@@ -1,0 +1,7 @@
+.env
+node_modules
+dist
+.nitro
+.tanstack
+.output
+.vinxi

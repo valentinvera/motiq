@@ -1,0 +1,36 @@
+import { createEnv } from "@t3-oss/env-core"
+import * as z from "zod"
+
+export const env = createEnv({
+  server: {
+    SENTRY_DSN: z.string(),
+    DATABASE_URL: z.url(),
+    UPSTASH_REDIS_REST_URL: z.url(),
+    UPSTASH_REDIS_REST_TOKEN: z.string(),
+    PORT: z.coerce.number(),
+    VITE_BASE_URL: z.url(),
+    RESET_PASSWORD_TOKEN_EXPIRES_IN: z.coerce.number(),
+    GOOGLE_CLIENT_ID: z.string(),
+    GOOGLE_CLIENT_SECRET: z.string(),
+    REDIRECT_URI: z.string(),
+    TRUSTED_ORIGINS: z.string(),
+    BETTER_AUTH_SECRET: z.string().min(1),
+    EMAIL_VERIFICATION_EXPIRES_IN: z.coerce.number(),
+    SESSION_FRESH_AGE: z.coerce.number(),
+    RATE_LIMIT_WINDOW: z.coerce.number(),
+    RATE_LIMIT_MAX: z.coerce.number(),
+    RATE_LIMIT_WINDOW_AUTH: z.coerce.number(),
+    RATE_LIMIT_MAX_AUTH: z.coerce.number(),
+    SECURE_COOKIES: z.enum(["true", "false"]).transform(v => v === "true"),
+    COOKIE_SESSION_TOKEN_NAME: z.string(),
+    COOKIE_SESSION_TOKEN_EXPIRES: z.coerce.number(),
+    COOKIE_PREFIX: z.string(),
+    AWS_REGION: z.string(),
+    AWS_ACCESS_KEY_ID: z.string(),
+    AWS_SECRET_ACCESS_KEY: z.string(),
+    AWS_S3_BUCKET_NAME: z.string(),
+    GOOGLE_GENERATIVE_AI_API_KEY: z.string(),
+  },
+  runtimeEnv: process.env,
+  emptyStringAsUndefined: true,
+})
