@@ -1,0 +1,1 @@
+export { WaitlistEmail } from "./waitlist"
