@@ -5,3 +5,6 @@ dist
 .tanstack
 .output
 .vinxi
+.react-email
+/src/emails/preview.tsx
+/out
