@@ -30,6 +30,7 @@ export const env = createEnv({
     AWS_SECRET_ACCESS_KEY: z.string(),
     AWS_S3_BUCKET_NAME: z.string(),
     GOOGLE_GENERATIVE_AI_API_KEY: z.string(),
+    RESEND_API_KEY: z.string(),
   },
   runtimeEnv: process.env,
   emptyStringAsUndefined: true,
