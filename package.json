@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "vite dev",
     "start": "node -r dotenv/config .output/server/index.mjs",
-    "build": "vite build && bun email-build",
+    "build": "vite build",
     "serve": "vite preview",
     "email-preview": "email dev --dir ./src/emails",
     "email-build": "email build --dir ./src/emails --packageManager bun",
