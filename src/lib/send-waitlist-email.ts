@@ -9,7 +9,7 @@ interface SendWaitlistEmailOptions {
 export const sendWaitlistEmail = async ({ to, name }: SendWaitlistEmailOptions) => {
   return await sendEmail({
     to,
-    subject: "You're on the waitlist!",
+    subject: "Welcome to Motiq",
     react: WaitlistEmail({ name }),
   })
 }
