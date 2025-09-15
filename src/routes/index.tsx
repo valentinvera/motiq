@@ -2,6 +2,7 @@ import { createFileRoute } from "@tanstack/react-router"
 import { Header } from "@/components/header"
 import { Hero } from "@/components/hero"
 import { seo } from "@/lib/seo"
+import { Footer } from "@/components/footer"
 
 export const Route = createFileRoute("/")({
   component: App,
@@ -49,6 +50,7 @@ function App() {
       <main className="overflow-hidden">
         <Hero />
       </main>
+      <Footer />
     </div>
   )
 }
