@@ -141,10 +141,6 @@ export const Hero = () => {
             }}
           >
             <div className="relative mt-8 -mr-56 overflow-hidden px-2 sm:mt-12 sm:mr-0 md:mt-30">
-              <div
-                aria-hidden
-                className="absolute inset-0 z-10 bg-linear-to-b from-transparent from-35% to-background"
-              />
               <div className="relative mx-auto max-w-6xl overflow-hidden rounded-2xl border bg-background p-4 shadow-lg ring-1 inset-shadow-2xs shadow-zinc-950/15 ring-background dark:inset-shadow-white/20">
                 <img
                   className="relative hidden aspect-15/8 rounded-2xl bg-background dark:block"
