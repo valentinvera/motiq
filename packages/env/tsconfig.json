@@ -1,0 +1,6 @@
+{
+  "extends": "@motiq/ts-config/hono-framework",
+  "compilerOptions": {
+    "strictNullChecks": true
+  }
+}

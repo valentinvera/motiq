@@ -1,0 +1,31 @@
+{
+  "name": "@motiq/db",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "sideEffects": false,
+  "exports": {
+    ".": "./src/index.ts",
+    "./schema/auth": "./src/schema/auth.ts",
+    "./schema/waitlist": "./src/schema/waitlist.ts"
+  },
+  "scripts": {
+    "check-types": "tsc --noEmit",
+    "db:push": "drizzle-kit push",
+    "db:studio": "drizzle-kit studio",
+    "db:generate": "drizzle-kit generate",
+    "db:migrate": "drizzle-kit migrate"
+  },
+  "dependencies": {
+    "@motiq/env": "workspace:*",
+    "drizzle-orm": "^0.44.2",
+    "@neondatabase/serverless": "^1.0.1",
+    "ws": "^8.18.3",
+    "zod": "catalog:"
+  },
+  "devDependencies": {
+    "drizzle-kit": "^0.31.2",
+    "@types/ws": "^8.18.1",
+    "@motiq/ts-config": "workspace:*"
+  }
+}

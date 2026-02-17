@@ -1,0 +1,3 @@
+{
+  "extends": "@motiq/ts-config/base"
+}

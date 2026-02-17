@@ -1,0 +1,22 @@
+{
+  "name": "@motiq/env",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "sideEffects": false,
+  "exports": {
+    "./api": "./src/api.ts",
+    "./web": "./src/web.ts"
+  },
+  "scripts": {
+    "check-types": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@t3-oss/env-core": "^0.13.10",
+    "zod": "catalog:"
+  },
+  "devDependencies": {
+    "@motiq/ts-config": "workspace:*",
+    "@types/bun": "catalog:"
+  }
+}

@@ -1,0 +1,29 @@
+{
+  "name": "@motiq/mail",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "sideEffects": false,
+  "exports": {
+    "./resend": "./src/resend/index.ts",
+    "./templates/*": "./src/templates/*.tsx"
+  },
+  "scripts": {
+    "check-types": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@motiq/env": "workspace:*",
+    "@react-email/components": "^0.0.37",
+    "@react-email/render": "^1.0.1",
+    "react": "^19.2.0",
+    "react-dom": "^19.2.0",
+    "resend": "^4.0.1",
+    "zod": "catalog:"
+  },
+  "devDependencies": {
+    "@motiq/db": "workspace:*",
+    "@motiq/ts-config": "workspace:*",
+    "@types/react": "^19.2.5",
+    "@types/react-dom": "^19.2.3"
+  }
+}

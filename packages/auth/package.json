@@ -1,0 +1,25 @@
+{
+  "name": "@motiq/auth",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "sideEffects": false,
+  "exports": {
+    ".": "./src/index.ts",
+    "./payments": "./src/lib/payments.ts"
+  },
+  "scripts": {
+    "check-types": "tsc --noEmit"
+  },
+  "dependencies": {
+    "better-auth": "catalog:",
+    "@polar-sh/better-auth": "catalog:",
+    "@polar-sh/sdk": "^0.34.16",
+    "zod": "catalog:",
+    "@motiq/db": "workspace:*",
+    "@motiq/env": "workspace:*"
+  },
+  "devDependencies": {
+    "@motiq/ts-config": "workspace:*"
+  }
+}

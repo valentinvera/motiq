@@ -1,0 +1,30 @@
+{
+  "name": "@motiq/trpc",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "sideEffects": false,
+  "exports": {
+    ".": "./src/index.ts",
+    "./context": "./src/context.ts",
+    "./routers": "./src/routers/index.ts"
+  },
+  "scripts": {
+    "check-types": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@motiq/ai": "workspace:*",
+    "@motiq/auth": "workspace:*",
+    "@motiq/db": "workspace:*",
+    "@motiq/mail": "workspace:*",
+    "@trpc/client": "catalog:",
+    "@trpc/server": "catalog:",
+    "drizzle-orm": "^0.44.2",
+    "hono": "catalog:",
+    "superjson": "catalog:",
+    "zod": "catalog:"
+  },
+  "devDependencies": {
+    "@motiq/ts-config": "workspace:*"
+  }
+}

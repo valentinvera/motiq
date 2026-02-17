@@ -1,0 +1,6 @@
+{
+  "extends": "@motiq/ts-config/react-library",
+  "compilerOptions": {
+    "jsx": "react-jsx"
+  }
+}
