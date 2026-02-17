@@ -1,0 +1,31 @@
+{
+  "name": "@motiq/api",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "bun run --hot src/index.ts",
+    "build": "tsdown",
+    "start": "bun run dist/index.mjs",
+    "check-types": "tsc -b",
+    "compile": "bun build --compile --minify --sourcemap --bytecode ./src/index.ts --outfile api"
+  },
+  "dependencies": {
+    "@hono/trpc-server": "^0.4.2",
+    "@motiq/auth": "workspace:*",
+    "@motiq/db": "workspace:*",
+    "@motiq/trpc": "workspace:*",
+    "@polar-sh/better-auth": "catalog:",
+    "@polar-sh/sdk": "^0.42.2",
+    "@trpc/server": "catalog:",
+    "better-auth": "catalog:",
+    "hono": "catalog:",
+    "zod": "catalog:",
+    "@motiq/env": "workspace:*"
+  },
+  "devDependencies": {
+    "tsdown": "catalog:",
+    "@motiq/ts-config": "workspace:*",
+    "@types/bun": "catalog:"
+  }
+}

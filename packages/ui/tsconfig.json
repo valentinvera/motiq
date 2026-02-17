@@ -1,0 +1,13 @@
+{
+  "extends": "@motiq/ts-config/react-library",
+  "compilerOptions": {
+    "outDir": "dist",
+    "baseUrl": ".",
+    "sourceMap": true,
+    "paths": {
+      "@/*": ["./src/*"],
+      "@motiq/ui/*": ["./src/*"]
+    }
+  },
+  "include": [".", "src"]
+}

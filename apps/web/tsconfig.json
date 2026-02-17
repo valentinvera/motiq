@@ -1,0 +1,12 @@
+{
+  "extends": "@motiq/ts-config/react-library",
+  "compilerOptions": {
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["./src/*"],
+      "@motiq/ui/*": ["../../packages/ui/src/*"]
+    },
+    "types": ["vite/client"]
+  },
+  "include": ["**/*.ts", "**/*.tsx", "vite.config.ts"]
+}

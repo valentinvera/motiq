@@ -1,0 +1,52 @@
+import tailwindcss from "@tailwindcss/vite"
+import { tanstackStart } from "@tanstack/react-start/plugin/vite"
+import viteReact from "@vitejs/plugin-react"
+import { defineConfig, loadEnv } from "vite"
+import viteTsConfigPaths from "vite-tsconfig-paths"
+
+const config = defineConfig(({ mode }) => {
+  const env = loadEnv(mode, process.cwd(), "")
+
+  const secureValue = env.VITE_PROXY_SECURE === "true"
+
+  const cookieDomainRewriteValue =
+    env.VITE_PROXY_COOKIE_DOMAIN_REWRITE === "false"
+      ? false
+      : env.VITE_PROXY_COOKIE_DOMAIN_REWRITE || "localhost"
+
+  return {
+    plugins: [
+      viteTsConfigPaths({
+        projects: ["./tsconfig.json"],
+      }),
+      tailwindcss({ optimize: true }),
+      tanstackStart({
+        sitemap: {
+          enabled: true,
+          outputPath: "./public/sitemap.xml",
+          host: "https://motiq.app",
+        },
+      }),
+      viteReact({
+        babel: {
+          plugins: ["babel-plugin-react-compiler"],
+        },
+      }),
+    ],
+    server: {
+      port: Number(env.VITE_PORT),
+      proxy: {
+        "/api": {
+          target: env.VITE_API_URL,
+          changeOrigin: true,
+          secure: secureValue,
+          cookieDomainRewrite: cookieDomainRewriteValue,
+          autoRewrite: true,
+          timeout: 30_000,
+        },
+      },
+    },
+  }
+})
+
+export default config

@@ -1,0 +1,12 @@
+{
+  "extends": "@motiq/ts-config/hono-framework",
+  "compilerOptions": {
+    "outDir": "dist",
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["./src/*"]
+    },
+    "strictNullChecks": true
+  },
+  "include": ["src"]
+}
