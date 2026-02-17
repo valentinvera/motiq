@@ -1,0 +1,60 @@
+{
+  "$schema": "https://turbo.build/schema.json",
+  "ui": "tui",
+  "daemon": true,
+  "concurrency": "4",
+  "globalDependencies": ["**/package.json", "**/.env*", "bun.lock"],
+  "globalEnv": [],
+  "globalPassThroughEnv": [],
+  "tasks": {
+    "topo": {
+      "dependsOn": ["^topo"]
+    },
+    "build": {
+      "dependsOn": ["^build"],
+      "inputs": ["$TURBO_DEFAULT$", ".env*"],
+      "outputs": ["dist/**"],
+      "outputLogs": "new-only",
+      "passThroughEnv": []
+    },
+    "lint": {
+      "dependsOn": ["^topo"],
+      "inputs": ["**/*.{ts,tsx,js,jsx}"],
+      "outputLogs": "errors-only"
+    },
+    "//#check": {},
+    "//#fix": {
+      "cache": false
+    },
+    "check-types": {
+      "dependsOn": ["^topo"],
+      "inputs": ["**/*.{ts,tsx}"],
+      "outputLogs": "errors-only"
+    },
+    "dev": {
+      "cache": false,
+      "persistent": true,
+      "interruptible": true
+    },
+    "db:push": {
+      "cache": false,
+      "persistent": true,
+      "interactive": true
+    },
+    "db:studio": {
+      "cache": false,
+      "persistent": true,
+      "interactive": true
+    },
+    "db:migrate": {
+      "cache": false,
+      "persistent": true,
+      "interactive": true
+    },
+    "db:generate": {
+      "cache": false,
+      "persistent": true,
+      "interactive": true
+    }
+  }
+}

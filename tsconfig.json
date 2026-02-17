@@ -1,0 +1,6 @@
+{
+  "extends": "@motiq/ts-config/base",
+  "compilerOptions": {
+    "strictNullChecks": true
+  }
+}
