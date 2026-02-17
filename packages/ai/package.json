@@ -1,0 +1,25 @@
+{
+  "name": "@motiq/ai",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "sideEffects": false,
+  "exports": {
+    ".": "./src/index.ts",
+    "./chat": "./src/chat.ts",
+    "./tools": "./src/tools.ts"
+  },
+  "scripts": {
+    "check-types": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@ai-sdk/google": "^3.0.7",
+    "@ai-sdk/provider": "^3.0.4",
+    "@motiq/env": "workspace:*",
+    "ai": "^6.0.0",
+    "zod": "catalog:"
+  },
+  "devDependencies": {
+    "@motiq/ts-config": "workspace:*"
+  }
+}
