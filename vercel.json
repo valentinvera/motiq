@@ -1,4 +1,5 @@
 {
   "framework": null,
+  "buildCommand": "turbo run build && mkdir -p public",
   "rewrites": [{ "source": "/(.*)", "destination": "/api/index" }]
 }
