@@ -16,7 +16,7 @@ export const Route = createFileRoute("/")({
 
 function HomePage() {
   return (
-    <div className="relative h-dvh overflow-y-auto overflow-x-hidden bg-zinc-950 selection:bg-lime-500/30 selection:text-lime-200">
+    <div className="relative h-dvh overflow-y-auto overflow-x-hidden bg-zinc-950 selection:bg-lime-500/30 selection:text-lime-200 md:overflow-hidden">
       <Header />
       <main>
         <Hero />

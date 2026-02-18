@@ -35,13 +35,14 @@ export function WaitlistConfirmationEmail({
               know when we launch.
             </Text>
             <Text className="mb-4 text-[#e4e4e7] text-base leading-relaxed">
-              Motiq is your conversational data analyst for survey responses and
-              form data. Skip the spreadsheets — just upload your CSV or connect
-              your tools, then chat with your data in plain English.
+              Motiq is an autonomous customer intelligence platform for B2B SaaS
+              teams. AI agents monitor all your customer feedback 24/7 —
+              triaging signals, detecting patterns, and alerting the right
+              people before small issues become churn.
             </Text>
             <Text className="mb-4 text-[#a1a1aa] text-base leading-relaxed">
-              Ask questions, generate charts, discover insights. We handle the
-              analysis while you focus on decisions.
+              Stop missing critical customer signals. We watch so you don't have
+              to.
             </Text>
             <Text className="mb-6 text-[#a1a1aa] text-base leading-relaxed">
               We'll email you when early access opens.
