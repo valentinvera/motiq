@@ -37,6 +37,19 @@
         "BETTER_AUTH_URL"
       ]
     },
+    "@motiq/web#build": {
+      "dependsOn": ["^build"],
+      "inputs": ["$TURBO_DEFAULT$", ".env*"],
+      "outputs": [".vercel/**", ".output/**"],
+      "outputLogs": "new-only",
+      "passThroughEnv": [
+        "VERCEL",
+        "VITE_PORT",
+        "VITE_API_URL",
+        "VITE_PROXY_SECURE",
+        "VITE_PROXY_COOKIE_DOMAIN_REWRITE"
+      ]
+    },
     "lint": {
       "dependsOn": ["^topo"],
       "inputs": ["**/*.{ts,tsx,js,jsx}"],
