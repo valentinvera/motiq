@@ -1,3 +1,5 @@
+import { db } from "@motiq/db"
+import { waitlist } from "@motiq/db/schema/waitlist"
 import { joinWaitlist } from "@motiq/mail/resend"
 import { TRPCError } from "@trpc/server"
 import { count } from "drizzle-orm"
@@ -25,8 +27,6 @@ export const waitlistRouter = router({
     }),
 
   count: publicProcedure.query(async () => {
-    const { db } = await import("@motiq/db")
-    const { waitlist } = await import("@motiq/db/schema/waitlist")
     const result = await db.select({ count: count() }).from(waitlist)
     return { count: result[0]?.count ?? 0 }
   }),

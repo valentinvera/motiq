@@ -20,7 +20,7 @@
     "@motiq/api#build": {
       "dependsOn": ["^build"],
       "inputs": ["$TURBO_DEFAULT$", ".env*"],
-      "outputs": ["dist/**"],
+      "outputs": ["api/**"],
       "outputLogs": "new-only",
       "passThroughEnv": [
         "PORT",
