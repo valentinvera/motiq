@@ -1,6 +1,3 @@
 {
-  "extends": "@motiq/ts-config/hono-framework",
-  "compilerOptions": {
-    "composite": false
-  }
+  "extends": "@motiq/ts-config/hono-framework"
 }
