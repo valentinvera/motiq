@@ -17,6 +17,26 @@
       "outputLogs": "new-only",
       "passThroughEnv": []
     },
+    "@motiq/api#build": {
+      "dependsOn": ["^build"],
+      "inputs": ["$TURBO_DEFAULT$", ".env*"],
+      "outputs": ["dist/**"],
+      "outputLogs": "new-only",
+      "passThroughEnv": [
+        "PORT",
+        "CORS_ORIGIN",
+        "GOOGLE_GENERATIVE_AI_API_KEY",
+        "POLAR_ACCESS_TOKEN",
+        "POLAR_PRODUCT_ID",
+        "POLAR_SUCCESS_URL",
+        "UPSTASH_REDIS_REST_URL",
+        "UPSTASH_REDIS_REST_TOKEN",
+        "DATABASE_URL",
+        "RESEND_API_KEY",
+        "BETTER_AUTH_SECRET",
+        "BETTER_AUTH_URL"
+      ]
+    },
     "lint": {
       "dependsOn": ["^topo"],
       "inputs": ["**/*.{ts,tsx,js,jsx}"],
