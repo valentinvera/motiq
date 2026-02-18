@@ -8,6 +8,6 @@ export default defineConfig({
   },
   format: "esm",
   noExternal: [/@motiq\/.*/],
-  dts: true,
+  dts: !process.env.VERCEL,
   outDir: "dist",
 })

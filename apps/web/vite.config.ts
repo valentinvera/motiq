@@ -35,6 +35,16 @@ const config = defineConfig(({ mode }) => {
         },
       }),
     ],
+    build: {
+      rollupOptions: {
+        onwarn(warning, warn) {
+          if (warning.code === "MODULE_LEVEL_DIRECTIVE") {
+            return
+          }
+          warn(warning)
+        },
+      },
+    },
     server: {
       port: Number(env.VITE_PORT),
       proxy: {
