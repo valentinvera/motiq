@@ -88,6 +88,7 @@ export const Hero = () => {
               id="waitlist-email"
               onChange={(e) => setEmail(e.target.value)}
               placeholder="Enter your email"
+              required
               type="email"
               value={email}
             />
