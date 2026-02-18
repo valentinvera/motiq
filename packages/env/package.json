@@ -5,10 +5,17 @@
   "type": "module",
   "sideEffects": false,
   "exports": {
-    "./api": "./src/api.ts",
-    "./web": "./src/web.ts"
+    "./api": {
+      "types": "./dist/api.d.mts",
+      "import": "./dist/api.mjs"
+    },
+    "./web": {
+      "types": "./dist/web.d.mts",
+      "import": "./dist/web.mjs"
+    }
   },
   "scripts": {
+    "build": "tsdown",
     "check-types": "tsc --noEmit"
   },
   "dependencies": {
@@ -17,6 +24,7 @@
   },
   "devDependencies": {
     "@motiq/ts-config": "workspace:*",
-    "@types/bun": "catalog:"
+    "@types/bun": "catalog:",
+    "tsdown": "catalog:"
   }
 }

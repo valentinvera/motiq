@@ -5,10 +5,17 @@
   "type": "module",
   "sideEffects": false,
   "exports": {
-    ".": "./src/index.ts",
-    "./payments": "./src/lib/payments.ts"
+    ".": {
+      "types": "./dist/index.d.mts",
+      "import": "./dist/index.mjs"
+    },
+    "./payments": {
+      "types": "./dist/lib/payments.d.mts",
+      "import": "./dist/lib/payments.mjs"
+    }
   },
   "scripts": {
+    "build": "tsdown",
     "check-types": "tsc --noEmit"
   },
   "dependencies": {
@@ -20,6 +27,7 @@
     "@motiq/env": "workspace:*"
   },
   "devDependencies": {
-    "@motiq/ts-config": "workspace:*"
+    "@motiq/ts-config": "workspace:*",
+    "tsdown": "catalog:"
   }
 }

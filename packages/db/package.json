@@ -5,11 +5,21 @@
   "type": "module",
   "sideEffects": false,
   "exports": {
-    ".": "./src/index.ts",
-    "./schema/auth": "./src/schema/auth.ts",
-    "./schema/waitlist": "./src/schema/waitlist.ts"
+    ".": {
+      "types": "./dist/index.d.mts",
+      "import": "./dist/index.mjs"
+    },
+    "./schema/auth": {
+      "types": "./dist/schema/auth.d.mts",
+      "import": "./dist/schema/auth.mjs"
+    },
+    "./schema/waitlist": {
+      "types": "./dist/schema/waitlist.d.mts",
+      "import": "./dist/schema/waitlist.mjs"
+    }
   },
   "scripts": {
+    "build": "tsdown",
     "check-types": "tsc --noEmit",
     "db:push": "drizzle-kit push",
     "db:studio": "drizzle-kit studio",
@@ -26,6 +36,7 @@
   "devDependencies": {
     "drizzle-kit": "^0.31.2",
     "@types/ws": "^8.18.1",
-    "@motiq/ts-config": "workspace:*"
+    "@motiq/ts-config": "workspace:*",
+    "tsdown": "catalog:"
   }
 }

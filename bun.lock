@@ -111,6 +111,7 @@
       },
       "devDependencies": {
         "@motiq/ts-config": "workspace:*",
+        "tsdown": "catalog:",
       },
     },
     "packages/auth": {
@@ -126,6 +127,7 @@
       },
       "devDependencies": {
         "@motiq/ts-config": "workspace:*",
+        "tsdown": "catalog:",
       },
     },
     "packages/cache": {
@@ -137,6 +139,7 @@
       },
       "devDependencies": {
         "@motiq/ts-config": "workspace:*",
+        "tsdown": "catalog:",
       },
     },
     "packages/db": {
@@ -153,6 +156,7 @@
         "@motiq/ts-config": "workspace:*",
         "@types/ws": "^8.18.1",
         "drizzle-kit": "^0.31.2",
+        "tsdown": "catalog:",
       },
     },
     "packages/env": {
@@ -165,6 +169,7 @@
       "devDependencies": {
         "@motiq/ts-config": "workspace:*",
         "@types/bun": "catalog:",
+        "tsdown": "catalog:",
       },
     },
     "packages/mail": {
@@ -203,6 +208,7 @@
       },
       "devDependencies": {
         "@motiq/ts-config": "workspace:*",
+        "tsdown": "catalog:",
       },
     },
     "packages/ts-config": {
