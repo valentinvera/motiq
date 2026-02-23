@@ -1,38 +1,50 @@
 import { IntercomIcon } from "@motiq/ui/icons/intercom"
 import { JiraIcon } from "@motiq/ui/icons/jira"
 import { LinearIcon } from "@motiq/ui/icons/linear"
-import { NotionIcon } from "@motiq/ui/icons/notion"
-import { PolarIcon } from "@motiq/ui/icons/polar"
 import { SlackIcon } from "@motiq/ui/icons/slack"
-import { ZapierIcon } from "@motiq/ui/icons/zapier"
+import { ZendeskIcon } from "@motiq/ui/icons/zendesk"
 import { motion } from "motion/react"
 
 const integrations = [
-  { icon: SlackIcon, name: "Slack", color: "bg-fuchsia-500/20" },
-  { icon: NotionIcon, name: "Notion", color: "bg-zinc-500/20" },
-  { icon: LinearIcon, name: "Linear", color: "bg-purple-500/20" },
-  { icon: JiraIcon, name: "Jira", color: "bg-blue-500/20" },
-  { icon: ZapierIcon, name: "Zapier", color: "bg-orange-500/20" },
-  { icon: IntercomIcon, name: "Intercom", color: "bg-blue-600/20" },
-  { icon: PolarIcon, name: "Polar", color: "bg-indigo-500/20" },
+  {
+    icon: IntercomIcon,
+    name: "Intercom",
+    color: "",
+    bgColor: "bg-zinc-900/80",
+  },
+  {
+    icon: ZendeskIcon,
+    name: "Zendesk",
+    color: "text-white",
+    bgColor: "bg-zinc-900/80",
+  },
+  {
+    icon: SlackIcon,
+    name: "Slack",
+    color: "text-white",
+    bgColor: "bg-zinc-900/80",
+  },
+  {
+    icon: LinearIcon,
+    name: "Linear",
+    color: "text-[#5E6AD2]",
+    bgColor: "bg-zinc-900/80",
+  },
+  { icon: JiraIcon, name: "Jira", color: "", bgColor: "bg-zinc-900/80" },
 ]
 
 export const IntegrationsOrbit = () => {
   return (
     <div className="relative flex items-center justify-center py-12">
-      <div className="mask-[radial-gradient(ellipse_at_center,black,transparent_75%)] absolute inset-0">
-        <div className="h-full w-full bg-[radial-gradient(#27272a_1px,transparent_1px)] bg-size-[24px_24px] opacity-20" />
-      </div>
-
-      <div className="absolute size-60 rounded-full border border-white/5" />
+      <div className="absolute size-60 rounded-full border border-white/5 bg-white/1" />
       <div className="absolute size-90 rounded-full border border-white/5" />
       <div className="absolute size-120 rounded-full border border-white/3" />
-
       <div className="relative z-10">
-        <div className="absolute -inset-4 animate-pulse rounded-2xl bg-lime-400/20 blur-xl" />
-        <div className="relative flex h-20 w-20 items-center justify-center rounded-2xl border border-lime-300 bg-lime-400 shadow-[0_0_30px_rgba(163,230,53,0.3)]">
+        <div className="absolute -inset-6 animate-pulse rounded-2xl bg-lime-400/5 blur-xl" />
+        <div className="relative flex h-24 w-24 items-center justify-center overflow-hidden rounded-2xl border border-white/10 bg-zinc-900 shadow-2xl transition-transform hover:scale-105">
+          <div className="halftone absolute inset-0 opacity-[0.05]" />
           <svg
-            className="h-12 w-12 text-zinc-950"
+            className="relative z-10 h-12 w-12 text-white"
             fill="currentColor"
             preserveAspectRatio="none"
             viewBox="250 250 524 524"
@@ -42,106 +54,59 @@ export const IntegrationsOrbit = () => {
           </svg>
         </div>
       </div>
-
-      <div
-        className="absolute size-60 motion-safe:animate-spin"
-        style={{ animationDuration: "35s" }}
+      <motion.div
+        animate={{ rotate: 360 }}
+        className="pointer-events-none absolute size-75"
+        transition={{
+          duration: 40,
+          repeat: Number.POSITIVE_INFINITY,
+          ease: "linear",
+        }}
       >
-        {integrations.slice(0, 4).map((item, index) => {
-          const angle = index * 90 * (Math.PI / 180)
-          const x = Math.cos(angle) * 120
-          const y = Math.sin(angle) * 120
+        {integrations.map((item, index) => {
+          const count = integrations.length
+          const angle = index * (360 / count) * (Math.PI / 180)
+          const x = Math.round(Math.cos(angle) * 150)
+          const y = Math.round(Math.sin(angle) * 150)
           return (
             <motion.div
               animate={{ opacity: 1, scale: 1 }}
-              className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2"
+              className="pointer-events-auto absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2"
               initial={{ opacity: 0, scale: 0 }}
               key={item.name}
               style={{ x, y }}
               transition={{ delay: index * 0.1 + 0.3 }}
             >
-              <div
-                className={`flex h-12 w-12 items-center justify-center rounded-xl ${item.color} border border-white/10 bg-zinc-900/50 shadow-lg backdrop-blur-md motion-safe:animate-spin`}
-                style={{
-                  animationDuration: "35s",
-                  animationDirection: "reverse",
-                }}
-              >
-                <item.icon className="h-6 w-6" />
-              </div>
-            </motion.div>
-          )
-        })}
-      </div>
-
-      <div
-        className="absolute size-90 motion-safe:animate-spin"
-        style={{ animationDuration: "50s", animationDirection: "reverse" }}
-      >
-        {integrations.slice(4).map((item, index) => {
-          const angle = (index * 90 + 45) * (Math.PI / 180)
-          const x = Math.cos(angle) * 180
-          const y = Math.sin(angle) * 180
-          return (
-            <motion.div
-              animate={{ opacity: 1, scale: 1 }}
-              className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2"
-              initial={{ opacity: 0, scale: 0 }}
-              key={item.name}
-              style={{ x, y }}
-              transition={{ delay: index * 0.1 + 0.5 }}
-            >
-              <div
-                className={`flex h-12 w-12 items-center justify-center rounded-xl ${item.color} border border-white/10 bg-zinc-900/50 shadow-lg backdrop-blur-md motion-safe:animate-spin`}
-                style={{ animationDuration: "50s" }}
-              >
-                <item.icon className="h-6 w-6" />
-              </div>
-            </motion.div>
-          )
-        })}
-      </div>
-
-      <div className="pointer-events-none absolute size-125">
-        <svg className="h-full w-full" viewBox="0 0 400 400">
-          <title>Connection lines</title>
-          <defs>
-            <linearGradient id="lineGradient" x1="0%" x2="100%" y1="0%" y2="0%">
-              <stop offset="0%" stopColor="rgb(163, 230, 53)" stopOpacity="0" />
-              <stop
-                offset="50%"
-                stopColor="rgb(163, 230, 53)"
-                stopOpacity="0.15"
-              />
-              <stop
-                offset="100%"
-                stopColor="rgb(163, 230, 53)"
-                stopOpacity="0"
-              />
-            </linearGradient>
-          </defs>
-
-          {[0, 90, 180, 270].map((angle) => (
-            <g key={angle} transform={`rotate(${angle} 200 200)`}>
-              <line
-                stroke="url(#lineGradient)"
-                strokeWidth="1"
-                x1="200"
-                x2="320"
-                y1="200"
-                y2="200"
-              />
-              <motion.circle
-                animate={{ cx: 200, cy: 200, opacity: [0, 1, 0] }}
-                fill="rgb(163, 230, 53)"
-                initial={{ cx: 320, cy: 200, opacity: 0 }}
-                r="1.5"
+              <motion.div
+                animate={{ rotate: -360 }}
+                className={`flex h-14 w-14 items-center justify-center rounded-2xl ${item.bgColor} group border border-white/10 shadow-2xl backdrop-blur-md transition-all hover:border-lime-500/50`}
                 transition={{
-                  duration: 3,
+                  duration: 40,
                   repeat: Number.POSITIVE_INFINITY,
                   ease: "linear",
-                  delay: angle / 90,
                 }}
+              >
+                <item.icon
+                  className={`h-7 w-7 ${item.color} transition-transform group-hover:scale-110`}
+                />
+              </motion.div>
+            </motion.div>
+          )
+        })}
+      </motion.div>
+      <div className="pointer-events-none absolute size-150 opacity-20">
+        <svg className="h-full w-full" viewBox="0 0 400 400">
+          <title>Connection lines</title>
+          {[0, 72, 144, 216, 288].map((angle) => (
+            <g key={angle} transform={`rotate(${angle} 200 200)`}>
+              <line
+                stroke="white"
+                strokeDasharray="2 4"
+                strokeWidth="0.5"
+                x1="200"
+                x2="350"
+                y1="200"
+                y2="200"
               />
             </g>
           ))}
