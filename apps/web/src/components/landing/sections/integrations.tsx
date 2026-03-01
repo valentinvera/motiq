@@ -1,43 +1,41 @@
-import { motion } from "motion/react"
 import { IntegrationsOrbit } from "../integrations-orbit"
 
 export const Integrations = () => {
   return (
-    <section
-      className="relative overflow-hidden bg-zinc-950 py-12 md:py-24"
-      id="integrations"
-    >
-      <div className="pointer-events-none absolute inset-0 overflow-hidden">
-        <div className="absolute top-1/2 left-1/2 h-150 w-300 -translate-x-1/2 -translate-y-1/2 rounded-full bg-lime-500/10 mix-blend-screen blur-[120px]" />
-
-        <div className="absolute top-1/2 left-1/2 h-75 w-150 -translate-x-1/2 -translate-y-1/2 rounded-full bg-lime-400/5 blur-[80px]" />
-      </div>
-
-      <div className="pointer-events-none absolute top-0 right-0 left-0 z-20 h-20 bg-linear-to-b from-zinc-950 to-transparent" />
-      <div className="pointer-events-none absolute right-0 bottom-0 left-0 z-20 h-20 bg-linear-to-t from-zinc-950 to-transparent" />
-
-      <div className="relative z-10 mx-auto max-w-7xl px-4">
-        <motion.div
-          className="mb-10 text-center"
-          initial={{ opacity: 0, y: 20 }}
-          transition={{ duration: 0.5 }}
-          viewport={{ once: true }}
-          whileInView={{ opacity: 1, y: 0 }}
-        >
-          <span className="mb-4 inline-block font-medium text-lime-400 text-sm uppercase tracking-wider">
-            Integrations
-          </span>
-          <h2 className="mb-4 text-balance font-bold text-3xl text-white md:text-5xl">
-            Connects with your entire stack
-          </h2>
-          <p className="mx-auto max-w-2xl text-pretty text-base text-zinc-400 md:text-lg">
-            Seamlessly integrate Motiq with your existing tools and workflows.
-            No complex setup required.
-          </p>
-        </motion.div>
-
-        <div className="relative flex min-h-100 flex-col items-center justify-center antialiased md:min-h-150">
-          <IntegrationsOrbit />
+    <section className="relative overflow-hidden bg-zinc-950" id="integrations">
+      <div className="relative mx-auto max-w-7xl overflow-hidden border-white/5 border-x border-t">
+        <div className="relative overflow-hidden border-white/5 border-b px-8 pt-24 pb-16 md:pt-20 md:pr-20 md:pb-20 md:pl-10">
+          <div className="relative z-10 flex flex-col justify-start gap-12 lg:flex-row lg:items-end lg:gap-95">
+            <div>
+              <span className="mb-6 block font-mono text-[10px] text-lime-500 uppercase tracking-[0.2em]">
+                {"03 // Ecosystem"}
+              </span>
+              <h2 className="font-bold text-4xl text-white leading-none tracking-tighter sm:text-5xl md:text-7xl">
+                Universal <br />
+                <span className="text-zinc-700 italic">Intake.</span>
+              </h2>
+            </div>
+            <div className="max-w-md">
+              <p className="text-lg text-zinc-500 leading-relaxed">
+                Motiq connects to your entire support and feedback stack. Deploy
+                agents to your existing channels in one click.
+              </p>
+            </div>
+          </div>
+          <div className="grid-lines pointer-events-none absolute inset-0 opacity-[0.02]" />
+        </div>
+        <div className="relative flex min-h-150 items-center justify-center overflow-hidden bg-zinc-900/10 md:min-h-175">
+          <div className="halftone pointer-events-none absolute inset-0 opacity-[0.03]" />
+          <div className="grid-lines pointer-events-none absolute inset-0 opacity-[0.01]" />
+          <div className="relative z-10 w-full scale-75 md:scale-100">
+            <IntegrationsOrbit />
+          </div>
+          <div className="absolute bottom-4 left-4 flex items-center gap-3 rounded-sm border border-white/10 bg-zinc-950 px-4 py-2 md:bottom-8 md:left-8">
+            <div className="size-1.5 animate-pulse rounded-full bg-lime-500" />
+            <span className="font-mono text-[9px] text-zinc-400 uppercase tracking-[0.2em]">
+              Adapter_Status: Connected
+            </span>
+          </div>
         </div>
       </div>
     </section>

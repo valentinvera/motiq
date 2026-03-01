@@ -41,7 +41,9 @@ const generateSitemap = async () => {
     })
     .filter(Boolean)
     .filter(({ url }) => {
-      if (seen.has(url)) return false
+      if (seen.has(url)) {
+        return false
+      }
       seen.add(url)
       return true
     })

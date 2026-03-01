@@ -4,56 +4,100 @@ import { motion } from "motion/react"
 
 export const Cta = () => {
   return (
-    <section className="relative overflow-hidden py-12 md:py-24">
-      <div className="absolute inset-x-0 top-0 h-px bg-linear-to-r from-transparent via-lime-500/50 to-transparent" />
-      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,var(--tw-gradient-stops))] from-lime-900/20 via-zinc-950 to-zinc-950" />
-
-      <div className="relative z-10 mx-auto max-w-4xl px-4 text-center">
-        <motion.h2
-          className="mb-6 text-balance font-bold text-4xl text-white tracking-tight md:text-[65px] min-[575px]:text-5xl min-[690px]:text-6xl"
-          initial={{ opacity: 0, y: 20 }}
-          transition={{ duration: 0.5 }}
-          viewport={{ once: true }}
-          whileInView={{ opacity: 1, y: 0 }}
-        >
-          Ready to stop missing critical signals?
-        </motion.h2>
-
-        <motion.p
-          className="mx-auto mb-10 max-w-2xl text-pretty text-lg text-zinc-400 md:text-xl"
-          initial={{ opacity: 0, y: 20 }}
-          transition={{ delay: 0.2, duration: 0.5 }}
-          viewport={{ once: true }}
-          whileInView={{ opacity: 1, y: 0 }}
-        >
-          Join CS and Product leaders who catch issues before they become churn.
-          Get early access today.
-        </motion.p>
-
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          transition={{ delay: 0.4, duration: 0.5 }}
-          viewport={{ once: true }}
-          whileInView={{ opacity: 1, y: 0 }}
-        >
-          <Button
-            className="relative inline-flex h-14 overflow-hidden rounded-full p-px focus:outline-none focus:ring-2 focus:ring-lime-400 focus:ring-offset-2 focus:ring-offset-slate-50"
-            onClick={() => {
-              const input = document.getElementById("waitlist-email")
-              if (input) {
-                input.scrollIntoView({ behavior: "smooth", block: "center" })
-                setTimeout(() => input.focus(), 500)
-              }
-            }}
-            size="lg"
-          >
-            <span className="absolute inset-[-1000%] animate-[spin_2s_linear_infinite] bg-[conic-gradient(from_90deg_at_50%_50%,#E2E8F0_0%,#a3e635_50%,#E2E8F0_100%)]" />
-            <span className="inline-flex h-full w-full cursor-pointer items-center justify-center rounded-full bg-zinc-950 px-8 py-1 font-medium text-sm text-white backdrop-blur-3xl">
-              Get Started Free
-              <ArrowRightIcon className="ml-2 h-4 w-4" />
-            </span>
-          </Button>
-        </motion.div>
+    <section className="relative overflow-hidden bg-zinc-950">
+      <div className="relative mx-auto max-w-7xl overflow-hidden border-white/5 border-x border-t">
+        <div className="grid min-h-100 grid-cols-1 md:min-h-150 md:grid-cols-12">
+          <div className="relative flex flex-col justify-center overflow-hidden p-8 md:col-span-8 md:p-10">
+            <div className="grid-lines pointer-events-none absolute inset-0 opacity-[0.03]" />
+            <div className="relative z-10">
+              <motion.h2
+                className="mb-8 font-bold text-5xl text-white leading-[0.9] tracking-tighter sm:text-6xl md:text-8xl"
+                initial={{ opacity: 0, y: 20 }}
+                transition={{ duration: 0.5 }}
+                viewport={{ once: true }}
+                whileInView={{ opacity: 1, y: 0 }}
+              >
+                Stop Missing <br />
+                <span className="text-lime-400 italic">Critical Signals.</span>
+              </motion.h2>
+              <motion.p
+                className="mb-12 max-w-lg text-lg text-zinc-500 leading-relaxed md:text-xl"
+                initial={{ opacity: 0, y: 20 }}
+                transition={{ delay: 0.2, duration: 0.5 }}
+                viewport={{ once: true }}
+                whileInView={{ opacity: 1, y: 0 }}
+              >
+                Be among the first to deploy autonomous customer intelligence.
+                Join the waitlist for early access and founding-member pricing.
+              </motion.p>
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                transition={{ delay: 0.4, duration: 0.5 }}
+                viewport={{ once: true }}
+                whileInView={{ opacity: 1, y: 0 }}
+              >
+                <Button
+                  className="h-14 cursor-pointer rounded-sm bg-white px-8 font-bold text-xs text-zinc-950 uppercase tracking-[0.2em] transition-all hover:scale-[1.02] hover:bg-lime-400 active:scale-95"
+                  onClick={() => {
+                    const input = document.getElementById("waitlist-email")
+                    if (input) {
+                      input.scrollIntoView({
+                        behavior: "smooth",
+                        block: "center",
+                      })
+                      setTimeout(() => input.focus(), 500)
+                    }
+                  }}
+                >
+                  Join the Waitlist
+                  <ArrowRightIcon className="ml-2 h-4 w-4" />
+                </Button>
+              </motion.div>
+            </div>
+          </div>
+          <div className="relative flex flex-col justify-between border-white/5 border-t bg-zinc-900/20 p-8 md:col-span-4 md:border-t-0 md:border-l md:p-12">
+            <div className="halftone absolute inset-0 opacity-[0.05]" />
+            <div className="relative z-10 space-y-8">
+              <div>
+                <span className="mb-4 block font-mono text-[10px] text-zinc-600 uppercase tracking-widest">
+                  Early_Access
+                </span>
+                <p className="text-xs text-zinc-400 leading-relaxed">
+                  Founding-member pricing locked in.
+                  <br />
+                  Priority onboarding & setup.
+                  <br />
+                  Direct line to the team.
+                </p>
+              </div>
+              <div>
+                <span className="mb-4 block font-mono text-[10px] text-zinc-600 uppercase tracking-widest">
+                  Day_One_Integrations
+                </span>
+                <div className="flex flex-wrap gap-2">
+                  {["Intercom", "Zendesk", "Slack", "Linear", "Jira"].map(
+                    (i) => (
+                      <span
+                        className="rounded border border-white/5 bg-white/5 px-2 py-1 font-bold text-[10px] text-zinc-500 uppercase tracking-tighter"
+                        key={i}
+                      >
+                        {i}
+                      </span>
+                    )
+                  )}
+                </div>
+              </div>
+            </div>
+            <div className="relative z-10 border-white/5 border-t pt-8">
+              <span className="mb-2 block font-mono text-[10px] text-lime-500/50 uppercase tracking-widest">
+                Launch_Status
+              </span>
+              <span className="text-[10px] text-zinc-500 uppercase tracking-tighter">
+                {"Early_Access // 2026"}
+              </span>
+            </div>
+          </div>
+        </div>
       </div>
     </section>
   )
