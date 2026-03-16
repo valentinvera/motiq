@@ -7,9 +7,9 @@ import {
 
 const faqs = [
   {
-    question: "What channels does Motiq monitor?",
+    question: "What channels does the platform monitor?",
     answer:
-      "Motiq connects to all your existing feedback sources: support tickets (Zendesk, Intercom), Slack channels, customer interviews, NPS surveys, app reviews, and more. Our agents continuously monitor these channels 24/7 to detect patterns and critical signals.",
+      "The platform connects to all your existing feedback sources: support tickets (Zendesk, Intercom), Slack channels, customer interviews, NPS surveys, app reviews, and more. Our agents continuously monitor these channels 24/7 to detect patterns and critical signals.",
   },
   {
     question: "How do the agents work?",
@@ -29,7 +29,7 @@ const faqs = [
   {
     question: "Does it integrate with our tools?",
     answer:
-      "Yes! Motiq integrates seamlessly with Slack, Linear, Jira, Notion, and more. Alerts appear where your team already works, and issues can be auto-created in your project management system.",
+      "Yes! The intelligence engine integrates seamlessly with Slack, Linear, Jira, Notion, and more. Alerts appear where your team already works, and issues can be auto-created in your project management system.",
   },
 ]
 
@@ -51,7 +51,7 @@ export const Faq = () => {
             {faqs.map((faq, i) => (
               <AccordionItem
                 className="border-white/10 border-b"
-                key={i}
+                key={faq.question}
                 value={`item-${i}`}
               >
                 <AccordionTrigger className="cursor-pointer py-8 text-left font-semibold text-lg text-white transition-colors hover:text-white/70 hover:no-underline">
