@@ -1,6 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router"
 import { Footer } from "@/components/landing/footer"
-import { Header } from "@/components/landing/header"
+import { Header } from "@/components/landing/header2"
 import { Cta } from "@/components/landing/sections/cta"
 import { Faq } from "@/components/landing/sections/faq"
 import { Features } from "@/components/landing/sections/features"
@@ -15,9 +15,7 @@ export const Route = createFileRoute("/")({
 
 function HomePage() {
   return (
-    <div className="relative min-h-dvh scroll-smooth bg-zinc-950 antialiased selection:bg-lime-500/30 selection:text-lime-200">
-      <div className="pointer-events-none fixed inset-0 z-50 bg-grain opacity-[0.015]" />
-
+    <div className="relative min-h-dvh scroll-smooth bg-black antialiased selection:bg-indigo-500/30 selection:text-indigo-200">
       <Header />
       <main className="relative z-10">
         <Hero />
