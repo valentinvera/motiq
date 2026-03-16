@@ -5,5 +5,4 @@ export default defineConfig({
   format: "esm",
   noExternal: [/@motiq\/.*/],
   dts: false,
-  outDir: "api",
 })

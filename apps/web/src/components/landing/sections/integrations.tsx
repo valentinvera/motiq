@@ -1,39 +1,83 @@
-import { IntegrationsOrbit } from "../integrations-orbit"
+import { DiscordIcon } from "@motiq/ui/icons/discord"
+import { GithubIcon } from "@motiq/ui/icons/github"
+import { JiraIcon } from "@motiq/ui/icons/jira"
+import { LinearIcon } from "@motiq/ui/icons/linear"
+import { NotionIcon } from "@motiq/ui/icons/notion"
+import { SlackIcon } from "@motiq/ui/icons/slack"
+import { TelegramIcon } from "@motiq/ui/icons/telegram"
+import { ZendeskIcon } from "@motiq/ui/icons/zendesk"
+import { motion } from "motion/react"
 
 export const Integrations = () => {
+  const integrations = [
+    { name: "Telegram", icon: TelegramIcon, desc: "Monitor groups" },
+    { name: "Slack", icon: SlackIcon, desc: "Monitor #channels" },
+    { name: "Linear", icon: LinearIcon, desc: "Create issues" },
+    { name: "Jira", icon: JiraIcon, desc: "Track bugs" },
+    {
+      name: "Discord",
+      icon: DiscordIcon,
+      desc: "Community sentiment",
+      color: "text-[#5865F2]",
+    },
+    { name: "Notion", icon: NotionIcon, desc: "Document insights" },
+    {
+      name: "GitHub",
+      icon: GithubIcon,
+      desc: "Link to PRs",
+      color: "text-white",
+    },
+    {
+      name: "Zendesk",
+      icon: ZendeskIcon,
+      desc: "Analyze tickets",
+      color: "text-white",
+    },
+  ]
+
   return (
-    <section className="relative overflow-hidden bg-zinc-950" id="integrations">
-      <div className="relative mx-auto max-w-7xl overflow-hidden border-white/5 border-x border-t">
-        <div className="relative overflow-hidden border-white/5 border-b px-8 pt-24 pb-16 md:pt-20 md:pr-20 md:pb-20 md:pl-10">
-          <div className="relative z-10 flex flex-col justify-start gap-12 lg:flex-row lg:items-end lg:gap-95">
-            <div>
-              <span className="mb-6 block font-mono text-[10px] text-lime-500 uppercase tracking-[0.2em]">
-                {"03 // Ecosystem"}
-              </span>
-              <h2 className="font-bold text-4xl text-white leading-none tracking-tighter sm:text-5xl md:text-7xl">
-                Universal <br />
-                <span className="text-zinc-700 italic">Intake.</span>
-              </h2>
-            </div>
-            <div className="max-w-md">
-              <p className="text-lg text-zinc-500 leading-relaxed">
-                Motiq connects to your entire support and feedback stack. Deploy
-                agents to your existing channels in one click.
-              </p>
-            </div>
-          </div>
-          <div className="grid-lines pointer-events-none absolute inset-0 opacity-[0.02]" />
+    <section
+      className="relative border-white/5 border-y bg-black py-32"
+      id="ecosystem"
+    >
+      <div className="mx-auto max-w-6xl px-6">
+        <div className="mx-auto mb-24 max-w-2xl text-center">
+          <span className="mb-6 inline-block rounded-full border border-white/10 px-3 py-1 font-medium text-[10px] text-white/60 uppercase tracking-widest">
+            Ecosystem
+          </span>
+          <h2 className="mb-6 font-medium text-4xl text-white leading-tight tracking-tighter md:text-5xl lg:text-6xl">
+            Universal <span className="text-white/40">Intake.</span>
+          </h2>
+          <p className="text-lg text-white/50 leading-relaxed">
+            Connect to your entire support and feedback stack. Deploy agents to
+            your existing channels in one click.
+          </p>
         </div>
-        <div className="relative flex min-h-150 items-center justify-center overflow-hidden bg-zinc-900/10 md:min-h-175">
-          <div className="halftone pointer-events-none absolute inset-0 opacity-[0.03]" />
-          <div className="grid-lines pointer-events-none absolute inset-0 opacity-[0.01]" />
-          <div className="relative z-10 w-full scale-75 md:scale-100">
-            <IntegrationsOrbit />
-          </div>
-          <div className="absolute bottom-4 left-4 flex items-center gap-3 rounded-sm border border-white/10 bg-zinc-950 px-4 py-2 md:bottom-8 md:left-8">
-            <div className="size-1.5 animate-pulse rounded-full bg-lime-500" />
-            <span className="font-mono text-[9px] text-zinc-400 uppercase tracking-[0.2em]">
-              Adapter_Status: Connected
+
+        <div className="grid grid-cols-2 gap-4 md:grid-cols-4">
+          {integrations.map((item, i) => (
+            <motion.div
+              className="group relative rounded-3xl border border-white/5 bg-white/2 p-6 transition-all hover:bg-white/5"
+              initial={{ opacity: 0, y: 20 }}
+              key={item.name}
+              transition={{ delay: i * 0.05 }}
+              viewport={{ once: true }}
+              whileInView={{ opacity: 1, y: 0 }}
+            >
+              <item.icon
+                className={`mb-6 size-8 transition-colors ${"color" in item ? item.color : "text-white/40 group-hover:text-white"}`}
+              />
+              <h4 className="mb-1 font-medium text-white">{item.name}</h4>
+              <span className="text-[11px] text-white/40">{item.desc}</span>
+            </motion.div>
+          ))}
+        </div>
+
+        <div className="mt-16 flex justify-center">
+          <div className="inline-flex items-center gap-4 rounded-full border border-white/5 bg-white/2 px-6 py-3">
+            <div className="size-2 animate-pulse rounded-full bg-white" />
+            <span className="font-mono text-[10px] text-white/50 uppercase tracking-widest">
+              + 50 adapters in development
             </span>
           </div>
         </div>

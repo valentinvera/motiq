@@ -1,11 +1,14 @@
 import {
   Body,
+  Button,
   Container,
   Head,
   Heading,
+  Hr,
   Html,
   Link,
   Preview,
+  Section,
   Tailwind,
   Text,
 } from "@react-email/components"
@@ -18,50 +21,198 @@ export function WaitlistConfirmationEmail({
   name = "there",
 }: WaitlistConfirmationEmailProps) {
   return (
-    <Html>
-      <Head />
-      <Preview>You're on the list — Motiq early access</Preview>
+    <Html lang="en">
       <Tailwind>
-        <Body className="bg-[#0a0a0a] font-sans">
-          <Container className="mx-auto max-w-140 px-5 py-10">
-            <Heading className="mb-6 font-bold text-[28px] text-white leading-tight">
-              You're in.
-            </Heading>
-            <Text className="mb-4 text-[#a1a1aa] text-base leading-relaxed">
-              Hi {name},
-            </Text>
-            <Text className="mb-4 text-[#a1a1aa] text-base leading-relaxed">
-              Thanks for joining the Motiq waitlist. You're among the first to
-              know when we launch.
-            </Text>
-            <Text className="mb-4 text-[#e4e4e7] text-base leading-relaxed">
-              Motiq is an autonomous customer intelligence platform for B2B SaaS
-              teams. AI agents monitor all your customer feedback 24/7 —
-              triaging signals, detecting patterns, and alerting the right
-              people before small issues become churn.
-            </Text>
-            <Text className="mb-4 text-[#a1a1aa] text-base leading-relaxed">
-              Stop missing critical customer signals. We watch so you don't have
-              to.
-            </Text>
-            <Text className="mb-6 text-[#a1a1aa] text-base leading-relaxed">
-              We'll email you when early access opens.
-            </Text>
-            <Text className="mt-8 text-[#71717a] text-sm">
-              — The Motiq Team
-              <br />
+        <Head />
+        <Preview>You're on the list — Motiq early access</Preview>
+        <Body className="bg-[#050505] font-sans">
+          <Container className="mx-auto max-w-140 px-6 py-12">
+            <Section className="text-center">
+              <Text className="m-0 font-bold text-[22px] text-white tracking-tighter">
+                Motiq
+              </Text>
+            </Section>
+
+            <Section className="h-12" />
+
+            <Section
+              style={{
+                backgroundColor: "#0a0a0a",
+                borderRadius: "16px",
+                border: "1px solid rgba(255,255,255,0.08)",
+                padding: "48px 36px",
+              }}
+            >
+              <table
+                cellPadding="0"
+                cellSpacing="0"
+                role="presentation"
+                style={{ margin: "0 auto 24px" }}
+              >
+                <tr>
+                  <td
+                    style={{
+                      backgroundColor: "rgba(255,255,255,0.05)",
+                      border: "1px solid rgba(255,255,255,0.1)",
+                      borderRadius: "999px",
+                      padding: "6px 16px",
+                    }}
+                  >
+                    <Text className="m-0 font-medium text-[#71717a] text-[11px] uppercase tracking-widest">
+                      ✦ Early Access
+                    </Text>
+                  </td>
+                </tr>
+              </table>
+
+              <Heading className="m-0 mb-4 text-center font-medium text-[32px] text-white leading-tight tracking-tight">
+                You're on the list.
+              </Heading>
+
+              <Text className="m-0 mb-8 text-center text-[#71717a] text-[16px] leading-relaxed">
+                Hi {name}, welcome to the future of customer intelligence.
+              </Text>
+
+              <Hr
+                style={{
+                  borderColor: "rgba(255,255,255,0.08)",
+                  margin: "0 0 32px",
+                }}
+              />
+
+              <table
+                cellPadding="0"
+                cellSpacing="0"
+                role="presentation"
+                style={{ width: "100%", marginBottom: "32px" }}
+              >
+                <tr>
+                  <td style={{ paddingBottom: "20px" }}>
+                    <table cellPadding="0" cellSpacing="0" role="presentation">
+                      <tr>
+                        <td
+                          style={{
+                            width: "36px",
+                            verticalAlign: "top",
+                            paddingTop: "2px",
+                          }}
+                        >
+                          <Text className="m-0 text-[#a1a1aa] text-[16px]">
+                            →
+                          </Text>
+                        </td>
+                        <td>
+                          <Text className="m-0 text-[#d4d4d8] text-[15px] leading-relaxed">
+                            <strong className="text-white">
+                              AI agents that never sleep.
+                            </strong>{" "}
+                            Autonomous monitoring across every feedback channel,
+                            24/7.
+                          </Text>
+                        </td>
+                      </tr>
+                    </table>
+                  </td>
+                </tr>
+                <tr>
+                  <td style={{ paddingBottom: "20px" }}>
+                    <table cellPadding="0" cellSpacing="0" role="presentation">
+                      <tr>
+                        <td
+                          style={{
+                            width: "36px",
+                            verticalAlign: "top",
+                            paddingTop: "2px",
+                          }}
+                        >
+                          <Text className="m-0 text-[#a1a1aa] text-[16px]">
+                            →
+                          </Text>
+                        </td>
+                        <td>
+                          <Text className="m-0 text-[#d4d4d8] text-[15px] leading-relaxed">
+                            <strong className="text-white">
+                              Churn detected before it hits.
+                            </strong>{" "}
+                            Patterns, risks, and critical signals surfaced
+                            automatically.
+                          </Text>
+                        </td>
+                      </tr>
+                    </table>
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <table cellPadding="0" cellSpacing="0" role="presentation">
+                      <tr>
+                        <td
+                          style={{
+                            width: "36px",
+                            verticalAlign: "top",
+                            paddingTop: "2px",
+                          }}
+                        >
+                          <Text className="m-0 text-[#a1a1aa] text-[16px]">
+                            →
+                          </Text>
+                        </td>
+                        <td>
+                          <Text className="m-0 text-[#d4d4d8] text-[15px] leading-relaxed">
+                            <strong className="text-white">
+                              90-day historical scan included.
+                            </strong>{" "}
+                            Connect your stack and get insights from day one —
+                            no cold start.
+                          </Text>
+                        </td>
+                      </tr>
+                    </table>
+                  </td>
+                </tr>
+              </table>
+
+              <Hr
+                style={{
+                  borderColor: "rgba(255,255,255,0.08)",
+                  margin: "0 0 32px",
+                }}
+              />
+
+              <Section className="text-center">
+                <Button
+                  className="box-border rounded-lg bg-white px-8 py-4 text-center font-medium text-[#000000] text-[15px] no-underline"
+                  href="https://motiq.app"
+                >
+                  Visit Motiq →
+                </Button>
+              </Section>
+
+              <Text className="m-0 mt-6 text-center text-[#52525b] text-[13px]">
+                We'll notify you the moment early access opens.
+              </Text>
+            </Section>
+
+            <Section className="mt-12 text-center">
+              <Text className="m-0 mb-1 text-[#3f3f46] text-[12px]">
+                — The Motiq Team
+              </Text>
               <Link
-                className="text-[#a1a1aa] underline hover:text-white"
+                className="text-[#52525b] text-[12px] no-underline"
                 href="https://motiq.app"
               >
                 motiq.app
               </Link>
-            </Text>
+            </Section>
           </Container>
         </Body>
       </Tailwind>
     </Html>
   )
 }
+
+WaitlistConfirmationEmail.PreviewProps = {
+  name: "Valen",
+} satisfies WaitlistConfirmationEmailProps
 
 export default WaitlistConfirmationEmail
