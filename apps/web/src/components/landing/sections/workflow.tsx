@@ -14,15 +14,14 @@ export const Workflow = () => {
     <section className="relative bg-black py-32" id="how-it-works">
       <div className="mx-auto max-w-6xl px-6">
         <div className="grid grid-cols-1 gap-12 md:grid-cols-12">
-          {/* Sticky Left Sidebar */}
           <div className="relative md:col-span-5">
             <div className="sticky top-32 space-y-6">
               <span className="inline-block rounded-full border border-white/10 px-3 py-1 font-medium text-[10px] text-white/60 uppercase tracking-widest">
                 Workflow
               </span>
               <h2 className="font-medium text-4xl text-white leading-tight tracking-tighter md:text-5xl lg:text-6xl">
-                How Motiq <br />
-                <span className="text-white/40">Wins.</span>
+                How It <br />
+                <span className="text-white/40">Works.</span>
               </h2>
               <p className="max-w-sm text-lg text-white/50 leading-relaxed">
                 From chaotic inbox to resolved issues in milliseconds. The
@@ -31,13 +30,10 @@ export const Workflow = () => {
             </div>
           </div>
 
-          {/* Scrolling Right Content */}
           <div className="relative md:col-span-7">
-            {/* Connecting vertical line */}
-            <div className="absolute top-0 bottom-0 left-[39px] hidden w-px bg-white/5 md:block" />
+            <div className="absolute top-0 bottom-0 left-9.75 hidden w-px bg-white/5 md:block" />
 
             <div className="space-y-32">
-              {/* Step 1 */}
               <motion.div
                 className="relative md:pl-24"
                 initial={{ opacity: 0, x: 20 }}
@@ -45,7 +41,7 @@ export const Workflow = () => {
                 viewport={{ margin: "-100px" }}
                 whileInView={{ opacity: 1, x: 0 }}
               >
-                <div className="absolute top-0 left-0 z-10 flex hidden size-20 items-center justify-center rounded-full border border-white/10 bg-white/5 font-light text-white text-xl backdrop-blur-md md:flex">
+                <div className="absolute top-0 left-0 z-10 flex size-20 items-center justify-center rounded-full border border-white/10 bg-white/5 font-light text-white text-xl backdrop-blur-md md:flex">
                   1
                 </div>
                 <div className="space-y-6">
@@ -54,24 +50,32 @@ export const Workflow = () => {
                   </h3>
                   <p className="text-lg text-white/60 leading-relaxed">
                     Integrate your entire stack in seconds. Stop drowning in
-                    tabs with our Unified Inbox, while Motiq instantly analyzes
-                    90 days of history.
+                    tabs with our Unified Inbox, while AI agents instantly
+                    analyze 90 days of history.
                   </p>
-                  <div className="flex flex-wrap gap-4 rounded-3xl border border-white/5 bg-white/[0.02] p-8">
+                  <div className="flex flex-wrap gap-4 rounded-3xl border border-white/5 bg-white/2 p-8">
                     {[
-                      { Icon: TelegramIcon },
-                      { Icon: GmailIcon },
-                      { Icon: PolarIcon },
-                      { Icon: NotionIcon },
-                      { Icon: DiscordIcon, className: "text-[#5865F2]" },
-                      { Icon: SlackIcon },
-                      { Icon: ZendeskIcon, className: "text-white" },
-                      { Icon: JiraIcon },
-                      { Icon: LinearIcon },
-                    ].map((item, i) => (
+                      { Icon: TelegramIcon, name: "telegram" },
+                      { Icon: GmailIcon, name: "gmail" },
+                      { Icon: PolarIcon, name: "polar" },
+                      { Icon: NotionIcon, name: "notion" },
+                      {
+                        Icon: DiscordIcon,
+                        className: "text-[#5865F2]",
+                        name: "discord",
+                      },
+                      { Icon: SlackIcon, name: "slack" },
+                      {
+                        Icon: ZendeskIcon,
+                        className: "text-white",
+                        name: "zendesk",
+                      },
+                      { Icon: JiraIcon, name: "jira" },
+                      { Icon: LinearIcon, name: "linear" },
+                    ].map((item) => (
                       <div
                         className="flex size-16 items-center justify-center rounded-2xl border border-white/10 bg-white/5 text-white/50"
-                        key={i}
+                        key={item.name}
                       >
                         <item.Icon
                           className={`size-8 ${item.className || ""}`}
@@ -82,7 +86,6 @@ export const Workflow = () => {
                 </div>
               </motion.div>
 
-              {/* Step 2 */}
               <motion.div
                 className="relative md:pl-24"
                 initial={{ opacity: 0, x: 20 }}
@@ -90,7 +93,7 @@ export const Workflow = () => {
                 viewport={{ margin: "-100px" }}
                 whileInView={{ opacity: 1, x: 0 }}
               >
-                <div className="absolute top-0 left-0 z-10 flex hidden size-20 items-center justify-center rounded-full border border-white/10 bg-white/5 font-light text-white text-xl backdrop-blur-md md:flex">
+                <div className="absolute top-0 left-0 z-10 flex size-20 items-center justify-center rounded-full border border-white/10 bg-white/5 font-light text-white text-xl backdrop-blur-md md:flex">
                   2
                 </div>
                 <div className="space-y-6">
@@ -101,7 +104,7 @@ export const Workflow = () => {
                     Our pipeline classifies, detects patterns across time, and
                     assigns rigorous confidence scores to every insight.
                   </p>
-                  <div className="flex items-center justify-center gap-4 rounded-3xl border border-white/5 bg-white/[0.02] p-12">
+                  <div className="flex items-center justify-center gap-4 rounded-3xl border border-white/5 bg-white/2 p-12">
                     <div className="font-mono text-[10px] text-white/40 uppercase">
                       Raw Data
                     </div>
@@ -119,7 +122,6 @@ export const Workflow = () => {
                 </div>
               </motion.div>
 
-              {/* Step 3 */}
               <motion.div
                 className="relative md:pl-24"
                 initial={{ opacity: 0, x: 20 }}
@@ -127,7 +129,7 @@ export const Workflow = () => {
                 viewport={{ margin: "-100px" }}
                 whileInView={{ opacity: 1, x: 0 }}
               >
-                <div className="absolute top-0 left-0 z-10 flex hidden size-20 items-center justify-center rounded-full border border-white/10 bg-white/5 font-light text-white text-xl backdrop-blur-md md:flex">
+                <div className="absolute top-0 left-0 z-10 flex size-20 items-center justify-center rounded-full border border-white/10 bg-white/5 font-light text-white text-xl backdrop-blur-md md:flex">
                   3
                 </div>
                 <div className="space-y-6">
@@ -138,7 +140,7 @@ export const Workflow = () => {
                     Dashboards are dead. Close the loop automatically. Start in
                     Observe mode, graduate to Auto execution.
                   </p>
-                  <div className="space-y-3 rounded-3xl border border-white/5 bg-white/[0.02] p-8">
+                  <div className="space-y-3 rounded-3xl border border-white/5 bg-white/2 p-8">
                     <div className="flex items-center justify-between rounded-xl border border-white/10 bg-white/5 p-4">
                       <div className="flex items-center gap-4">
                         <SlackIcon className="size-5 text-white/60" />

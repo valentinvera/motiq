@@ -11,7 +11,7 @@ export const Features = () => {
       title: "Smart Triage",
       icon: Bot,
       description:
-        "Every piece of feedback is automatically classified by intent, customer segment, and urgency. Motiq routes signals where they belong, completely autonomously.",
+        "Every piece of feedback is automatically classified by intent, customer segment, and urgency. The platform routes signals where they belong, completely autonomously.",
       visual: (
         <div className="w-full max-w-sm space-y-4">
           {[
@@ -25,10 +25,10 @@ export const Features = () => {
               tag: "FEATURE",
               color: "text-blue-400 border-blue-400/20 bg-blue-400/10",
             },
-          ].map((item, i) => (
+          ].map((item) => (
             <div
               className="flex items-center justify-between rounded-xl border border-white/10 bg-white/5 p-4"
-              key={i}
+              key={item.text}
             >
               <span className="text-sm text-white/80">{item.text}</span>
               <span
@@ -46,7 +46,7 @@ export const Features = () => {
       title: "90-Day Scan",
       icon: Bell,
       description:
-        "Skip the cold start. Connect your stack and Motiq analyzes 3 months of historical data in minutes to find hidden churn risks immediately.",
+        "Skip the cold start. Connect your stack and AI agents analyze 3 months of historical data in minutes to find hidden churn risks immediately.",
       visual: (
         <div className="relative flex size-40 items-center justify-center">
           <div className="absolute inset-0 animate-[spin_10s_linear_infinite] rounded-full border border-white/10 border-dashed" />
@@ -71,8 +71,8 @@ export const Features = () => {
             { level: "Auto-Execute", active: false },
           ].map((item, i) => (
             <div
-              className={`flex items-center justify-between rounded-xl border p-4 ${item.active ? "border-white/20 bg-white/10" : "border-white/5 bg-white/[0.02]"}`}
-              key={i}
+              className={`flex items-center justify-between rounded-xl border p-4 ${item.active ? "border-white/20 bg-white/10" : "border-white/5 bg-white/2"}`}
+              key={item.level}
             >
               <span
                 className={`font-medium text-sm ${item.active ? "text-white" : "text-white/40"}`}
@@ -92,7 +92,7 @@ export const Features = () => {
       title: "Memory Graph",
       icon: TrendingUp,
       description:
-        "We don't just analyze isolated tickets. Motiq builds a relational graph of every customer, connecting latency complaints to future usage drops.",
+        "We don't just analyze isolated tickets. The platform builds a relational graph of every customer, connecting latency complaints to future usage drops.",
       visual: (
         <div className="flex items-end gap-12">
           <div className="flex flex-col">
@@ -120,7 +120,6 @@ export const Features = () => {
     <section className="relative bg-black py-32" id="features">
       <div className="mx-auto max-w-6xl px-6">
         <div className="grid grid-cols-1 gap-12 md:grid-cols-12">
-          {/* Sticky Left Sidebar */}
           <div className="relative md:col-span-5">
             <div className="sticky top-32 space-y-6">
               <span className="inline-block rounded-full border border-white/10 px-3 py-1 font-medium text-[10px] text-white/60 uppercase tracking-widest">
@@ -131,15 +130,14 @@ export const Features = () => {
                 <span className="text-white/40">Action.</span>
               </h2>
               <p className="max-w-sm text-lg text-white/50 leading-relaxed">
-                Motiq analyzes every customer interaction autonomously, turning
-                raw feedback into actionable intelligence.
+                AI agents analyze every customer interaction autonomously,
+                turning raw feedback into actionable intelligence.
               </p>
             </div>
           </div>
 
-          {/* Scrolling Right Content */}
           <div className="space-y-32 md:col-span-7">
-            {features.map((feature, i) => (
+            {features.map((feature) => (
               <motion.div
                 className="flex flex-col gap-8"
                 initial={{ opacity: 0, y: 40 }}
@@ -161,7 +159,7 @@ export const Features = () => {
                   {feature.description}
                 </p>
 
-                <div className="mt-8 flex items-center justify-center rounded-3xl border border-white/5 bg-white/[0.02] p-12">
+                <div className="mt-8 flex items-center justify-center rounded-3xl border border-white/5 bg-white/2 p-12">
                   {feature.visual}
                 </div>
               </motion.div>
