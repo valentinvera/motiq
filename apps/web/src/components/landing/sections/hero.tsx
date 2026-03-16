@@ -40,53 +40,48 @@ export const Hero = () => {
   }
 
   return (
-    <section className="relative min-h-dvh bg-zinc-950 pt-12 selection:bg-lime-500/30 selection:text-lime-200 md:pt-16">
-      <div className="relative mx-auto flex min-h-[calc(100dvh-64px)] max-w-7xl flex-col items-center border-white/5 border-x">
-        <div className="grid-lines pointer-events-none absolute inset-0 opacity-[0.03]" />
-        <div className="halftone pointer-events-none absolute inset-0 opacity-[0.02]" />
-        <div className="relative z-10 flex w-full max-w-4xl flex-col items-center px-6 pt-16 pb-12 text-center md:pt-20 md:pb-20">
-          <motion.div
-            animate={{ opacity: 1, y: 0 }}
-            className="mb-8 inline-flex items-center gap-2 rounded border border-white/10 bg-white/5 px-3 py-1"
-            initial={{ opacity: 0, y: -10 }}
-            transition={{ duration: 0.5 }}
-          >
-            <div className="h-1.5 w-1.5 animate-pulse rounded-full bg-lime-500 shadow-[0_0_8px_rgba(163,230,53,0.8)]" />
-            <span className="font-bold font-mono text-[10px] text-zinc-400 uppercase tracking-[0.2em]">
-              Autonomous Customer Intelligence
+    <section className="relative flex min-h-screen items-center justify-center overflow-hidden bg-black pt-20">
+      {/* Gradient mesh background */}
+      <div className="pointer-events-none absolute inset-0 overflow-hidden">
+        <div className="absolute bottom-[-10%] left-[-10%] h-[50%] w-[90%] rounded-full bg-cyan-500/20 blur-[120px] md:bottom-[-38%] md:h-[70%] md:w-[70%] md:bg-cyan-500/15 md:blur-[150px]" />
+        <div className="absolute right-[-15%] bottom-[-5%] h-[40%] w-[80%] rounded-full bg-teal-500/15 blur-[120px] md:bottom-[-28%] md:h-[60%] md:w-[60%] md:bg-teal-500/12 md:blur-[150px]" />
+        <div className="absolute top-[55%] left-[20%] h-[50%] w-[70%] rounded-full bg-cyan-400/5 blur-[150px]" />
+      </div>
+      {/* Bottom fade to black */}
+      <div className="absolute inset-x-0 bottom-0 h-40 bg-gradient-to-b from-transparent to-black" />
+
+      <div className="w-full max-w-5xl px-6 text-center">
+        <motion.div
+          animate={{ opacity: 1, y: 0 }}
+          className="flex flex-col items-center gap-6"
+          initial={{ opacity: 0, y: 20 }}
+          transition={{ duration: 1, ease: "easeOut" }}
+        >
+          <div className="flex items-center gap-3 rounded-full border border-white/10 bg-white/5 px-4 py-1.5 backdrop-blur-sm">
+            <div className="size-2 animate-pulse rounded-full bg-white" />
+            <span className="font-medium text-[11px] text-white/70 uppercase tracking-[0.2em]">
+              Autonomous Intelligence Engine
             </span>
-          </motion.div>
-          <motion.h1
-            animate={{ opacity: 1, y: 0 }}
-            className="font-bold text-5xl text-white leading-[0.85] tracking-tighter sm:text-7xl md:text-8xl lg:text-[110px]"
-            initial={{ opacity: 0, y: 20 }}
-            transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-          >
-            Stop Missing <br />
-            <span className="text-lime-400">Critical Signals.</span>
-          </motion.h1>
-          <motion.p
-            animate={{ opacity: 1, y: 0 }}
-            className="mt-10 mb-12 max-w-xl text-lg text-zinc-400 leading-relaxed md:text-xl"
-            initial={{ opacity: 0, y: 20 }}
-            transition={{ delay: 0.2, duration: 0.5 }}
-          >
-            Autonomous customer intelligence that monitors feedback 24/7. We
-            triage the noise so you can focus on growth.
-          </motion.p>
-          <motion.div
-            animate={{ opacity: 1, y: 0 }}
-            className="w-full max-w-md"
-            initial={{ opacity: 0, y: 20 }}
-            transition={{ delay: 0.4, duration: 0.5 }}
-          >
+          </div>
+
+          <h1 className="font-medium text-6xl text-white leading-[0.9] tracking-tighter sm:text-7xl md:text-8xl lg:text-[110px]">
+            Stop staring at dashboards.
+          </h1>
+
+          <p className="mt-4 max-w-2xl font-light text-lg text-white/50 leading-relaxed md:text-xl">
+            Motiq builds a relational memory graph of your users and takes
+            autonomous action to prevent churn. We don't just show data—we
+            execute the solution.
+          </p>
+
+          <div className="mt-10 w-full max-w-md">
             <form
-              className="flex flex-col gap-2 rounded-sm border border-white/10 bg-white/5 p-1 sm:flex-row"
+              className="flex w-full flex-col gap-2 sm:flex-row"
               onSubmit={handleSubmit}
             >
               <Input
                 aria-label="Email address"
-                className="h-11 border-none bg-transparent px-4 text-center text-white placeholder:text-zinc-600 focus:ring-0 sm:text-left"
+                className="h-14 rounded-sm border border-white/10 bg-white/5 px-6 text-white transition-all placeholder:text-white/30 focus-visible:border-transparent focus-visible:ring-1 focus-visible:ring-white/50"
                 disabled={joinWaitlist.isPending}
                 id="waitlist-email"
                 onChange={(e) => setEmail(e.target.value)}
@@ -96,25 +91,26 @@ export const Hero = () => {
                 value={email}
               />
               <Button
-                className="h-11 cursor-pointer rounded-sm bg-white px-6 font-bold text-zinc-950 transition-all hover:bg-lime-400"
+                className="h-14 cursor-pointer rounded-sm bg-white px-8 text-black transition-all hover:bg-white/80 active:scale-95"
                 disabled={joinWaitlist.isPending}
                 type="submit"
               >
                 {joinWaitlist.isPending ? "..." : "Join Waitlist"}
               </Button>
             </form>
-            <div className="mt-6 flex items-center justify-center gap-4 font-mono text-[10px] text-zinc-500 uppercase tracking-widest">
-              <span className="flex items-center gap-1.5">
-                <div className="h-1 w-1 rounded-full bg-zinc-700" />
-                {waitlistData?.count ?? 0} on the waitlist
+
+            <div className="mt-6 flex items-center justify-center gap-6 font-mono text-[11px] text-white/40 uppercase tracking-widest">
+              <span className="flex items-center gap-2">
+                <span className="font-bold text-white">
+                  {waitlistData?.count ?? 0}
+                </span>{" "}
+                already on the waitlist
               </span>
-              <span className="flex items-center gap-1.5">
-                <div className="h-1 w-1 rounded-full bg-zinc-700" />
-                Beta Access v0.1
-              </span>
+              <span className="h-px w-4 bg-white/20" />
+              <span>Includes 90-Day Scan</span>
             </div>
-          </motion.div>
-        </div>
+          </div>
+        </motion.div>
       </div>
     </section>
   )
