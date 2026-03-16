@@ -1,4 +1,3 @@
-import { Button } from "@motiq/ui/components/button"
 import { CheckIcon } from "@motiq/ui/icons/check"
 
 const plans = [
@@ -48,92 +47,87 @@ const plans = [
 
 export const Pricing = () => {
   return (
-    <section className="relative overflow-hidden bg-zinc-950" id="pricing">
-      <div className="relative mx-auto max-w-7xl border-white/5 border-x border-t">
-        <div className="relative overflow-hidden border-white/5 border-b px-8 pt-24 pb-8 md:pt-20 md:pr-20 md:pb-20 md:pl-10">
-          <div className="relative z-10 flex flex-col justify-between gap-8 lg:flex-row lg:items-end">
-            <div>
-              <span className="mb-6 block font-mono text-[10px] text-lime-500 uppercase tracking-[0.2em]">
-                {"04 // Pricing"}
-              </span>
-              <h2 className="font-bold text-4xl text-white leading-none tracking-tighter sm:text-5xl md:text-7xl">
-                Lock in <br />
-                <span className="text-zinc-700 italic">Beta Rates.</span>
-              </h2>
-            </div>
-            <p className="max-w-md text-lg text-zinc-500 leading-relaxed">
-              Transparent, scalable pricing designed for high-growth SaaS. Join
-              the waitlist to secure early-adopter benefits.
-            </p>
+    <section className="relative bg-black py-20 md:py-32" id="pricing">
+      <div className="mx-auto max-w-6xl px-6">
+        <div className="mb-12 flex flex-col items-start justify-between gap-8 md:mb-24 md:flex-row md:items-end">
+          <div className="max-w-xl">
+            <span className="mb-4 inline-block rounded-full border border-white/10 px-3 py-1 font-medium text-[10px] text-white/60 uppercase tracking-widest">
+              Pricing
+            </span>
+            <h2 className="font-medium text-4xl text-white leading-tight tracking-tighter md:text-5xl lg:text-6xl">
+              Lock in <br />
+              <span className="text-white/40">Beta Rates.</span>
+            </h2>
           </div>
-          <div className="grid-lines pointer-events-none absolute inset-0 opacity-[0.02]" />
+          <p className="max-w-xs text-lg text-white/50 leading-relaxed md:text-right">
+            Transparent, scalable pricing designed for high-growth SaaS.
+          </p>
         </div>
-        <div className="grid grid-cols-1 md:grid-cols-3">
-          {plans.map((plan, i) => (
+
+        <div className="grid grid-cols-1 gap-6 md:grid-cols-3">
+          {plans.map((plan) => (
             <div
-              className={`border-white/5 border-b p-8 md:border-b-0 md:p-12 ${i < plans.length - 1 ? "md:border-r" : ""} group relative flex flex-col`}
+              className={`relative flex flex-col rounded-3xl border p-10 transition-all duration-500 ${plan.popular ? "border-white/20 bg-white/10" : "border-white/5 bg-white/[0.02] hover:bg-white/[0.04]"}`}
               key={plan.name}
             >
-              <div className="relative z-10 flex flex-1 flex-col">
-                <div className="mb-8">
-                  <div className="mb-4 flex items-center justify-between">
-                    <h3 className="font-bold text-white text-xl uppercase tracking-widest">
-                      {plan.name}
-                    </h3>
-                    {plan.popular && (
-                      <span className="rounded-sm bg-lime-400 px-2 py-0.5 font-black text-[9px] text-zinc-950 uppercase tracking-tighter">
-                        Recommended
-                      </span>
-                    )}
-                  </div>
-                  <div className="flex items-baseline gap-1">
-                    <span className="font-bold text-5xl text-white tabular-nums tracking-tighter">
-                      {plan.price}
+              {plan.popular && (
+                <div className="absolute -top-3 left-10 rounded-full bg-white px-3 py-1 font-bold text-[9px] text-black uppercase tracking-widest">
+                  Recommended
+                </div>
+              )}
+
+              <div className="mb-12">
+                <h3 className="mb-2 font-medium text-white text-xl">
+                  {plan.name}
+                </h3>
+                <p className="h-10 text-sm text-white/50 leading-relaxed">
+                  {plan.description}
+                </p>
+                <div className="mt-6 flex items-baseline gap-1">
+                  <span className="font-light text-5xl text-white tracking-tighter">
+                    {plan.price}
+                  </span>
+                  {plan.price !== "Custom" && (
+                    <span className="font-medium text-sm text-white/40">
+                      /mo
                     </span>
-                    {plan.price !== "Custom" && (
-                      <span className="font-mono text-xs text-zinc-600 uppercase tracking-widest">
-                        /mo
-                      </span>
-                    )}
-                  </div>
-                  <p className="mt-4 text-sm text-zinc-500 leading-relaxed">
-                    {plan.description}
-                  </p>
+                  )}
                 </div>
-                <div className="mb-12 space-y-4">
-                  {plan.features.map((feature) => (
-                    <div className="flex items-start gap-3" key={feature}>
-                      <div className="flex h-5 w-5 shrink-0 items-center justify-center rounded-full border border-white/10 bg-white/5 transition-colors group-hover:border-lime-500/30">
-                        <CheckIcon className="h-2.5 w-2.5 text-lime-400" />
-                      </div>
-                      <span className="text-sm text-zinc-400 leading-tight tracking-tight">
-                        {feature}
-                      </span>
-                    </div>
-                  ))}
-                </div>
-                <Button
-                  className={`h-12 w-full cursor-pointer rounded-sm font-bold text-xs uppercase tracking-[0.2em] transition-all ${
-                    plan.popular
-                      ? "bg-white text-zinc-950 hover:bg-lime-400"
-                      : "border border-white/10 bg-white/5 text-white hover:bg-white/10"
-                  }`}
-                  onClick={() => {
-                    const input = document.getElementById("waitlist-email")
-                    if (input) {
-                      input.scrollIntoView({
-                        behavior: "smooth",
-                        block: "center",
-                      })
-                      setTimeout(() => input.focus(), 500)
-                    }
-                  }}
-                >
-                  {plan.cta}
-                </Button>
               </div>
-              <div className="pointer-events-none absolute inset-0 bg-grain opacity-[0.01] transition-opacity group-hover:opacity-[0.03]" />
-              <div className="halftone pointer-events-none absolute inset-0 opacity-0 transition-opacity group-hover:opacity-[0.02]" />
+
+              <div className="mb-12 flex-1 space-y-4">
+                {plan.features.map((feature) => (
+                  <div className="flex items-start gap-4" key={feature}>
+                    <div className="mt-1 flex size-4 shrink-0 items-center justify-center rounded-full bg-white/10 text-white">
+                      <CheckIcon className="size-2" />
+                    </div>
+                    <span className="font-medium text-sm text-white/70">
+                      {feature}
+                    </span>
+                  </div>
+                ))}
+              </div>
+
+              <button
+                className={`h-12 w-full cursor-pointer rounded-sm font-medium text-sm transition-all ${
+                  plan.popular
+                    ? "bg-white text-black hover:bg-white/80"
+                    : "bg-white/10 text-white hover:bg-white/20"
+                }`}
+                onClick={() => {
+                  if (plan.cta === "Contact Sales") return
+                  const input = document.getElementById("waitlist-email")
+                  if (input) {
+                    input.scrollIntoView({
+                      behavior: "smooth",
+                      block: "center",
+                    })
+                    setTimeout(() => input.focus(), 500)
+                  }
+                }}
+              >
+                {plan.cta}
+              </button>
             </div>
           ))}
         </div>
