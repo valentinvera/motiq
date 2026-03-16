@@ -67,7 +67,7 @@ export const Pricing = () => {
         <div className="grid grid-cols-1 gap-6 md:grid-cols-3">
           {plans.map((plan) => (
             <div
-              className={`relative flex flex-col rounded-3xl border p-10 transition-all duration-500 ${plan.popular ? "border-white/20 bg-white/10" : "border-white/5 bg-white/[0.02] hover:bg-white/[0.04]"}`}
+              className={`relative flex flex-col rounded-3xl border p-10 transition-all duration-500 ${plan.popular ? "border-white/20 bg-white/10" : "border-white/5 bg-white/2 hover:bg-white/4"}`}
               key={plan.name}
             >
               {plan.popular && (
@@ -115,7 +115,9 @@ export const Pricing = () => {
                     : "bg-white/10 text-white hover:bg-white/20"
                 }`}
                 onClick={() => {
-                  if (plan.cta === "Contact Sales") return
+                  if (plan.cta === "Contact Sales") {
+                    return
+                  }
                   const input = document.getElementById("waitlist-email")
                   if (input) {
                     input.scrollIntoView({
@@ -125,6 +127,7 @@ export const Pricing = () => {
                     setTimeout(() => input.focus(), 500)
                   }
                 }}
+                type="button"
               >
                 {plan.cta}
               </button>

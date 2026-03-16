@@ -49,17 +49,17 @@ export const Integrations = () => {
             Universal <span className="text-white/40">Intake.</span>
           </h2>
           <p className="text-lg text-white/50 leading-relaxed">
-            Motiq connects to your entire support and feedback stack. Deploy
-            agents to your existing channels in one click.
+            Connect to your entire support and feedback stack. Deploy agents to
+            your existing channels in one click.
           </p>
         </div>
 
         <div className="grid grid-cols-2 gap-4 md:grid-cols-4">
           {integrations.map((item, i) => (
             <motion.div
-              className="group relative rounded-3xl border border-white/5 bg-white/[0.02] p-6 transition-all hover:bg-white/[0.05]"
+              className="group relative rounded-3xl border border-white/5 bg-white/2 p-6 transition-all hover:bg-white/5"
               initial={{ opacity: 0, y: 20 }}
-              key={i}
+              key={item.name}
               transition={{ delay: i * 0.05 }}
               viewport={{ once: true }}
               whileInView={{ opacity: 1, y: 0 }}
@@ -74,7 +74,7 @@ export const Integrations = () => {
         </div>
 
         <div className="mt-16 flex justify-center">
-          <div className="inline-flex items-center gap-4 rounded-full border border-white/5 bg-white/[0.02] px-6 py-3">
+          <div className="inline-flex items-center gap-4 rounded-full border border-white/5 bg-white/2 px-6 py-3">
             <div className="size-2 animate-pulse rounded-full bg-white" />
             <span className="font-mono text-[10px] text-white/50 uppercase tracking-widest">
               + 50 adapters in development
