@@ -1,6 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router"
 import { Footer } from "@/components/landing/footer"
-import { Header } from "@/components/landing/header2"
+import { Header } from "@/components/landing/header"
 import { Cta } from "@/components/landing/sections/cta"
 import { Faq } from "@/components/landing/sections/faq"
 import { Features } from "@/components/landing/sections/features"
