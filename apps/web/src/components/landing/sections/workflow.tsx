@@ -31,17 +31,17 @@ export const Workflow = () => {
           </div>
 
           <div className="relative md:col-span-7">
-            <div className="absolute top-0 bottom-0 left-9.75 hidden w-px bg-white/5 md:block" />
+            <div className="absolute top-0 bottom-0 left-5 w-px bg-white/5 md:left-9.75" />
 
-            <div className="space-y-32">
+            <div className="space-y-20 md:space-y-32">
               <motion.div
-                className="relative md:pl-24"
+                className="relative pl-16 md:pl-24"
                 initial={{ opacity: 0, x: 20 }}
                 transition={{ duration: 0.8 }}
                 viewport={{ margin: "-100px" }}
                 whileInView={{ opacity: 1, x: 0 }}
               >
-                <div className="absolute top-0 left-0 z-10 flex size-20 items-center justify-center rounded-full border border-white/10 bg-white/5 font-light text-white text-xl backdrop-blur-md md:flex">
+                <div className="absolute top-0 left-0 z-10 flex size-10 items-center justify-center rounded-full border border-white/10 bg-white/5 font-light text-sm text-white backdrop-blur-md md:size-20 md:text-xl">
                   1
                 </div>
                 <div className="space-y-6">
@@ -87,13 +87,13 @@ export const Workflow = () => {
               </motion.div>
 
               <motion.div
-                className="relative md:pl-24"
+                className="relative pl-16 md:pl-24"
                 initial={{ opacity: 0, x: 20 }}
                 transition={{ duration: 0.8 }}
                 viewport={{ margin: "-100px" }}
                 whileInView={{ opacity: 1, x: 0 }}
               >
-                <div className="absolute top-0 left-0 z-10 flex size-20 items-center justify-center rounded-full border border-white/10 bg-white/5 font-light text-white text-xl backdrop-blur-md md:flex">
+                <div className="absolute top-0 left-0 z-10 flex size-10 items-center justify-center rounded-full border border-white/10 bg-white/5 font-light text-sm text-white backdrop-blur-md md:size-20 md:text-xl">
                   2
                 </div>
                 <div className="space-y-6">
@@ -123,13 +123,13 @@ export const Workflow = () => {
               </motion.div>
 
               <motion.div
-                className="relative md:pl-24"
+                className="relative pl-16 md:pl-24"
                 initial={{ opacity: 0, x: 20 }}
                 transition={{ duration: 0.8 }}
                 viewport={{ margin: "-100px" }}
                 whileInView={{ opacity: 1, x: 0 }}
               >
-                <div className="absolute top-0 left-0 z-10 flex size-20 items-center justify-center rounded-full border border-white/10 bg-white/5 font-light text-white text-xl backdrop-blur-md md:flex">
+                <div className="absolute top-0 left-0 z-10 flex size-10 items-center justify-center rounded-full border border-white/10 bg-white/5 font-light text-sm text-white backdrop-blur-md md:size-20 md:text-xl">
                   3
                 </div>
                 <div className="space-y-6">
