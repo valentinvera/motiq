@@ -42,8 +42,8 @@ export const Hero = () => {
   return (
     <section className="relative flex min-h-screen items-center justify-center overflow-hidden bg-black pt-32 md:pt-20">
       <div className="pointer-events-none absolute inset-0 overflow-hidden">
-        <div className="absolute bottom-[-10%] left-[-10%] h-[50%] w-[90%] rounded-full bg-cyan-500/20 blur-[120px] md:bottom-[-38%] md:h-[70%] md:w-[70%] md:bg-cyan-500/15 md:blur-[150px]" />
-        <div className="absolute right-[-15%] bottom-[-5%] h-[40%] w-[80%] rounded-full bg-teal-500/15 blur-[120px] md:bottom-[-28%] md:h-[60%] md:w-[60%] md:bg-teal-500/12 md:blur-[150px]" />
+        <div className="absolute bottom-[5%] left-[-10%] h-[50%] w-[90%] rounded-full bg-cyan-500/20 blur-[120px] md:bottom-[-38%] md:h-[70%] md:w-[70%] md:bg-cyan-500/15 md:blur-[150px]" />
+        <div className="absolute right-[-15%] bottom-[10%] h-[40%] w-[80%] rounded-full bg-teal-500/15 blur-[120px] md:bottom-[-28%] md:h-[60%] md:w-[60%] md:bg-teal-500/12 md:blur-[150px]" />
         <div className="absolute top-[55%] left-[20%] h-[50%] w-[70%] rounded-full bg-cyan-400/5 blur-[150px]" />
       </div>
       <div className="absolute inset-x-0 bottom-0 h-40 bg-linear-to-b from-transparent to-black" />
@@ -51,7 +51,7 @@ export const Hero = () => {
       <div className="w-full max-w-6xl px-6 text-center">
         <motion.div
           animate={{ opacity: 1, y: 0 }}
-          className="flex flex-col items-center gap-6"
+          className="flex flex-col items-center gap-3 md:gap-6"
           initial={{ opacity: 0, y: 20 }}
           transition={{ duration: 1, ease: "easeOut" }}
         >
@@ -71,13 +71,13 @@ export const Hero = () => {
             </span>
           </h1>
 
-          <p className="mt-4 max-w-2xl font-light text-base text-white/50 leading-relaxed md:text-xl">
+          <p className="mt-1 max-w-2xl font-light text-base text-white/50 leading-relaxed md:mt-4 md:text-xl">
             AI agents that monitor every feedback channel 24/7, detect churn
             before it happens, and act autnomously — so your team can focus on
             building, not firefighting.
           </p>
 
-          <div className="mt-10 w-full max-w-md">
+          <div className="mt-4 w-full max-w-md md:mt-10">
             <form
               className="flex w-full flex-col gap-2 sm:flex-row"
               onSubmit={handleSubmit}
