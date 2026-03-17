@@ -40,7 +40,7 @@ export const Hero = () => {
   }
 
   return (
-    <section className="relative flex min-h-screen items-center justify-center overflow-hidden bg-black pt-20">
+    <section className="relative flex min-h-screen items-center justify-center overflow-hidden bg-black pt-32 md:pt-20">
       <div className="pointer-events-none absolute inset-0 overflow-hidden">
         <div className="absolute bottom-[-10%] left-[-10%] h-[50%] w-[90%] rounded-full bg-cyan-500/20 blur-[120px] md:bottom-[-38%] md:h-[70%] md:w-[70%] md:bg-cyan-500/15 md:blur-[150px]" />
         <div className="absolute right-[-15%] bottom-[-5%] h-[40%] w-[80%] rounded-full bg-teal-500/15 blur-[120px] md:bottom-[-28%] md:h-[60%] md:w-[60%] md:bg-teal-500/12 md:blur-[150px]" />
@@ -62,7 +62,7 @@ export const Hero = () => {
             </span>
           </div>
 
-          <h1 className="flex flex-col items-center font-medium text-[55px] text-white leading-[0.9] tracking-tighter sm:text-[65px] md:text-[70px] lg:text-[80px] xl:text-[96px] 2xl:text-[110px]">
+          <h1 className="flex flex-col items-center font-medium text-[40px] text-white leading-[0.9] tracking-tighter sm:text-[50px] md:text-[65px] lg:text-[80px] xl:text-[96px] 2xl:text-[110px]">
             <span className="text-balance text-center lg:whitespace-nowrap">
               Autonomous intelligence
             </span>
@@ -71,7 +71,7 @@ export const Hero = () => {
             </span>
           </h1>
 
-          <p className="mt-4 max-w-2xl font-light text-lg text-white/50 leading-relaxed md:text-xl">
+          <p className="mt-4 max-w-2xl font-light text-base text-white/50 leading-relaxed md:text-xl">
             AI agents that monitor every feedback channel 24/7, detect churn
             before it happens, and act autnomously — so your team can focus on
             building, not firefighting.
@@ -102,7 +102,7 @@ export const Hero = () => {
               </Button>
             </form>
 
-            <div className="mt-6 flex flex-col items-center justify-center gap-2 font-mono text-[11px] text-white/40 uppercase tracking-widest sm:flex-row sm:gap-6">
+            <div className="mt-6 flex flex-col items-center justify-center gap-2 font-mono text-[11px] text-white/60 uppercase tracking-widest sm:flex-row sm:gap-6 sm:text-white/40">
               <span className="flex items-center gap-2">
                 <span className="font-bold text-white">
                   {waitlistData?.count ?? 0}
