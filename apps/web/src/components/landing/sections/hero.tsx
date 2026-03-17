@@ -40,7 +40,7 @@ export const Hero = () => {
   }
 
   return (
-    <section className="relative flex min-h-screen items-center justify-center overflow-hidden bg-black pt-24 md:pt-20">
+    <section className="relative flex min-h-screen items-center justify-center overflow-hidden bg-black pt-20">
       <div className="pointer-events-none absolute inset-0 overflow-hidden">
         <div className="absolute bottom-[5%] left-[-10%] h-[50%] w-[90%] rounded-full bg-cyan-500/20 blur-[120px] md:bottom-[-38%] md:h-[70%] md:w-[70%] md:bg-cyan-500/15 md:blur-[150px]" />
         <div className="absolute right-[-15%] bottom-[10%] h-[40%] w-[80%] rounded-full bg-teal-500/15 blur-[120px] md:bottom-[-28%] md:h-[60%] md:w-[60%] md:bg-teal-500/12 md:blur-[150px]" />
@@ -62,7 +62,7 @@ export const Hero = () => {
             </span>
           </div>
 
-          <h1 className="flex flex-col items-center font-medium text-[40px] text-white leading-[0.9] tracking-tighter sm:text-[50px] md:text-[65px] lg:text-[80px] xl:text-[96px] 2xl:text-[110px]">
+          <h1 className="flex flex-col items-center font-medium text-[40px] text-white leading-[0.9] tracking-tighter sm:text-[50px] md:text-[65px] lg:text-[80px] xl:text-[96px] 2xl:text-[110px] min-[400px]:text-[46px]">
             <span className="text-balance text-center lg:whitespace-nowrap">
               Autonomous intelligence
             </span>
@@ -71,7 +71,7 @@ export const Hero = () => {
             </span>
           </h1>
 
-          <p className="mt-1 max-w-2xl font-light text-base text-white/50 leading-relaxed md:mt-4 md:text-xl">
+          <p className="mt-1 max-w-2xl font-light text-base text-white/50 leading-relaxed md:mt-4 md:text-xl min-[400px]:text-lg">
             AI agents that monitor every feedback channel 24/7, detect churn
             before it happens, and act autnomously — so your team can focus on
             building, not firefighting.
