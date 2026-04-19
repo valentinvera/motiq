@@ -84,19 +84,22 @@ export const Footer = () => {
               </h3>
               <ul className="space-y-4 text-sm text-zinc-500">
                 <li>
-                  <Link className="transition-colors hover:text-white" to="/">
-                    About
-                  </Link>
-                </li>
-                <li>
-                  <Link className="transition-colors hover:text-white" to="/">
-                    Blog
-                  </Link>
-                </li>
-                <li>
-                  <Link className="transition-colors hover:text-white" to="/">
+                  <a
+                    className="transition-colors hover:text-white"
+                    href="mailto:hello@motiq.app"
+                  >
                     Contact
-                  </Link>
+                  </a>
+                </li>
+                <li>
+                  <a
+                    className="transition-colors hover:text-white"
+                    href="https://github.com/valentinvera/motiq"
+                    rel="noopener noreferrer"
+                    target="_blank"
+                  >
+                    GitHub
+                  </a>
                 </li>
               </ul>
             </div>
@@ -133,20 +136,12 @@ export const Footer = () => {
             {" Motiq Inc. Built for Scale."}
           </span>
           <div className="flex gap-8 font-medium text-xs text-zinc-500">
-            <Link
+            <a
               className="transition-colors hover:text-white"
-              onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
-              to="/"
+              href="mailto:hello@motiq.app"
             >
-              Privacy Policy
-            </Link>
-            <Link
-              className="transition-colors hover:text-white"
-              onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
-              to="/"
-            >
-              Terms of Service
-            </Link>
+              hello@motiq.app
+            </a>
           </div>
         </div>
       </div>
