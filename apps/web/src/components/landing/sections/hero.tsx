@@ -41,7 +41,7 @@ export const Hero = () => {
 
   return (
     <section className="relative overflow-hidden bg-black">
-      <div className="relative flex min-h-screen items-center justify-center overflow-hidden pt-20 md:pb-0 min-[400px]:pb-28">
+      <div className="relative flex items-center justify-center overflow-hidden pt-32 pb-20 md:min-h-screen md:pt-20 md:pb-0">
         <div className="pointer-events-none absolute inset-0 overflow-hidden">
           <div className="absolute bottom-[5%] left-[-10%] h-[50%] w-[90%] rounded-full bg-cyan-500/20 blur-[120px] md:bottom-[-38%] md:h-[70%] md:w-[70%] md:bg-cyan-500/15 md:blur-[150px]" />
           <div className="absolute right-[-15%] bottom-[10%] h-[40%] w-[80%] rounded-full bg-teal-500/15 blur-[120px] md:bottom-[-28%] md:h-[60%] md:w-[60%] md:bg-teal-500/12 md:blur-[150px]" />
