@@ -67,7 +67,7 @@ export const Integrations = () => {
               <item.icon
                 className={`mb-6 size-8 transition-colors ${"color" in item ? item.color : "text-white/40 group-hover:text-white"}`}
               />
-              <h4 className="mb-1 font-medium text-white">{item.name}</h4>
+              <h3 className="mb-1 font-medium text-white">{item.name}</h3>
               <span className="text-[11px] text-white/40">{item.desc}</span>
             </motion.div>
           ))}
