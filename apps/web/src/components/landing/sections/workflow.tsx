@@ -38,10 +38,10 @@ export const Workflow = () => {
                 className="relative pl-16 md:pl-24"
                 initial={{ opacity: 0, x: 20 }}
                 transition={{ duration: 0.8 }}
-                viewport={{ margin: "-100px" }}
+                viewport={{ margin: "-100px", once: true }}
                 whileInView={{ opacity: 1, x: 0 }}
               >
-                <div className="absolute top-0 left-0 z-10 flex size-10 items-center justify-center rounded-full border border-white/10 bg-white/5 font-light text-sm text-white backdrop-blur-md md:size-20 md:text-xl">
+                <div className="absolute top-0 left-0 z-10 flex size-10 items-center justify-center rounded-full border border-white/10 bg-white/5 font-normal text-sm text-white backdrop-blur-md md:size-20 md:text-xl">
                   1
                 </div>
                 <div className="space-y-6">
@@ -90,10 +90,10 @@ export const Workflow = () => {
                 className="relative pl-16 md:pl-24"
                 initial={{ opacity: 0, x: 20 }}
                 transition={{ duration: 0.8 }}
-                viewport={{ margin: "-100px" }}
+                viewport={{ margin: "-100px", once: true }}
                 whileInView={{ opacity: 1, x: 0 }}
               >
-                <div className="absolute top-0 left-0 z-10 flex size-10 items-center justify-center rounded-full border border-white/10 bg-white/5 font-light text-sm text-white backdrop-blur-md md:size-20 md:text-xl">
+                <div className="absolute top-0 left-0 z-10 flex size-10 items-center justify-center rounded-full border border-white/10 bg-white/5 font-normal text-sm text-white backdrop-blur-md md:size-20 md:text-xl">
                   2
                 </div>
                 <div className="space-y-6">
@@ -126,10 +126,10 @@ export const Workflow = () => {
                 className="relative pl-16 md:pl-24"
                 initial={{ opacity: 0, x: 20 }}
                 transition={{ duration: 0.8 }}
-                viewport={{ margin: "-100px" }}
+                viewport={{ margin: "-100px", once: true }}
                 whileInView={{ opacity: 1, x: 0 }}
               >
-                <div className="absolute top-0 left-0 z-10 flex size-10 items-center justify-center rounded-full border border-white/10 bg-white/5 font-light text-sm text-white backdrop-blur-md md:size-20 md:text-xl">
+                <div className="absolute top-0 left-0 z-10 flex size-10 items-center justify-center rounded-full border border-white/10 bg-white/5 font-normal text-sm text-white backdrop-blur-md md:size-20 md:text-xl">
                   3
                 </div>
                 <div className="space-y-6">

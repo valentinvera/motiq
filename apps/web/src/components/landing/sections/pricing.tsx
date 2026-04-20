@@ -84,7 +84,7 @@ export const Pricing = () => {
                   {plan.description}
                 </p>
                 <div className="mt-6 flex items-baseline gap-1">
-                  <span className="font-light text-5xl text-white tracking-tighter">
+                  <span className="font-normal text-5xl text-white tracking-tighter">
                     {plan.price}
                   </span>
                   {plan.price !== "Custom" && (
