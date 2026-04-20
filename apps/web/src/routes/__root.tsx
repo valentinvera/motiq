@@ -87,6 +87,16 @@ export const Route = createRootRouteWithContext<RouterAppContext>()({
       { rel: "canonical", href: SEO.siteUrl },
       { rel: "icon", type: "image/svg+xml", href: "/favicon.svg" },
       { rel: "manifest", href: "/manifest.json" },
+      {
+        rel: "preload",
+        as: "image",
+        href: "/hero-image-1600.avif",
+        type: "image/avif",
+        imageSrcSet:
+          "/hero-image-800.avif 800w, /hero-image-1200.avif 1200w, /hero-image-1600.avif 1600w, /hero-image-2400.avif 2400w",
+        imageSizes: "(min-width: 1024px) 1152px, 92vw",
+        fetchPriority: "high",
+      },
     ],
     scripts: [
       {
