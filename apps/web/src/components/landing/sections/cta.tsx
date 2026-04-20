@@ -24,7 +24,7 @@ export const Cta = () => {
             <span className="text-white/40">critical signal.</span>
           </h2>
 
-          <p className="mx-auto mb-12 max-w-2xl font-light text-lg text-white/50 leading-relaxed md:text-xl">
+          <p className="mx-auto mb-12 max-w-2xl font-normal text-lg text-white/50 leading-relaxed md:text-xl">
             Be among the first to deploy autonomous customer intelligence. Join
             the waitlist for early access.
           </p>

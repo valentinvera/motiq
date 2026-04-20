@@ -109,6 +109,7 @@ export const Footer = () => {
               </h3>
               <div className="flex gap-4">
                 <a
+                  aria-label="Follow Motiq on X"
                   className="text-zinc-500 transition-colors hover:text-white"
                   href="https://x.com/motiq_app"
                   rel="noopener noreferrer"
@@ -117,6 +118,7 @@ export const Footer = () => {
                   <XIcon className="size-5" />
                 </a>
                 <a
+                  aria-label="Motiq on GitHub"
                   className="text-zinc-500 transition-colors hover:text-white"
                   href="https://github.com/valentinvera/motiq"
                   rel="noopener noreferrer"

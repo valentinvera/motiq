@@ -72,7 +72,7 @@ export const Hero = () => {
               </span>
             </h1>
 
-            <p className="mt-1 max-w-2xl font-light text-base text-white/50 leading-relaxed md:mt-4 md:text-xl min-[400px]:text-lg">
+            <p className="mt-1 max-w-2xl font-normal text-base text-white/50 leading-relaxed md:mt-4 md:text-xl min-[400px]:text-lg">
               AI agents that monitor every feedback channel 24/7, detect churn
               before it happens, and act autonomously — so your team can focus
               on building, not firefighting.
@@ -131,16 +131,28 @@ export const Hero = () => {
         </div>
 
         <div className="relative overflow-hidden rounded-lg border border-white/8 shadow-[0_0_80px_-20px_rgba(6,182,212,0.15)] md:rounded-xl lg:rounded-2xl">
-          <img
-            alt="Motiq product dashboard"
-            className="relative block h-auto w-full"
-            decoding="async"
-            fetchPriority="high"
-            height={2561}
-            loading="eager"
-            src="/hero-image.png"
-            width={3842}
-          />
+          <picture>
+            <source
+              sizes="(min-width: 1024px) 1152px, 92vw"
+              srcSet="/hero-image-800.avif 800w, /hero-image-1200.avif 1200w, /hero-image-1600.avif 1600w, /hero-image-2400.avif 2400w"
+              type="image/avif"
+            />
+            <source
+              sizes="(min-width: 1024px) 1152px, 92vw"
+              srcSet="/hero-image-800.webp 800w, /hero-image-1200.webp 1200w, /hero-image-1600.webp 1600w, /hero-image-2400.webp 2400w"
+              type="image/webp"
+            />
+            <img
+              alt="Motiq product dashboard"
+              className="relative block h-auto w-full"
+              decoding="async"
+              fetchPriority="high"
+              height={2561}
+              loading="eager"
+              src="/hero-image-1600.webp"
+              width={3842}
+            />
+          </picture>
         </div>
       </motion.div>
 
