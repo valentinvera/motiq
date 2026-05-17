@@ -12,7 +12,7 @@ const plans = [
       "Slack/Email alerts",
       "Email support",
     ],
-    cta: "Join Waitlist",
+    cta: "Get Started",
     popular: false,
   },
   {
@@ -26,7 +26,7 @@ const plans = [
       "Custom alerts & routing rules",
       "Priority support + Slack channel",
     ],
-    cta: "Join Waitlist",
+    cta: "Get Started",
     popular: true,
   },
   {
@@ -108,29 +108,20 @@ export const Pricing = () => {
                 ))}
               </div>
 
-              <button
+              <a
                 className={`h-12 w-full cursor-pointer rounded-sm font-medium text-sm transition-all ${
                   plan.popular
                     ? "bg-white text-black hover:bg-white/80"
                     : "bg-white/10 text-white hover:bg-white/20"
-                }`}
-                onClick={() => {
-                  if (plan.cta === "Contact Sales") {
-                    return
-                  }
-                  const input = document.getElementById("waitlist-email")
-                  if (input) {
-                    input.scrollIntoView({
-                      behavior: "smooth",
-                      block: "center",
-                    })
-                    setTimeout(() => input.focus(), 500)
-                  }
-                }}
-                type="button"
+                } inline-flex items-center justify-center`}
+                href={
+                  plan.cta === "Contact Sales"
+                    ? "mailto:hello@motiq.app?subject=Sales%20inquiry"
+                    : "/login"
+                }
               >
                 {plan.cta}
-              </button>
+              </a>
             </div>
           ))}
         </div>

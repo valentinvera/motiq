@@ -12,10 +12,6 @@
     "./schema/auth": {
       "types": "./dist/schema/auth.d.mts",
       "import": "./dist/schema/auth.mjs"
-    },
-    "./schema/waitlist": {
-      "types": "./dist/schema/waitlist.d.mts",
-      "import": "./dist/schema/waitlist.mjs"
     }
   },
   "scripts": {

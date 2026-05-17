@@ -1,8 +1,5 @@
 import { router } from "../index"
-import { waitlistRouter } from "./waitlist"
 
-export const appRouter = router({
-  waitlist: waitlistRouter,
-})
+export const appRouter = router({})
 
 export type AppRouter = typeof appRouter

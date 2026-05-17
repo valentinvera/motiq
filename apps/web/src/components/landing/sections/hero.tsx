@@ -1,44 +1,8 @@
 import { Button } from "@motiq/ui/components/button"
-import { Input } from "@motiq/ui/components/input"
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query"
+import { ArrowRightIcon } from "@motiq/ui/icons/arrow-right"
 import { motion } from "motion/react"
-import { useState } from "react"
-import { toast } from "sonner"
-import { useTRPC } from "@/utils/trpc"
 
 export const Hero = () => {
-  const [email, setEmail] = useState("")
-  const trpc = useTRPC()
-  const queryClient = useQueryClient()
-
-  const { data: waitlistData } = useQuery(trpc.waitlist.count.queryOptions())
-
-  const joinWaitlist = useMutation({
-    ...trpc.waitlist.join.mutationOptions(),
-    onSuccess: (data) => {
-      if (data.success) {
-        if (data.message === "You're already on the list!") {
-          toast.info("You're already on the waitlist!")
-        } else {
-          toast.success("You're on the list!")
-          setEmail("")
-          queryClient.invalidateQueries(trpc.waitlist.count.queryOptions())
-        }
-      }
-    },
-    onError: (error) => {
-      toast.error(error.message)
-    },
-  })
-
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault()
-    if (!email) {
-      return
-    }
-    joinWaitlist.mutate({ email })
-  }
-
   return (
     <section className="relative overflow-hidden bg-black">
       <div className="relative flex items-center justify-center overflow-hidden pt-32 pb-20 md:min-h-screen md:pt-20 md:pb-0">
@@ -78,41 +42,23 @@ export const Hero = () => {
               on building, not firefighting.
             </p>
 
-            <div className="mt-4 w-full max-w-md md:mt-10">
-              <form
-                className="flex w-full flex-col gap-2 sm:flex-row"
-                onSubmit={handleSubmit}
+            <div className="mt-4 flex w-full flex-col items-center justify-center gap-3 sm:w-auto sm:flex-row md:mt-10">
+              <Button
+                asChild
+                className="group h-14 w-full cursor-pointer rounded-sm bg-white px-8 text-black transition-all hover:bg-white/80 active:scale-95 sm:w-auto"
               >
-                <Input
-                  aria-label="Email address"
-                  className="h-14 rounded-sm border border-white/10 bg-white/5 px-6 text-white transition-all placeholder:text-white/30 focus-visible:border-transparent focus-visible:ring-1 focus-visible:ring-white/50"
-                  disabled={joinWaitlist.isPending}
-                  id="waitlist-email"
-                  onChange={(e) => setEmail(e.target.value)}
-                  placeholder="name@company.com"
-                  required
-                  type="email"
-                  value={email}
-                />
-                <Button
-                  className="h-14 cursor-pointer rounded-sm bg-white px-8 text-black transition-all hover:bg-white/80 active:scale-95"
-                  disabled={joinWaitlist.isPending}
-                  type="submit"
-                >
-                  {joinWaitlist.isPending ? "..." : "Join Waitlist"}
-                </Button>
-              </form>
-
-              <div className="mt-6 flex flex-col items-center justify-center gap-2 font-mono text-[11px] text-white/60 uppercase tracking-widest sm:flex-row sm:gap-6 sm:text-white/40">
-                <span className="flex items-center gap-2">
-                  <span className="font-bold text-white">
-                    {waitlistData?.count ?? 0}
-                  </span>{" "}
-                  already on the waitlist
-                </span>
-                <span className="hidden h-px w-4 bg-white/20 sm:block" />
-                <span>Includes 90-Day Scan</span>
-              </div>
+                <a href="/login" id="hero-primary-cta">
+                  Get Started
+                  <ArrowRightIcon className="size-4 transition-transform group-hover:translate-x-0.5" />
+                </a>
+              </Button>
+              <Button
+                asChild
+                className="h-14 w-full cursor-pointer rounded-sm border border-white/10 bg-white/5 px-8 text-white transition-all hover:border-white/20 hover:bg-white/10 active:scale-95 sm:w-auto"
+                variant="outline"
+              >
+                <a href="#how-it-works">See How It Works</a>
+              </Button>
             </div>
           </motion.div>
         </div>

@@ -186,7 +186,6 @@
         "zod": "catalog:",
       },
       "devDependencies": {
-        "@motiq/db": "workspace:*",
         "@motiq/ts-config": "workspace:*",
         "@types/react": "^19.2.5",
         "@types/react-dom": "^19.2.3",
@@ -198,14 +197,10 @@
       "dependencies": {
         "@motiq/ai": "workspace:*",
         "@motiq/auth": "workspace:*",
-        "@motiq/db": "workspace:*",
-        "@motiq/mail": "workspace:*",
         "@trpc/client": "catalog:",
         "@trpc/server": "catalog:",
-        "drizzle-orm": "^0.44.2",
         "hono": "catalog:",
         "superjson": "catalog:",
-        "zod": "catalog:",
       },
       "devDependencies": {
         "@motiq/ts-config": "workspace:*",

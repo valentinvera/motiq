@@ -25,21 +25,15 @@ export const Cta = () => {
           </h2>
 
           <p className="mx-auto mb-12 max-w-2xl font-normal text-lg text-white/50 leading-relaxed md:text-xl">
-            Be among the first to deploy autonomous customer intelligence. Join
-            the waitlist for early access.
+            Deploy autonomous customer intelligence for your team and turn
+            critical signals into action.
           </p>
 
           <Button
+            asChild
             className="h-16 cursor-pointer rounded-sm bg-white px-12 text-black text-lg transition-all hover:bg-white/80 active:scale-95"
-            onClick={() => {
-              const input = document.getElementById("waitlist-email")
-              if (input) {
-                input.scrollIntoView({ behavior: "smooth", block: "center" })
-                setTimeout(() => input.focus(), 500)
-              }
-            }}
           >
-            Get Early Access
+            <a href="/login">Get Started</a>
           </Button>
         </motion.div>
       </div>
