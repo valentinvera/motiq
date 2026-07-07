@@ -186,15 +186,14 @@ async function cancelPendingInvitationsCreatedByUser(userId: string) {
       and(eq(invitations.inviterId, userId), eq(invitations.status, "pending")),
   })
 
-  const organizationIds: string[] = [
-    ...new Set(
-      pendingInvitations
-        .map((inv) => inv.organizationId)
-        .filter((organizationId): organizationId is string => {
-          return typeof organizationId === "string"
-        })
-    ),
-  ]
+  const organizationIdSet = new Set<string>()
+  for (const invitationRecord of pendingInvitations) {
+    if (typeof invitationRecord.organizationId === "string") {
+      organizationIdSet.add(invitationRecord.organizationId)
+    }
+  }
+
+  const organizationIds = [...organizationIdSet]
 
   for (const organizationId of organizationIds) {
     const fallbackUserId = await getInvitationFallbackUserId({
