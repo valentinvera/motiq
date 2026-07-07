@@ -5,9 +5,10 @@
   "type": "module",
   "sideEffects": false,
   "exports": {
-    ".": "./src/index.ts",
-    "./chat": "./src/chat.ts",
-    "./tools": "./src/tools.ts"
+    ".": {
+      "types": "./dist/index.d.mts",
+      "import": "./dist/index.mjs"
+    }
   },
   "scripts": {
     "build": "tsdown",

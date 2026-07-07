@@ -5,10 +5,17 @@
   "type": "module",
   "sideEffects": false,
   "exports": {
-    "./resend": "./src/resend/index.ts",
-    "./templates/*": "./src/templates/*.tsx"
+    "./resend": {
+      "types": "./dist/resend/index.d.mts",
+      "import": "./dist/resend/index.mjs"
+    },
+    "./templates/*": {
+      "types": "./dist/templates/*.d.mts",
+      "import": "./dist/templates/*.mjs"
+    }
   },
   "scripts": {
+    "build": "tsdown",
     "check-types": "tsc --noEmit"
   },
   "dependencies": {
@@ -23,6 +30,7 @@
   "devDependencies": {
     "@motiq/ts-config": "workspace:*",
     "@types/react": "^19.2.5",
-    "@types/react-dom": "^19.2.3"
+    "@types/react-dom": "^19.2.3",
+    "tsdown": "catalog:"
   }
 }

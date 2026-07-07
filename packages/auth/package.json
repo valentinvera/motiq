@@ -5,10 +5,22 @@
   "type": "module",
   "sideEffects": false,
   "exports": {
-    ".": "./src/index.ts",
-    "./payments": "./src/lib/payments.ts",
-    "./plans": "./src/plans.ts",
-    "./permissions": "./src/permissions.ts"
+    ".": {
+      "types": "./dist/index.d.mts",
+      "import": "./dist/index.mjs"
+    },
+    "./payments": {
+      "types": "./dist/lib/payments.d.mts",
+      "import": "./dist/lib/payments.mjs"
+    },
+    "./plans": {
+      "types": "./dist/plans.d.mts",
+      "import": "./dist/plans.mjs"
+    },
+    "./permissions": {
+      "types": "./dist/permissions.d.mts",
+      "import": "./dist/permissions.mjs"
+    }
   },
   "scripts": {
     "build": "tsdown",
