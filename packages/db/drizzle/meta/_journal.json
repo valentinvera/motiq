@@ -1,0 +1,55 @@
+{
+  "version": "7",
+  "dialect": "postgresql",
+  "entries": [
+    {
+      "idx": 0,
+      "version": "7",
+      "when": 1772973707169,
+      "tag": "0000_robust_stryfe",
+      "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "7",
+      "when": 1777795000000,
+      "tag": "0001_rename_integration_to_app",
+      "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1777856400000,
+      "tag": "0002_add_chats",
+      "breakpoints": true
+    },
+    {
+      "idx": 3,
+      "version": "7",
+      "when": 1780672769501,
+      "tag": "0003_expand_activity_feed",
+      "breakpoints": true
+    },
+    {
+      "idx": 4,
+      "version": "7",
+      "when": 1781740800000,
+      "tag": "0004_add_mentions",
+      "breakpoints": true
+    },
+    {
+      "idx": 5,
+      "version": "7",
+      "when": 1781827200000,
+      "tag": "0005_add_signal_comments",
+      "breakpoints": true
+    },
+    {
+      "idx": 6,
+      "version": "7",
+      "when": 1782345600000,
+      "tag": "0006_add_workspace_invitation_activity",
+      "breakpoints": true
+    }
+  ]
+}

@@ -9,13 +9,9 @@
       "types": "./dist/index.d.mts",
       "import": "./dist/index.mjs"
     },
-    "./schema/auth": {
-      "types": "./dist/schema/auth.d.mts",
-      "import": "./dist/schema/auth.mjs"
-    },
-    "./schema/waitlist": {
-      "types": "./dist/schema/waitlist.d.mts",
-      "import": "./dist/schema/waitlist.mjs"
+    "./schema/*": {
+      "types": "./dist/schema/*.d.mts",
+      "import": "./dist/schema/*.mjs"
     }
   },
   "scripts": {
@@ -24,7 +20,8 @@
     "db:push": "drizzle-kit push",
     "db:studio": "drizzle-kit studio",
     "db:generate": "drizzle-kit generate",
-    "db:migrate": "drizzle-kit migrate"
+    "db:migrate": "drizzle-kit migrate",
+    "db:setup-rls": "bun run src/setup-rls.ts"
   },
   "dependencies": {
     "@motiq/env": "workspace:*",
