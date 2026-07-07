@@ -4,7 +4,7 @@ import { app } from "@motiq/db/schema/apps"
 import { env } from "@motiq/env/api"
 import { and, eq } from "drizzle-orm"
 import { Hono } from "hono"
-import { ingestSlackMessageSignals } from "../../services/slack-signal-ingestion"
+import { ingestSlackMessageSignals } from "../../services/slack-signal-ingestion.js"
 
 const slack = new Hono()
 const getPublicApiUrl = () => process.env.PUBLIC_API_URL ?? env.BETTER_AUTH_URL

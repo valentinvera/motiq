@@ -3,9 +3,9 @@ import { member, organization } from "@motiq/db/schema/auth"
 import { pipelineRun } from "@motiq/db/schema/pipeline-runs"
 import { signal } from "@motiq/db/schema/signals"
 import { and, eq, gte, inArray } from "drizzle-orm"
-import { sendDailyDigest } from "./actions/email-digest"
-import { detectChurnRisks } from "./agents/risk"
-import { eventBus } from "./event-bus"
+import { sendDailyDigest } from "./actions/email-digest.js"
+import { detectChurnRisks } from "./agents/risk.js"
+import { eventBus } from "./event-bus.js"
 
 async function getActiveOrganizationIds(): Promise<string[]> {
   const orgs = await db

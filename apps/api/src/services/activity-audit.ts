@@ -1,6 +1,6 @@
 import { db } from "@motiq/db"
 import { activityLog } from "@motiq/db/schema/activity-log"
-import { eventBus } from "./event-bus"
+import { eventBus } from "./event-bus.js"
 
 type ActivityInsert = typeof activityLog.$inferInsert
 

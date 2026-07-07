@@ -9,7 +9,7 @@ import {
   ingestSignal,
   parseOAuthState,
   persistAppCredentials,
-} from "./_helpers"
+} from "./_helpers.js"
 
 const polar = new Hono()
 

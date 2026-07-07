@@ -1,9 +1,9 @@
-import { ingestSignal } from "../routes/apps/_helpers"
-import { logAgentActivity } from "./activity-audit"
+import { ingestSignal } from "../routes/apps/_helpers.js"
+import { logAgentActivity } from "./activity-audit.js"
 import {
   type ExtractedFeedbackItem,
   extractFeedbackItemsFromSlackMessage,
-} from "./agents/extract-feedback-items"
+} from "./agents/extract-feedback-items.js"
 
 const MOTIQ_GENERATED_SLACK_MESSAGE_PATTERN =
   /^:(?:red_circle|large_orange_circle|large_yellow_circle|large_blue_circle|white_circle):\s+slack:/

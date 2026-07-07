@@ -27,9 +27,9 @@ import {
 } from "drizzle-orm"
 import { Hono } from "hono"
 import { z } from "zod"
-import { logAgentActivity } from "../services/activity-audit"
-import { eventBus } from "../services/event-bus"
-import { sendSlackMessage } from "./apps/slack"
+import { logAgentActivity } from "../services/activity-audit.js"
+import { eventBus } from "../services/event-bus.js"
+import { sendSlackMessage } from "./apps/slack.js"
 
 const app = new Hono()
 

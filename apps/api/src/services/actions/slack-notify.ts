@@ -3,13 +3,13 @@ import { agentAction } from "@motiq/db/schema/agent-actions"
 import { app } from "@motiq/db/schema/apps"
 import { autonomyRule } from "@motiq/db/schema/autonomy-rules"
 import { and, eq } from "drizzle-orm"
-import { sendSlackMessage } from "../../routes/apps/slack"
-import { logAgentActivity } from "../activity-audit"
-import { eventBus } from "../event-bus"
+import { sendSlackMessage } from "../../routes/apps/slack.js"
+import { logAgentActivity } from "../activity-audit.js"
+import { eventBus } from "../event-bus.js"
 import {
   isNotificationEnabled,
   type NotificationPreferenceKey,
-} from "../notification-preferences"
+} from "../notification-preferences.js"
 
 interface AlertPayload {
   alertId?: string

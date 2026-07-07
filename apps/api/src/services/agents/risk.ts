@@ -11,9 +11,9 @@ import { pipelineRun } from "@motiq/db/schema/pipeline-runs"
 import { signal } from "@motiq/db/schema/signals"
 import { and, desc, eq, gte, inArray } from "drizzle-orm"
 import { z } from "zod"
-import { notifySlackAlert } from "../actions/slack-notify"
-import { logAgentActivity } from "../activity-audit"
-import { eventBus } from "../event-bus"
+import { notifySlackAlert } from "../actions/slack-notify.js"
+import { logAgentActivity } from "../activity-audit.js"
+import { eventBus } from "../event-bus.js"
 
 const riskSchema = z.object({
   risks: z.array(
