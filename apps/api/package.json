@@ -6,22 +6,28 @@
   "scripts": {
     "dev": "bun run --hot src/index.ts",
     "build": "tsdown",
-    "start": "bun run api/index.mjs",
+    "start": "bun run dist/index.mjs",
+    "reset:data": "bun --env-file=.env run scripts/reset-data.ts",
     "check-types": "tsc --noEmit",
-    "compile": "bun build --compile --minify --sourcemap --bytecode ./src/index.ts --outfile api"
+    "compile": "bun build --compile --minify --sourcemap --bytecode ./src/index.ts --outfile dist"
   },
   "dependencies": {
     "@hono/trpc-server": "^0.4.2",
+    "@motiq/ai": "workspace:*",
     "@motiq/auth": "workspace:*",
+    "@motiq/cache": "workspace:*",
     "@motiq/db": "workspace:*",
+    "@motiq/env": "workspace:*",
+    "@motiq/mail": "workspace:*",
     "@motiq/trpc": "workspace:*",
     "@polar-sh/better-auth": "catalog:",
     "@polar-sh/sdk": "^0.42.2",
     "@trpc/server": "catalog:",
+    "@vercel/blob": "^2.3.3",
     "better-auth": "catalog:",
+    "drizzle-orm": "^0.44.2",
     "hono": "catalog:",
-    "zod": "catalog:",
-    "@motiq/env": "workspace:*"
+    "zod": "catalog:"
   },
   "devDependencies": {
     "tsdown": "catalog:",

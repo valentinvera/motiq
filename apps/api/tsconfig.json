@@ -8,5 +8,5 @@
     },
     "strictNullChecks": true
   },
-  "include": ["src"]
+  "include": ["src", "scripts"]
 }
