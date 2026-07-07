@@ -5,14 +5,8 @@
   "type": "module",
   "sideEffects": false,
   "exports": {
-    "./api": {
-      "types": "./dist/api.d.mts",
-      "import": "./dist/api.mjs"
-    },
-    "./web": {
-      "types": "./dist/web.d.mts",
-      "import": "./dist/web.mjs"
-    }
+    "./api": "./src/api.ts",
+    "./web": "./src/web.ts"
   },
   "scripts": {
     "build": "tsdown",

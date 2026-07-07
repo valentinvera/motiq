@@ -5,14 +5,10 @@
   "type": "module",
   "sideEffects": false,
   "exports": {
-    ".": {
-      "types": "./dist/index.d.mts",
-      "import": "./dist/index.mjs"
-    },
-    "./payments": {
-      "types": "./dist/lib/payments.d.mts",
-      "import": "./dist/lib/payments.mjs"
-    }
+    ".": "./src/index.ts",
+    "./payments": "./src/lib/payments.ts",
+    "./plans": "./src/plans.ts",
+    "./permissions": "./src/permissions.ts"
   },
   "scripts": {
     "build": "tsdown",
@@ -23,8 +19,11 @@
     "@polar-sh/better-auth": "catalog:",
     "@polar-sh/sdk": "^0.34.16",
     "zod": "catalog:",
+    "@motiq/cache": "workspace:*",
     "@motiq/db": "workspace:*",
-    "@motiq/env": "workspace:*"
+    "@motiq/env": "workspace:*",
+    "@motiq/mail": "workspace:*",
+    "drizzle-orm": "^0.44.2"
   },
   "devDependencies": {
     "@motiq/ts-config": "workspace:*",

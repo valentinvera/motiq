@@ -1,15 +1,14 @@
 import type { AppRouter } from "@motiq/trpc/routers"
 import { Toaster } from "@motiq/ui/components/sonner"
 import type { QueryClient } from "@tanstack/react-query"
-import { ReactQueryDevtools } from "@tanstack/react-query-devtools"
 import {
   createRootRouteWithContext,
   HeadContent,
   Outlet,
   Scripts,
 } from "@tanstack/react-router"
-import { TanStackRouterDevtools } from "@tanstack/react-router-devtools"
 import type { TRPCOptionsProxy } from "@trpc/tanstack-react-query"
+import { getOptionalUser } from "@/functions/get-user"
 import {
   ORGANIZATION_JSONLD,
   SEO,
@@ -42,6 +41,10 @@ export interface RouterAppContext {
 const ogImageUrl = `${SEO.siteUrl}${SEO.ogImage}`
 
 export const Route = createRootRouteWithContext<RouterAppContext>()({
+  beforeLoad: async () => {
+    const auth = await getOptionalUser()
+    return { auth }
+  },
   head: () => ({
     meta: [
       { charSet: "utf-8" },
@@ -56,7 +59,6 @@ export const Route = createRootRouteWithContext<RouterAppContext>()({
       { name: "application-name", content: SEO.siteName },
       { name: "apple-mobile-web-app-title", content: SEO.siteName },
       { name: "format-detection", content: "telephone=no" },
-
       { property: "og:type", content: "website" },
       { property: "og:url", content: SEO.siteUrl },
       { property: "og:title", content: SEO.title },
@@ -70,7 +72,6 @@ export const Route = createRootRouteWithContext<RouterAppContext>()({
       { property: "og:image:height", content: String(SEO.ogImageHeight) },
       { property: "og:site_name", content: SEO.siteName },
       { property: "og:locale", content: SEO.locale },
-
       { name: "twitter:card", content: "summary_large_image" },
       { name: "twitter:site", content: SEO.twitterHandle },
       { name: "twitter:creator", content: SEO.twitterHandle },
@@ -85,8 +86,26 @@ export const Route = createRootRouteWithContext<RouterAppContext>()({
     links: [
       { rel: "stylesheet", href: appCss },
       { rel: "canonical", href: SEO.siteUrl },
+      { rel: "icon", href: "/favicon.ico", sizes: "48x48" },
       { rel: "icon", type: "image/svg+xml", href: "/favicon.svg" },
-      { rel: "manifest", href: "/manifest.json" },
+      {
+        rel: "icon",
+        type: "image/png",
+        href: "/favicon-32x32.png",
+        sizes: "32x32",
+      },
+      {
+        rel: "icon",
+        type: "image/png",
+        href: "/favicon-16x16.png",
+        sizes: "16x16",
+      },
+      {
+        rel: "apple-touch-icon",
+        href: "/apple-touch-icon.png",
+        sizes: "180x180",
+      },
+      { rel: "manifest", href: "/site.webmanifest" },
       {
         rel: "preload",
         as: "image",
@@ -124,20 +143,8 @@ function RootDocument() {
         <HeadContent />
       </head>
       <body>
-        <div className="grid h-svh grid-rows-[auto_1fr]">
-          <Outlet />
-        </div>
+        <Outlet />
         <Toaster richColors />
-        {/* biome-ignore lint/nursery/noUndeclaredEnvVars: DEV is a Vite built-in variable */}
-        {import.meta.env.DEV && (
-          <>
-            <TanStackRouterDevtools position="bottom-left" />
-            <ReactQueryDevtools
-              buttonPosition="bottom-right"
-              position="bottom"
-            />
-          </>
-        )}
         <Scripts />
       </body>
     </html>

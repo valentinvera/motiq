@@ -102,7 +102,7 @@ export const Workflow = () => {
                   </h3>
                   <p className="text-lg text-white/60 leading-relaxed">
                     Our pipeline classifies, detects patterns across time, and
-                    assigns rigorous confidence scores to every insight.
+                    assigns rigorous confidence scores to every signal.
                   </p>
                   <div className="flex items-center justify-center gap-4 rounded-3xl border border-white/5 bg-white/2 p-12">
                     <div className="font-mono text-[10px] text-white/40 uppercase">
@@ -116,7 +116,7 @@ export const Workflow = () => {
                     </div>
                     <div className="h-px w-12 bg-white/10" />
                     <div className="font-mono text-[10px] text-white/90 uppercase tracking-widest">
-                      Insight
+                      Signal
                     </div>
                   </div>
                 </div>

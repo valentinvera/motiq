@@ -48,10 +48,12 @@ function SheetOverlay({
 
 function SheetContent({
   className,
+  closeClassName,
   children,
   side = "right",
   ...props
 }: React.ComponentProps<typeof DialogContent> & {
+  closeClassName?: string
   side?: "top" | "right" | "bottom" | "left"
 }) {
   return (
@@ -74,7 +76,12 @@ function SheetContent({
         {...props}
       >
         {children}
-        <DialogClose className="absolute top-4 right-4 rounded-xs opacity-70 ring-offset-background transition-opacity hover:opacity-100 focus:outline-hidden focus:ring-2 focus:ring-ring focus:ring-offset-2 disabled:pointer-events-none data-[state=open]:bg-secondary">
+        <DialogClose
+          className={cn(
+            "absolute top-4 right-4 rounded-xs opacity-70 ring-offset-background transition-opacity hover:opacity-100 focus:outline-hidden focus:ring-2 focus:ring-ring focus:ring-offset-2 disabled:pointer-events-none data-[state=open]:bg-secondary",
+            closeClassName
+          )}
+        >
           <XIcon className="size-4" />
           <span className="sr-only">Close</span>
         </DialogClose>

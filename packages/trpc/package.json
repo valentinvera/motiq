@@ -25,10 +25,14 @@
   "dependencies": {
     "@motiq/ai": "workspace:*",
     "@motiq/auth": "workspace:*",
+    "@motiq/db": "workspace:*",
+    "@motiq/mail": "workspace:*",
     "@trpc/client": "catalog:",
     "@trpc/server": "catalog:",
+    "drizzle-orm": "^0.44.2",
     "hono": "catalog:",
-    "superjson": "catalog:"
+    "superjson": "catalog:",
+    "zod": "catalog:"
   },
   "devDependencies": {
     "@motiq/ts-config": "workspace:*",

@@ -22,7 +22,7 @@ const formatSize = (bytes) => `${(bytes / 1024).toFixed(1)} KiB`
 const source = sharp(SOURCE)
 const metadata = await source.metadata()
 console.log(
-  `Source: hero-image.png ${metadata.width}x${metadata.height} (${formatSize(statSync(SOURCE).size)})`,
+  `Source: hero-image.png ${metadata.width}x${metadata.height} (${formatSize(statSync(SOURCE).size)})`
 )
 
 for (const width of WIDTHS) {
