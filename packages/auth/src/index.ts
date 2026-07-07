@@ -138,7 +138,7 @@ async function getInvitationFallbackUserId({
 }: {
   organizationId: string
   deletingUserId: string
-}) {
+}): Promise<string | null> {
   const remainingMembers = await db.query.member.findMany({
     columns: {
       userId: true,
@@ -151,12 +151,28 @@ async function getInvitationFallbackUserId({
       ),
   })
 
+  const members = remainingMembers
+    .map((membership) => {
+      if (
+        typeof membership.userId !== "string" ||
+        typeof membership.role !== "string"
+      ) {
+        return null
+      }
+
+      return {
+        role: membership.role,
+        userId: membership.userId,
+      }
+    })
+    .filter((membership): membership is { role: string; userId: string } => {
+      return membership !== null
+    })
+
   return (
-    remainingMembers.find((membership) => hasRole(membership.role, "owner"))
-      ?.userId ??
-    remainingMembers.find((membership) => hasRole(membership.role, "admin"))
-      ?.userId ??
-    remainingMembers[0]?.userId ??
+    members.find((membership) => hasRole(membership.role, "owner"))?.userId ??
+    members.find((membership) => hasRole(membership.role, "admin"))?.userId ??
+    members[0]?.userId ??
     null
   )
 }
@@ -170,7 +186,7 @@ async function cancelPendingInvitationsCreatedByUser(userId: string) {
       and(eq(invitations.inviterId, userId), eq(invitations.status, "pending")),
   })
 
-  const organizationIds = [
+  const organizationIds: string[] = [
     ...new Set(
       pendingInvitations
         .map((inv) => inv.organizationId)
