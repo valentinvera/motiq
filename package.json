@@ -8,7 +8,6 @@
     "build": "turbo build",
     "dev:web": "turbo -F @motiq/web dev",
     "dev:api": "turbo -F @motiq/api dev",
-    "reset:data": "bun run --cwd apps/api reset:data",
     "check-types": "turbo check-types",
     "check": "bunx ultracite check",
     "fix": "bunx ultracite fix",

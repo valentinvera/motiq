@@ -7,7 +7,6 @@
     "dev": "bun run --hot src/index.ts",
     "build": "tsdown",
     "start": "bun run dist/index.mjs",
-    "reset:data": "bun --env-file=.env run scripts/reset-data.ts",
     "check-types": "tsc --noEmit",
     "compile": "bun build --compile --minify --sourcemap --bytecode ./src/index.ts --outfile dist"
   },
