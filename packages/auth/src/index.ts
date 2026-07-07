@@ -56,6 +56,27 @@ const isProduction = env.BETTER_AUTH_URL.startsWith("https://")
 const MAX_EMAIL_LENGTH = 254
 const mailDomainCache = new Map<string, boolean>()
 
+function getCrossSubdomainCookieDomain() {
+  if (!isProduction) {
+    return null
+  }
+
+  const authHost = new URL(env.BETTER_AUTH_URL).hostname
+  const appHost = new URL(env.CORS_ORIGIN).hostname
+
+  if (authHost === appHost) {
+    return null
+  }
+
+  if (authHost.endsWith(`.${appHost}`)) {
+    return appHost
+  }
+
+  return null
+}
+
+const crossSubdomainCookieDomain = getCrossSubdomainCookieDomain()
+
 function hasRole(role: string, targetRole: string) {
   return role
     .split(",")
@@ -374,6 +395,12 @@ export const auth = betterAuth<BetterAuthOptions>({
     },
     useSecureCookies: isProduction,
     disableCSRFCheck: false,
+    crossSubDomainCookies: crossSubdomainCookieDomain
+      ? {
+          enabled: true,
+          domain: crossSubdomainCookieDomain,
+        }
+      : undefined,
   },
   emailVerification: {
     sendOnSignUp: true,
