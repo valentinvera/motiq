@@ -1,6 +1,6 @@
 import { env } from "@motiq/env/api"
 import { Hono } from "hono"
-import { sendWeeklyAnalysisDigests } from "../services/actions/weekly-analysis-digest"
+import { sendWeeklyAnalysisDigests } from "../services/actions/weekly-analysis-digest.js"
 
 export const cron = new Hono()
 

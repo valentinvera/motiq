@@ -1,7 +1,7 @@
 import { db } from "@motiq/db"
 import { app } from "@motiq/db/schema/apps"
 import { and, eq } from "drizzle-orm"
-import { ingestSlackMessageSignals } from "../slack-signal-ingestion"
+import { ingestSlackMessageSignals } from "../slack-signal-ingestion.js"
 
 const POLLING_INTERVAL_MS = 5 * 60 * 1000
 const SLACK_HISTORY_LIMIT = 100

@@ -5,11 +5,11 @@ import { customer } from "@motiq/db/schema/customers"
 import { pipelineRun } from "@motiq/db/schema/pipeline-runs"
 import { signal } from "@motiq/db/schema/signals"
 import { and, asc, desc, eq } from "drizzle-orm"
-import { notifySlackAlert } from "./actions/slack-notify"
-import { logAgentActivity } from "./activity-audit"
-import { type TriageResult, triageSignal } from "./agents/triage"
-import { eventBus } from "./event-bus"
-import { dequeueSignal, retrySignal, type SignalJob } from "./signal-queue"
+import { notifySlackAlert } from "./actions/slack-notify.js"
+import { logAgentActivity } from "./activity-audit.js"
+import { type TriageResult, triageSignal } from "./agents/triage.js"
+import { eventBus } from "./event-bus.js"
+import { dequeueSignal, retrySignal, type SignalJob } from "./signal-queue.js"
 
 type SignalRecord = typeof signal.$inferSelect
 

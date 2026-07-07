@@ -3,9 +3,9 @@ import { app } from "@motiq/db/schema/apps"
 import { signal } from "@motiq/db/schema/signals"
 import { env } from "@motiq/env/api"
 import { and, desc, eq } from "drizzle-orm"
-import { logAgentActivity } from "../../services/activity-audit"
-import { eventBus } from "../../services/event-bus"
-import { enqueueSignal } from "../../services/signal-queue"
+import { logAgentActivity } from "../../services/activity-audit.js"
+import { eventBus } from "../../services/event-bus.js"
+import { enqueueSignal } from "../../services/signal-queue.js"
 
 export interface OAuthState {
   organizationId: string

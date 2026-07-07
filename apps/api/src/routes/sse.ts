@@ -1,7 +1,7 @@
 import { auth } from "@motiq/auth"
 import { type Context, Hono } from "hono"
 import { streamSSE } from "hono/streaming"
-import { eventBus } from "../services/event-bus"
+import { eventBus } from "../services/event-bus.js"
 
 export const sse = new Hono()
 

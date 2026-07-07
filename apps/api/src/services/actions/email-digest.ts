@@ -6,9 +6,9 @@ import { autonomyRule } from "@motiq/db/schema/autonomy-rules"
 import { signal } from "@motiq/db/schema/signals"
 import { sendReactEmail } from "@motiq/mail/resend"
 import { and, count, eq, gte } from "drizzle-orm"
-import { logAgentActivity } from "../activity-audit"
-import { eventBus } from "../event-bus"
-import { isNotificationEnabled } from "../notification-preferences"
+import { logAgentActivity } from "../activity-audit.js"
+import { eventBus } from "../event-bus.js"
+import { isNotificationEnabled } from "../notification-preferences.js"
 
 export async function sendDailyDigest(
   organizationId: string
