@@ -171,7 +171,13 @@ async function cancelPendingInvitationsCreatedByUser(userId: string) {
   })
 
   const organizationIds = [
-    ...new Set(pendingInvitations.map((inv) => inv.organizationId)),
+    ...new Set(
+      pendingInvitations
+        .map((inv) => inv.organizationId)
+        .filter((organizationId): organizationId is string => {
+          return typeof organizationId === "string"
+        })
+    ),
   ]
 
   for (const organizationId of organizationIds) {
