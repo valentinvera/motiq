@@ -38,10 +38,10 @@ export const Workflow = () => {
                 className="relative pl-16 md:pl-24"
                 initial={{ opacity: 0, x: 20 }}
                 transition={{ duration: 0.8 }}
-                viewport={{ margin: "-100px" }}
+                viewport={{ margin: "-100px", once: true }}
                 whileInView={{ opacity: 1, x: 0 }}
               >
-                <div className="absolute top-0 left-0 z-10 flex size-10 items-center justify-center rounded-full border border-white/10 bg-white/5 font-light text-sm text-white backdrop-blur-md md:size-20 md:text-xl">
+                <div className="absolute top-0 left-0 z-10 flex size-10 items-center justify-center rounded-full border border-white/10 bg-white/5 font-normal text-sm text-white backdrop-blur-md md:size-20 md:text-xl">
                   1
                 </div>
                 <div className="space-y-6">
@@ -90,10 +90,10 @@ export const Workflow = () => {
                 className="relative pl-16 md:pl-24"
                 initial={{ opacity: 0, x: 20 }}
                 transition={{ duration: 0.8 }}
-                viewport={{ margin: "-100px" }}
+                viewport={{ margin: "-100px", once: true }}
                 whileInView={{ opacity: 1, x: 0 }}
               >
-                <div className="absolute top-0 left-0 z-10 flex size-10 items-center justify-center rounded-full border border-white/10 bg-white/5 font-light text-sm text-white backdrop-blur-md md:size-20 md:text-xl">
+                <div className="absolute top-0 left-0 z-10 flex size-10 items-center justify-center rounded-full border border-white/10 bg-white/5 font-normal text-sm text-white backdrop-blur-md md:size-20 md:text-xl">
                   2
                 </div>
                 <div className="space-y-6">
@@ -102,7 +102,7 @@ export const Workflow = () => {
                   </h3>
                   <p className="text-lg text-white/60 leading-relaxed">
                     Our pipeline classifies, detects patterns across time, and
-                    assigns rigorous confidence scores to every insight.
+                    assigns rigorous confidence scores to every signal.
                   </p>
                   <div className="flex items-center justify-center gap-4 rounded-3xl border border-white/5 bg-white/2 p-12">
                     <div className="font-mono text-[10px] text-white/40 uppercase">
@@ -116,7 +116,7 @@ export const Workflow = () => {
                     </div>
                     <div className="h-px w-12 bg-white/10" />
                     <div className="font-mono text-[10px] text-white/90 uppercase tracking-widest">
-                      Insight
+                      Signal
                     </div>
                   </div>
                 </div>
@@ -126,10 +126,10 @@ export const Workflow = () => {
                 className="relative pl-16 md:pl-24"
                 initial={{ opacity: 0, x: 20 }}
                 transition={{ duration: 0.8 }}
-                viewport={{ margin: "-100px" }}
+                viewport={{ margin: "-100px", once: true }}
                 whileInView={{ opacity: 1, x: 0 }}
               >
-                <div className="absolute top-0 left-0 z-10 flex size-10 items-center justify-center rounded-full border border-white/10 bg-white/5 font-light text-sm text-white backdrop-blur-md md:size-20 md:text-xl">
+                <div className="absolute top-0 left-0 z-10 flex size-10 items-center justify-center rounded-full border border-white/10 bg-white/5 font-normal text-sm text-white backdrop-blur-md md:size-20 md:text-xl">
                   3
                 </div>
                 <div className="space-y-6">

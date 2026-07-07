@@ -8,7 +8,7 @@ import { TelegramIcon } from "@motiq/ui/icons/telegram"
 import { ZendeskIcon } from "@motiq/ui/icons/zendesk"
 import { motion } from "motion/react"
 
-export const Integrations = () => {
+export const Apps = () => {
   const integrations = [
     { name: "Telegram", icon: TelegramIcon, desc: "Monitor groups" },
     { name: "Slack", icon: SlackIcon, desc: "Monitor #channels" },
@@ -20,7 +20,7 @@ export const Integrations = () => {
       desc: "Community sentiment",
       color: "text-[#5865F2]",
     },
-    { name: "Notion", icon: NotionIcon, desc: "Document insights" },
+    { name: "Notion", icon: NotionIcon, desc: "Feedback docs" },
     {
       name: "GitHub",
       icon: GithubIcon,
@@ -67,7 +67,7 @@ export const Integrations = () => {
               <item.icon
                 className={`mb-6 size-8 transition-colors ${"color" in item ? item.color : "text-white/40 group-hover:text-white"}`}
               />
-              <h4 className="mb-1 font-medium text-white">{item.name}</h4>
+              <h3 className="mb-1 font-medium text-white">{item.name}</h3>
               <span className="text-[11px] text-white/40">{item.desc}</span>
             </motion.div>
           ))}

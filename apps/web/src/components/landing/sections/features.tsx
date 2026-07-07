@@ -51,7 +51,7 @@ export const Features = () => {
         <div className="relative flex size-40 items-center justify-center">
           <div className="absolute inset-0 animate-[spin_10s_linear_infinite] rounded-full border border-white/10 border-dashed" />
           <div className="absolute inset-4 animate-[spin_15s_linear_infinite_reverse] rounded-full border border-white/5 border-dashed" />
-          <span className="font-light text-5xl text-white tracking-tighter">
+          <span className="font-normal text-5xl text-white tracking-tighter">
             90<span className="text-white/40">d</span>
           </span>
         </div>
@@ -96,7 +96,7 @@ export const Features = () => {
       visual: (
         <div className="flex items-end gap-12">
           <div className="flex flex-col">
-            <span className="font-light text-6xl text-white tracking-tighter">
+            <span className="font-normal text-6xl text-white tracking-tighter">
               99.9<span className="text-white/40">%</span>
             </span>
             <span className="mt-2 border-white/10 border-t pt-2 font-mono text-[10px] text-white/50 uppercase tracking-widest">
@@ -143,11 +143,14 @@ export const Features = () => {
                 initial={{ opacity: 0, y: 40 }}
                 key={feature.id}
                 transition={{ duration: 0.8 }}
-                viewport={{ margin: "-100px" }}
+                viewport={{ margin: "-100px", once: true }}
                 whileInView={{ opacity: 1, y: 0 }}
               >
                 <div className="flex items-center gap-6 border-white/10 border-b pb-6">
-                  <span className="font-light text-4xl text-white/20 tracking-tighter">
+                  <span
+                    aria-hidden="true"
+                    className="font-normal text-4xl text-white/40 tracking-tighter"
+                  >
                     {feature.id}
                   </span>
                   <h3 className="font-medium text-3xl text-white tracking-tight">

@@ -52,15 +52,12 @@ export const Navbar = () => {
 
       <div className="flex flex-1 items-center justify-end gap-4">
         <Button
+          asChild
           className="hidden h-9 cursor-pointer rounded-sm bg-white px-5 text-sm text-zinc-950 transition-all hover:bg-white/80 md:block"
-          onClick={() => {
-            const input = document.getElementById("waitlist-email")
-            if (input) {
-              input.focus({ preventScroll: true })
-            }
-          }}
         >
-          Get Started
+          <a href="/login" id="navbar-sign-in">
+            Sign In
+          </a>
         </Button>
         <button
           aria-expanded={mobileMenuOpen}
@@ -106,20 +103,12 @@ export const Navbar = () => {
                 ))}
               <hr className="my-1 border-white/5" />
               <Button
+                asChild
                 className="h-9 w-full cursor-pointer rounded-sm bg-white text-sm text-zinc-950 hover:bg-white/80"
-                onClick={() => {
-                  setMobileMenuOpen(false)
-                  const input = document.getElementById("waitlist-email")
-                  if (input) {
-                    input.scrollIntoView({
-                      behavior: "smooth",
-                      block: "center",
-                    })
-                    setTimeout(() => input.focus(), 500)
-                  }
-                }}
               >
-                Get Started
+                <a href="/login" onClick={() => setMobileMenuOpen(false)}>
+                  Sign In
+                </a>
               </Button>
             </nav>
           </motion.div>

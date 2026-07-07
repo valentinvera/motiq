@@ -1,15 +1,23 @@
-import { createFileRoute } from "@tanstack/react-router"
+import { createFileRoute, redirect } from "@tanstack/react-router"
 import { Footer } from "@/components/landing/footer"
 import { Header } from "@/components/landing/header"
+import { Apps } from "@/components/landing/sections/apps"
 import { Cta } from "@/components/landing/sections/cta"
 import { Faq } from "@/components/landing/sections/faq"
 import { Features } from "@/components/landing/sections/features"
 import { Hero } from "@/components/landing/sections/hero"
-import { Integrations } from "@/components/landing/sections/integrations"
 import { Pricing } from "@/components/landing/sections/pricing"
 import { Workflow } from "@/components/landing/sections/workflow"
 
 export const Route = createFileRoute("/")({
+  beforeLoad: ({ context }) => {
+    if (context.auth) {
+      throw redirect({ to: "/overview" })
+    }
+  },
+  head: () => ({
+    meta: [{ title: "Motiq — Autonomous Customer Intelligence" }],
+  }),
   component: HomePage,
 })
 
@@ -21,7 +29,7 @@ function HomePage() {
         <Hero />
         <Features />
         <Workflow />
-        <Integrations />
+        <Apps />
         <Pricing />
         <Faq />
         <Cta />
