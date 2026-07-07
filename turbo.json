@@ -5,7 +5,7 @@
   "concurrency": "4",
   "globalDependencies": ["**/package.json", "**/.env*", "bun.lock"],
   "globalEnv": [],
-  "globalPassThroughEnv": [],
+  "globalPassThroughEnv": ["PUBLIC_API_URL"],
   "tasks": {
     "topo": {
       "dependsOn": ["^topo"]
@@ -26,8 +26,12 @@
         "PORT",
         "CORS_ORIGIN",
         "GOOGLE_GENERATIVE_AI_API_KEY",
+        "GOOGLE_CLIENT_ID",
+        "GOOGLE_CLIENT_SECRET",
         "POLAR_ACCESS_TOKEN",
         "POLAR_PRODUCT_ID",
+        "POLAR_STARTER_PRODUCT_ID",
+        "POLAR_GROWTH_PRODUCT_ID",
         "POLAR_SUCCESS_URL",
         "UPSTASH_REDIS_REST_URL",
         "UPSTASH_REDIS_REST_TOKEN",

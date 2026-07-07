@@ -13,6 +13,7 @@
       "!**/.zed",
       "!**/dev-dist",
       "!**/routeTree.gen.ts",
+      "!apps/web/src/routes/**/*.$*.tsx",
       "!**/.source",
       "!**/.agents",
       "!**/.agent",
