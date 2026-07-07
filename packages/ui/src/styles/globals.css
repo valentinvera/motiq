@@ -158,7 +158,9 @@
 
   body {
     @apply bg-background text-foreground m-0 antialiased;
-    font-family: "Inter", sans-serif;
+    font-family: "Inter Variable", "Inter", sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
   }
 
   input:-webkit-autofill,

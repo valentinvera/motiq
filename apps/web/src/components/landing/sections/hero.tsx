@@ -54,7 +54,7 @@ export const Hero = () => {
               </Button>
               <Button
                 asChild
-                className="h-14 w-full cursor-pointer rounded-sm border border-white/10 px-8 text-white transition-all hover:border-white/20 active:scale-95 sm:w-auto"
+                className="h-14 w-full cursor-pointer rounded-sm border border-white/10 bg-white/5 px-8 text-white transition-all hover:border-white/20 hover:bg-white/10 active:scale-95 sm:w-auto"
                 variant="outline"
               >
                 <a href="#how-it-works">See How It Works</a>

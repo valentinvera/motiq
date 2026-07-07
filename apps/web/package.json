@@ -9,7 +9,8 @@
     "start": "node .output/server/index.mjs",
     "preview": "vite preview",
     "check-types": "tsc --noEmit",
-    "sitemap": "bun run scripts/generate-sitemap.mjs"
+    "sitemap": "bun run scripts/generate-sitemap.mjs",
+    "optimize:hero": "bun run scripts/optimize-hero-image.mjs"
   },
   "dependencies": {
     "@ai-sdk/react": "^3.0.44",
@@ -51,6 +52,7 @@
     "zod": "catalog:"
   },
   "devDependencies": {
+    "@motiq/ts-config": "workspace:*",
     "@tanstack/react-query-devtools": "^5.91.1",
     "@tanstack/react-router-devtools": "^1.141.1",
     "@testing-library/dom": "^10.4.0",
@@ -58,7 +60,6 @@
     "@types/react": "19.2.14",
     "@types/react-dom": "19.2.3",
     "@vitejs/plugin-react": "^5.0.4",
-    "@motiq/ts-config": "workspace:*",
     "babel-plugin-react-compiler": "^1.0.0",
     "glob": "^13.0.0",
     "jsdom": "^26.0.0",

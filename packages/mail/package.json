@@ -21,7 +21,6 @@
     "zod": "catalog:"
   },
   "devDependencies": {
-    "@motiq/db": "workspace:*",
     "@motiq/ts-config": "workspace:*",
     "@types/react": "^19.2.5",
     "@types/react-dom": "^19.2.3"

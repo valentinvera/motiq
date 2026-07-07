@@ -8,11 +8,9 @@ import { overviewRouter } from "./overview"
 import { pipelineRouter } from "./pipeline"
 import { signalRouter } from "./signal"
 import { signalCommentRouter } from "./signal-comment"
-import { waitlistRouter } from "./waitlist"
 import { workspaceRouter } from "./workspace"
 
 export const appRouter = router({
-  waitlist: waitlistRouter,
   workspace: workspaceRouter,
   apps: appsRouter,
   signal: signalRouter,
