@@ -5,7 +5,10 @@ import {
   QueryClient,
   QueryClientProvider,
 } from "@tanstack/react-query"
-import { createRouter as createTanStackRouter } from "@tanstack/react-router"
+import {
+  createRouter as createTanStackRouter,
+  Link,
+} from "@tanstack/react-router"
 import { createTRPCClient, httpBatchLink } from "@trpc/client"
 import { createTRPCOptionsProxy } from "@trpc/tanstack-react-query"
 import { toast } from "sonner"
@@ -19,7 +22,9 @@ export const queryClient = new QueryClient({
       toast.error(error.message, {
         action: {
           label: "retry",
-          onClick: query.invalidate,
+          onClick: () => {
+            queryClient.invalidateQueries({ queryKey: query.queryKey })
+          },
         },
       })
     },
@@ -56,7 +61,26 @@ export const getRouter = () => {
     defaultPreload: "intent",
     defaultPreloadStaleTime: 0,
     context: { trpc: trpcProxy, queryClient, auth: null },
-    defaultNotFoundComponent: () => <div>Not Found</div>,
+    defaultNotFoundComponent: () => (
+      <div className="flex h-dvh flex-col items-center justify-center bg-surface-0 p-4 text-center">
+        <div className="mb-6 flex size-16 items-center justify-center rounded-2xl bg-primary/10 ring-1 ring-primary/20">
+          <span className="font-bold font-mono text-primary text-xl">404</span>
+        </div>
+        <h1 className="mb-2 font-bold text-2xl text-zinc-100 tracking-tight">
+          Spectrum Void
+        </h1>
+        <p className="mb-8 max-w-xs font-mono text-sm text-zinc-500 uppercase tracking-widest">
+          The requested coordinate does not exist in the current monitoring
+          field.
+        </p>
+        <Link
+          className="rounded-full bg-primary px-6 py-2 font-bold text-primary-foreground text-xs uppercase tracking-widest shadow-lg shadow-primary/10 transition-transform hover:scale-105 active:scale-95"
+          to="/overview"
+        >
+          Return to Command
+        </Link>
+      </div>
+    ),
     Wrap: (props: { children: React.ReactNode }) => (
       <QueryClientProvider client={queryClient}>
         <TRPCProvider queryClient={queryClient} trpcClient={trpcClient}>

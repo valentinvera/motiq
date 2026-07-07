@@ -1,15 +1,14 @@
 import type { AppRouter } from "@motiq/trpc/routers"
 import { Toaster } from "@motiq/ui/components/sonner"
 import type { QueryClient } from "@tanstack/react-query"
-import { ReactQueryDevtools } from "@tanstack/react-query-devtools"
 import {
   createRootRouteWithContext,
   HeadContent,
   Outlet,
   Scripts,
 } from "@tanstack/react-router"
-import { TanStackRouterDevtools } from "@tanstack/react-router-devtools"
 import type { TRPCOptionsProxy } from "@trpc/tanstack-react-query"
+import { getOptionalUser } from "@/functions/get-user"
 import appCss from "@/styles/globals.css?url"
 
 export interface RouterAppContext {
@@ -34,6 +33,10 @@ export interface RouterAppContext {
 }
 
 export const Route = createRootRouteWithContext<RouterAppContext>()({
+  beforeLoad: async () => {
+    const auth = await getOptionalUser()
+    return { auth }
+  },
   head: () => ({
     meta: [
       {
@@ -44,7 +47,8 @@ export const Route = createRootRouteWithContext<RouterAppContext>()({
         content: "width=device-width, initial-scale=1",
       },
       {
-        title: "Motiq — Autonomous Customer Intelligence",
+        name: "theme-color",
+        content: "#000000",
       },
     ],
     links: [
@@ -54,8 +58,34 @@ export const Route = createRootRouteWithContext<RouterAppContext>()({
       },
       {
         rel: "icon",
+        href: "/favicon.ico",
+        sizes: "48x48",
+      },
+      {
+        rel: "icon",
         type: "image/svg+xml",
         href: "/favicon.svg",
+      },
+      {
+        rel: "icon",
+        type: "image/png",
+        href: "/favicon-32x32.png",
+        sizes: "32x32",
+      },
+      {
+        rel: "icon",
+        type: "image/png",
+        href: "/favicon-16x16.png",
+        sizes: "16x16",
+      },
+      {
+        rel: "apple-touch-icon",
+        href: "/apple-touch-icon.png",
+        sizes: "180x180",
+      },
+      {
+        rel: "manifest",
+        href: "/site.webmanifest",
       },
     ],
   }),
@@ -70,20 +100,8 @@ function RootDocument() {
         <HeadContent />
       </head>
       <body>
-        <div className="grid h-svh grid-rows-[auto_1fr]">
-          <Outlet />
-        </div>
+        <Outlet />
         <Toaster richColors />
-        {/* biome-ignore lint/nursery/noUndeclaredEnvVars: DEV is a Vite built-in variable */}
-        {import.meta.env.DEV && (
-          <>
-            <TanStackRouterDevtools position="bottom-left" />
-            <ReactQueryDevtools
-              buttonPosition="bottom-right"
-              position="bottom"
-            />
-          </>
-        )}
         <Scripts />
       </body>
     </html>
