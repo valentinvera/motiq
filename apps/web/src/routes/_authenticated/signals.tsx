@@ -135,10 +135,15 @@ function SignalsPage() {
       })
     }
 
+    const invalidateAlertsAndSignals = () => {
+      invalidateAlerts()
+      invalidateSignals()
+    }
+
     eventSource.addEventListener("signal:created", invalidateSignals)
     eventSource.addEventListener("signal:updated", invalidateSignals)
-    eventSource.addEventListener("alert:created", invalidateAlerts)
-    eventSource.addEventListener("alert:updated", invalidateAlerts)
+    eventSource.addEventListener("alert:created", invalidateAlertsAndSignals)
+    eventSource.addEventListener("alert:updated", invalidateAlertsAndSignals)
 
     return () => eventSource.close()
   }, [queryClient, selectedId, trpc])
