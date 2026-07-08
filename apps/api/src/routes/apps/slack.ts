@@ -107,14 +107,32 @@ async function joinSlackChannel(accessToken: string, channel: string) {
 slack.post("/events", async (c) => {
   const rawBody = await c.req.text()
 
-  if (!verifySlackRequest(c.req.raw.headers, rawBody)) {
-    return c.json({ error: "Invalid Slack signature" }, 401)
+  let body: {
+    event?: {
+      bot_id?: string
+      channel?: string
+      subtype?: string
+      text?: string
+      ts?: string
+      type?: string
+      user?: string
+    }
+    challenge?: string
+    team_id?: string
+    type?: string
+  }
+  try {
+    body = JSON.parse(rawBody)
+  } catch {
+    return c.json({ error: "Invalid Slack payload" }, 400)
   }
 
-  const body = JSON.parse(rawBody)
-
   if (body.type === "url_verification") {
-    return c.json({ challenge: body.challenge })
+    return c.text(body.challenge ?? "")
+  }
+
+  if (!verifySlackRequest(c.req.raw.headers, rawBody)) {
+    return c.json({ error: "Invalid Slack signature" }, 401)
   }
 
   if (body.type !== "event_callback") {

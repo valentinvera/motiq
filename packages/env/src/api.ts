@@ -3,7 +3,7 @@ import { z } from "zod"
 
 export const env = createEnv({
   server: {
-    PORT: z.string().min(1),
+    PORT: z.string().min(1).default("4040"),
     CORS_ORIGIN: z.string(),
     CRON_SECRET: z.string().default(""),
     OPENROUTER_AI_API_KEY: z.string().min(1),
@@ -23,8 +23,8 @@ export const env = createEnv({
     SLACK_CLIENT_ID: z.string().default(""),
     SLACK_CLIENT_SECRET: z.string().default(""),
     SLACK_SIGNING_SECRET: z.string().default(""),
-    GOOGLE_CLIENT_ID: z.string().min(1),
-    GOOGLE_CLIENT_SECRET: z.string().min(1),
+    GOOGLE_CLIENT_ID: z.string().default(""),
+    GOOGLE_CLIENT_SECRET: z.string().default(""),
     GITHUB_CLIENT_ID: z.string().default(""),
     GITHUB_CLIENT_SECRET: z.string().default(""),
     POLAR_APP_CLIENT_ID: z.string().default(""),

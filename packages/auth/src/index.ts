@@ -297,6 +297,25 @@ function getCheckoutProducts() {
   ]
 }
 
+const socialProviders = {
+  ...(env.GOOGLE_CLIENT_ID && env.GOOGLE_CLIENT_SECRET
+    ? {
+        google: {
+          clientId: env.GOOGLE_CLIENT_ID,
+          clientSecret: env.GOOGLE_CLIENT_SECRET,
+        },
+      }
+    : {}),
+  ...(env.GITHUB_CLIENT_ID && env.GITHUB_CLIENT_SECRET
+    ? {
+        github: {
+          clientId: env.GITHUB_CLIENT_ID,
+          clientSecret: env.GITHUB_CLIENT_SECRET,
+        },
+      }
+    : {}),
+}
+
 function getWebhookRecord(payload: unknown) {
   if (!(payload && typeof payload === "object")) {
     return null
@@ -368,16 +387,7 @@ export const auth = betterAuth<BetterAuthOptions>({
       })
     },
   },
-  socialProviders: {
-    google: {
-      clientId: env.GOOGLE_CLIENT_ID,
-      clientSecret: env.GOOGLE_CLIENT_SECRET,
-    },
-    github: {
-      clientId: env.GITHUB_CLIENT_ID,
-      clientSecret: env.GITHUB_CLIENT_SECRET,
-    },
-  },
+  socialProviders,
   secondaryStorage: {
     get: async (key: string) => {
       const value = await redis.get<string>(key)
