@@ -19,6 +19,11 @@ const daysSchema = z.union([
   z.literal(90),
 ])
 
+const logicalPipelineCount =
+  sql<number>`count(distinct case when ${pipelineRun.triggeredBy} = 'new_signal' and ${pipelineRun.triggerSignalId} is not null then ${pipelineRun.triggerSignalId} else ${pipelineRun.id} end)`.mapWith(
+    Number
+  )
+
 export const overviewRouter = router({
   getOverview: orgProcedure
     .input(z.object({ days: daysSchema }).optional())
@@ -77,7 +82,7 @@ export const overviewRouter = router({
             and(eq(alert.organizationId, orgId), eq(alert.acknowledged, false))
           ),
         db
-          .select({ count: count() })
+          .select({ count: logicalPipelineCount })
           .from(pipelineRun)
           .where(
             and(
@@ -86,7 +91,7 @@ export const overviewRouter = router({
             )
           ),
         db
-          .select({ count: count() })
+          .select({ count: logicalPipelineCount })
           .from(pipelineRun)
           .where(
             and(

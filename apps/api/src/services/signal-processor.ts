@@ -1,3 +1,4 @@
+import { redis } from "@motiq/cache"
 import { db } from "@motiq/db"
 import { agentRun } from "@motiq/db/schema/agent-runs"
 import { alert } from "@motiq/db/schema/alerts"
@@ -12,6 +13,28 @@ import { eventBus } from "./event-bus.js"
 import { dequeueSignal, retrySignal, type SignalJob } from "./signal-queue.js"
 
 type SignalRecord = typeof signal.$inferSelect
+
+const SIGNAL_PROCESSING_LOCK_TTL_SECONDS = 5 * 60
+
+function getSignalProcessingLockKey(signalId: string) {
+  return `motiq:signal-processing:${signalId}`
+}
+
+async function acquireSignalProcessingLock(signalId: string, token: string) {
+  const result = await redis.set(getSignalProcessingLockKey(signalId), token, {
+    ex: SIGNAL_PROCESSING_LOCK_TTL_SECONDS,
+    nx: true,
+  })
+  return result === "OK"
+}
+
+async function releaseSignalProcessingLock(signalId: string, token: string) {
+  const key = getSignalProcessingLockKey(signalId)
+  const currentToken = await redis.get<string>(key)
+  if (currentToken === token) {
+    await redis.del(key)
+  }
+}
 
 function normalizeSignalContent(content: string) {
   return content.trim().replace(/\s+/g, " ").toLowerCase()
@@ -357,7 +380,8 @@ export async function processNextSignal(): Promise<boolean> {
     return false
   }
 
-  const { job, signalRecord } = next
+  const { job } = next
+  let signalRecord = next.signalRecord
 
   if (signalRecord.status !== "new") {
     await logAgentActivity({
@@ -372,10 +396,44 @@ export async function processNextSignal(): Promise<boolean> {
     return true
   }
 
+  const lockToken = crypto.randomUUID()
+  const lockAcquired = await acquireSignalProcessingLock(
+    job.signalId,
+    lockToken
+  )
+  if (!lockAcquired) {
+    return true
+  }
+
   let plRunId: string | null = null
   let runId: string | null = null
 
   try {
+    const [freshSignalRecord] = await db
+      .select()
+      .from(signal)
+      .where(eq(signal.id, job.signalId))
+      .limit(1)
+
+    if (!freshSignalRecord) {
+      console.warn(`Signal ${job.signalId} not found after lock, skipping`)
+      return true
+    }
+
+    signalRecord = freshSignalRecord
+    if (signalRecord.status !== "new") {
+      await logAgentActivity({
+        organizationId: job.organizationId,
+        activityType: "signal_skipped",
+        title: "Signal Skipped: already processed",
+        description: `Skipped ${signalRecord.title} because status is ${signalRecord.status}.`,
+        entityType: "signal",
+        entityId: job.signalId,
+        metadata: { status: signalRecord.status },
+      })
+      return true
+    }
+
     plRunId = crypto.randomUUID()
     await db.insert(pipelineRun).values({
       id: plRunId,
@@ -587,6 +645,8 @@ export async function processNextSignal(): Promise<boolean> {
     })
     await retrySignal(job, error)
     return true
+  } finally {
+    await releaseSignalProcessingLock(job.signalId, lockToken)
   }
 }
 
