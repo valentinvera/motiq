@@ -42,6 +42,13 @@ interface AlertData {
   signalId: string | null
   metadata: Record<string, unknown> | null
   createdAt: Date
+  relatedSignal?: {
+    id: string
+    source: string
+    title: string
+    customerName: string | null
+    externalId: string | null
+  } | null
 }
 
 interface ResolutionMetadata {
@@ -49,6 +56,9 @@ interface ResolutionMetadata {
   label?: string
   decidedAt?: string
 }
+
+const SLACK_USER_ID_PATTERN = /^U[A-Z0-9]{6,}$/i
+const TECHNICAL_ID_PATTERN = /^[A-Z0-9]{12,}$/i
 
 function AlertsPage() {
   const trpc = useTRPC()
@@ -268,6 +278,10 @@ function AlertTimelineItem({
   const isPending = escalate.isPending
   const recommendation = getAlertRecommendation(alert)
   const resolution = getAlertResolution(alert)
+  const displayTitle = cleanAlertText(alert.title, alert)
+  const displayDescription = alert.description
+    ? cleanAlertText(alert.description, alert)
+    : null
   let alertClassName =
     "border-white/[0.08] bg-white/[0.03] hover:border-white/[0.12] hover:bg-white/[0.05]"
 
@@ -298,7 +312,7 @@ function AlertTimelineItem({
       <div className="flex-1 space-y-3">
         <div className="flex flex-wrap items-center gap-3">
           <p className="font-medium text-sm text-zinc-200 transition-colors group-hover:text-white">
-            {alert.title}
+            {displayTitle}
           </p>
           <div className="flex items-center gap-2">
             <SeverityBadge severity={alert.severity} />
@@ -308,9 +322,9 @@ function AlertTimelineItem({
           </div>
         </div>
 
-        {alert.description && (
+        {displayDescription && (
           <p className="max-w-2xl font-medium text-sm text-zinc-400 leading-relaxed">
-            {alert.description}
+            {displayDescription}
           </p>
         )}
 
@@ -385,6 +399,79 @@ function getAlertResolution(alert: AlertData) {
   }
 
   return { status: "reviewed", label: "Handled" } satisfies ResolutionMetadata
+}
+
+function escapeRegExp(value: string) {
+  return value.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")
+}
+
+function formatSourceLabel(source: string | undefined) {
+  if (!source) {
+    return "source"
+  }
+
+  return source
+    .split("_")
+    .map((part) => part.charAt(0).toUpperCase() + part.slice(1))
+    .join(" ")
+}
+
+function isTechnicalIdentifier(value: unknown): value is string {
+  if (typeof value !== "string") {
+    return false
+  }
+
+  const trimmed = value.trim()
+  return (
+    SLACK_USER_ID_PATTERN.test(trimmed) || TECHNICAL_ID_PATTERN.test(trimmed)
+  )
+}
+
+function getReadableAlertSource(alert: AlertData) {
+  const metadataCustomerName =
+    typeof alert.metadata?.customerName === "string"
+      ? alert.metadata.customerName.trim()
+      : ""
+  const relatedCustomerName = alert.relatedSignal?.customerName?.trim() ?? ""
+
+  if (metadataCustomerName && !isTechnicalIdentifier(metadataCustomerName)) {
+    return metadataCustomerName
+  }
+
+  if (relatedCustomerName && !isTechnicalIdentifier(relatedCustomerName)) {
+    return relatedCustomerName
+  }
+
+  return formatSourceLabel(alert.relatedSignal?.source)
+}
+
+function getTechnicalAlertIdentifiers(alert: AlertData) {
+  const candidates = [
+    alert.metadata?.customerName,
+    alert.relatedSignal?.customerName,
+    alert.relatedSignal?.externalId,
+  ]
+
+  return candidates.filter(isTechnicalIdentifier)
+}
+
+function cleanAlertText(text: string, alert: AlertData) {
+  let cleaned = text
+  const readableSource = getReadableAlertSource(alert)
+
+  for (const identifier of getTechnicalAlertIdentifiers(alert)) {
+    const escapedIdentifier = escapeRegExp(identifier)
+    cleaned = cleaned.replace(
+      new RegExp(`\\bfrom\\s+${escapedIdentifier}\\b`, "gi"),
+      `from ${readableSource}`
+    )
+    cleaned = cleaned.replace(
+      new RegExp(`\\bby\\s+${escapedIdentifier}\\b`, "gi"),
+      `by ${readableSource}`
+    )
+  }
+
+  return cleaned.replace(/\s{2,}/g, " ").trim()
 }
 
 function getAlertRecommendation(alert: AlertData) {

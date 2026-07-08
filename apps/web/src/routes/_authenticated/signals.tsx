@@ -247,7 +247,7 @@ function SignalsPage() {
         {totalPages > 1 && (
           <div className="flex items-center gap-2">
             <Button
-              className="h-8 rounded-lg border border-white/[0.08] bg-white/[0.04] font-medium text-xs transition-colors hover:bg-white/[0.06] disabled:opacity-20"
+              className="h-8 w-24 cursor-pointer rounded-lg border border-white/[0.08] bg-white/[0.04] font-medium text-xs text-zinc-200 transition-colors hover:bg-white/[0.06] hover:text-white disabled:cursor-default disabled:border-white/[0.04] disabled:bg-white/[0.015] disabled:text-zinc-600 disabled:opacity-100"
               disabled={page === 0}
               onClick={() => setPage((p) => p - 1)}
               size="sm"
@@ -256,11 +256,11 @@ function SignalsPage() {
               <ChevronLeftIcon className="mr-1 size-3.5" />
               Previous
             </Button>
-            <div className="flex h-8 items-center justify-center rounded-lg border border-white/[0.08] bg-white/[0.04] px-3 text-[11px] text-zinc-400">
+            <div className="flex h-8 w-14 items-center justify-center rounded-lg border border-white/[0.08] bg-white/[0.04] font-medium text-[11px] text-zinc-300">
               {page + 1} / {totalPages}
             </div>
             <Button
-              className="h-8 rounded-lg border border-white/[0.08] bg-white/[0.04] font-medium text-xs transition-colors hover:bg-white/[0.06] disabled:opacity-20"
+              className="h-8 w-24 cursor-pointer rounded-lg border border-white/[0.08] bg-white/[0.04] font-medium text-xs text-zinc-200 transition-colors hover:bg-white/[0.06] hover:text-white disabled:cursor-default disabled:border-white/[0.04] disabled:bg-white/[0.015] disabled:text-zinc-600 disabled:opacity-100"
               disabled={page >= totalPages - 1}
               onClick={() => setPage((p) => p + 1)}
               size="sm"
