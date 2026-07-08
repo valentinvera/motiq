@@ -9,6 +9,7 @@ import {
 } from "@tanstack/react-router"
 import type { TRPCOptionsProxy } from "@trpc/tanstack-react-query"
 import { getOptionalUser } from "@/functions/get-user"
+import { getClientSessionWithRetry } from "@/lib/auth-session"
 import {
   ORGANIZATION_JSONLD,
   SEO,
@@ -42,6 +43,11 @@ const ogImageUrl = `${SEO.siteUrl}${SEO.ogImage}`
 
 export const Route = createRootRouteWithContext<RouterAppContext>()({
   beforeLoad: async () => {
+    if (typeof window !== "undefined") {
+      const auth = await getClientSessionWithRetry()
+      return { auth }
+    }
+
     const auth = await getOptionalUser()
     return { auth }
   },

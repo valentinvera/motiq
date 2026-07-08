@@ -5,6 +5,7 @@ import { Loader2Icon } from "lucide-react"
 import { useState } from "react"
 import { toast } from "sonner"
 import { authClient } from "@/lib/auth-client"
+import { clearCachedAuthSession } from "@/lib/auth-session"
 import { useTRPC } from "@/utils/trpc"
 
 export const PENDING_INVITATION_KEY = "motiq:pendingInvitation"
@@ -170,6 +171,7 @@ function WrongAccountView({
     setSigningOut(true)
     rememberInvitation(invitationId)
     await authClient.signOut()
+    clearCachedAuthSession()
     window.location.assign("/login")
   }
 

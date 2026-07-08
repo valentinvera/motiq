@@ -14,6 +14,7 @@ import { toast } from "sonner"
 import { SettingsCard } from "@/components/app/settings-card"
 import { getPayment } from "@/functions/get-payment"
 import { authClient } from "@/lib/auth-client"
+import { clearCachedAuthSession } from "@/lib/auth-session"
 import { formatBillingDate, getActiveBillingPlan } from "@/lib/billing"
 import { getMediaUrl, isBlobMediaUrl } from "@/lib/media"
 
@@ -306,6 +307,7 @@ function PlanCard() {
 function SignOutCard() {
   async function handleSignOut() {
     await authClient.signOut()
+    clearCachedAuthSession()
     window.location.href = "/login"
   }
 
