@@ -11,14 +11,16 @@ import { CommandPalette } from "@/components/app/command-palette"
 import { AppSidebar } from "@/components/app/sidebar"
 import { Topbar } from "@/components/app/topbar"
 import { authClient } from "@/lib/auth-client"
+import { resolveAuthSession } from "@/lib/auth-session"
 import { useTRPC } from "@/utils/trpc"
 
 export const Route = createFileRoute("/_authenticated")({
-  beforeLoad: ({ context }) => {
-    if (!context.auth) {
+  beforeLoad: async ({ context }) => {
+    const auth = await resolveAuthSession(context.auth)
+    if (!auth) {
       throw redirect({ to: "/login" })
     }
-    return { auth: context.auth }
+    return { auth }
   },
   component: AuthenticatedLayout,
 })

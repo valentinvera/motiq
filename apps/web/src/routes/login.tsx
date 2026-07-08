@@ -13,10 +13,12 @@ import { useEffect, useState } from "react"
 import { toast } from "sonner"
 import { AuthLayout } from "@/components/app/auth-layout"
 import { authClient } from "@/lib/auth-client"
+import { resolveAuthSession } from "@/lib/auth-session"
 
 export const Route = createFileRoute("/login")({
-  beforeLoad: ({ context }) => {
-    if (context.auth) {
+  beforeLoad: async ({ context }) => {
+    const auth = await resolveAuthSession(context.auth)
+    if (auth) {
       throw redirect({ to: "/overview" })
     }
   },
@@ -59,10 +61,29 @@ function LoginPage() {
     } else {
       setGithubLoading(true)
     }
-    await authClient.signIn.social({
-      provider,
-      callbackURL: `${window.location.origin}/overview`,
-    })
+
+    try {
+      const { error } = await authClient.signIn.social({
+        provider,
+        callbackURL: `${window.location.origin}/overview`,
+      })
+
+      if (error) {
+        toast.error(error.message ?? `Failed to sign in with ${provider}`)
+        if (provider === "google") {
+          setGoogleLoading(false)
+        } else {
+          setGithubLoading(false)
+        }
+      }
+    } catch {
+      toast.error(`Failed to sign in with ${provider}`)
+      if (provider === "google") {
+        setGoogleLoading(false)
+      } else {
+        setGithubLoading(false)
+      }
+    }
   }
 
   async function handleSubmit(e: React.FormEvent) {
