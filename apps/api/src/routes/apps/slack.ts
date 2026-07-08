@@ -173,6 +173,13 @@ slack.post("/events", async (c) => {
       ? config.incomingWebhookChannel
       : undefined
 
+  console.log("[slack] Event message received", {
+    teamId,
+    appId: matched.id,
+    channel,
+    ts,
+  })
+
   await ingestSlackMessageSignals({
     organizationId: matched.organizationId,
     appId: matched.id,
@@ -183,6 +190,7 @@ slack.post("/events", async (c) => {
     messageTs: ts,
     ingestionMode: "events",
     detectedAt: new Date(),
+    extractFeedbackItems: false,
   })
 
   return c.json({ ok: true })

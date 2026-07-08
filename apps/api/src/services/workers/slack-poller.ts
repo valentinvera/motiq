@@ -3,7 +3,7 @@ import { app } from "@motiq/db/schema/apps"
 import { and, eq } from "drizzle-orm"
 import { ingestSlackMessageSignals } from "../slack-signal-ingestion.js"
 
-const POLLING_INTERVAL_MS = 5 * 60 * 1000
+const POLLING_INTERVAL_MS = 30 * 1000
 const SLACK_HISTORY_LIMIT = 100
 
 let pollerStarted = false
@@ -54,18 +54,29 @@ export function runSlackPoller() {
   )
 }
 
-async function pollSlackApps() {
+export async function pollSlackApps() {
   const records = await db
     .select()
     .from(app)
     .where(and(eq(app.type, "slack"), eq(app.status, "active")))
 
+  let syncedApps = 0
+  let ingestedMessages = 0
+
   for (const record of records) {
     try {
-      await syncSlack(record)
+      const count = await syncSlack(record)
+      syncedApps += 1
+      ingestedMessages += count
     } catch (error) {
       console.error(`[slack] Sync failed for ${record.id}:`, error)
     }
+  }
+
+  return {
+    activeApps: records.length,
+    syncedApps,
+    ingestedMessages,
   }
 }
 
@@ -76,7 +87,7 @@ async function syncSlack(record: typeof app.$inferSelect) {
   const channel = config.incomingWebhookChannelId
 
   if (!(accessToken && channel)) {
-    return
+    return 0
   }
 
   const response = await fetchSlackChannelHistory({
@@ -89,7 +100,7 @@ async function syncSlack(record: typeof app.$inferSelect) {
     console.error(
       `[slack] conversations.history failed for ${record.id}: ${response.error ?? "unknown_error"}`
     )
-    return
+    return 0
   }
 
   const messages = (response.messages ?? [])
@@ -107,6 +118,7 @@ async function syncSlack(record: typeof app.$inferSelect) {
       messageTs: message.ts ?? "",
       ingestionMode: "polling",
       detectedAt: slackTsToDate(message.ts),
+      extractFeedbackItems: false,
     })
   }
 
@@ -123,6 +135,8 @@ async function syncSlack(record: typeof app.$inferSelect) {
       updatedAt: new Date(),
     })
     .where(eq(app.id, record.id))
+
+  return messages.length
 }
 
 async function fetchSlackChannelHistory({
