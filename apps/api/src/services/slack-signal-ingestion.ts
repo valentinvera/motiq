@@ -18,6 +18,7 @@ interface SlackMessageSignalParams {
   messageTs: string
   ingestionMode?: "events" | "polling"
   detectedAt: Date
+  extractFeedbackItems?: boolean
 }
 
 function normalizeWhitespace(value: string) {
@@ -45,14 +46,31 @@ function getSlackSignalTitle(text: string) {
   return `Slack: ${truncate(preview, 80)}`
 }
 
-export async function ingestSlackMessageSignals(
-  params: SlackMessageSignalParams
-) {
-  const text = params.text.trim()
-  if (!text || isMotiqGeneratedSlackMessage(text)) {
-    return []
+function getSingleFeedbackItem(text: string): ExtractedFeedbackItem {
+  return {
+    title: getSlackSignalTitle(text),
+    content: text,
+    customerName: null,
   }
+}
 
+async function logExtractionSkipped(params: SlackMessageSignalParams) {
+  await logAgentActivity({
+    organizationId: params.organizationId,
+    activityType: "agent_run_completed",
+    title: "Slack Feedback Extraction Skipped",
+    description: "Ingested Slack message directly for faster processing.",
+    entityType: "slack_message",
+    entityId: params.messageTs,
+    metadata: {
+      appId: params.appId,
+      channel: params.channel,
+      ingestionMode: params.ingestionMode ?? "events",
+    },
+  })
+}
+
+async function logExtractionStarted(params: SlackMessageSignalParams) {
   await logAgentActivity({
     organizationId: params.organizationId,
     activityType: "agent_run_started",
@@ -67,48 +85,78 @@ export async function ingestSlackMessageSignals(
       ingestionMode: params.ingestionMode ?? "events",
     },
   })
+}
 
-  let items: ExtractedFeedbackItem[]
-  try {
-    items = await extractFeedbackItemsFromSlackMessage({ text })
-  } catch (error) {
-    console.error(
-      "[slack] Feedback extraction failed, ingesting message as one signal:",
-      error
-    )
-    await logAgentActivity({
-      organizationId: params.organizationId,
-      activityType: "agent_run_failed",
-      title: "Slack Feedback Extraction Failed",
-      description:
-        error instanceof Error ? error.message : "Unknown extraction error",
-      entityType: "slack_message",
-      entityId: params.messageTs,
-      metadata: { appId: params.appId, channel: params.channel },
-    })
-    items = [
-      {
-        title: getSlackSignalTitle(text),
-        content: text,
-        customerName: null,
-      },
-    ]
-  }
-
+async function logExtractionCompleted(
+  params: SlackMessageSignalParams,
+  itemCount: number
+) {
   await logAgentActivity({
     organizationId: params.organizationId,
     activityType: "agent_run_completed",
     title: "Slack Feedback Extraction Completed",
-    description: `Extracted ${items.length} feedback item${items.length === 1 ? "" : "s"}.`,
+    description: `Extracted ${itemCount} feedback item${itemCount === 1 ? "" : "s"}.`,
     entityType: "slack_message",
     entityId: params.messageTs,
     metadata: {
       appId: params.appId,
       channel: params.channel,
-      itemCount: items.length,
+      itemCount,
       ingestionMode: params.ingestionMode ?? "events",
     },
   })
+}
+
+async function logExtractionFailed(
+  params: SlackMessageSignalParams,
+  error: unknown
+) {
+  await logAgentActivity({
+    organizationId: params.organizationId,
+    activityType: "agent_run_failed",
+    title: "Slack Feedback Extraction Failed",
+    description:
+      error instanceof Error ? error.message : "Unknown extraction error",
+    entityType: "slack_message",
+    entityId: params.messageTs,
+    metadata: { appId: params.appId, channel: params.channel },
+  })
+}
+
+async function getFeedbackItemsFromMessage(
+  params: SlackMessageSignalParams,
+  text: string
+) {
+  if (params.extractFeedbackItems === false) {
+    await logExtractionSkipped(params)
+    return [getSingleFeedbackItem(text)]
+  }
+
+  await logExtractionStarted(params)
+
+  try {
+    const items = await extractFeedbackItemsFromSlackMessage({ text })
+    await logExtractionCompleted(params, items.length)
+    return items
+  } catch (error) {
+    console.error(
+      "[slack] Feedback extraction failed, ingesting message as one signal:",
+      error
+    )
+    await logExtractionFailed(params, error)
+    return [getSingleFeedbackItem(text)]
+  }
+}
+
+export async function ingestSlackMessageSignals(
+  params: SlackMessageSignalParams
+) {
+  const text = params.text.trim()
+  if (!text || isMotiqGeneratedSlackMessage(text)) {
+    return []
+  }
+
+  const items = await getFeedbackItemsFromMessage(params, text)
 
   const signalIds: string[] = []
   for (const [index, item] of items.entries()) {
