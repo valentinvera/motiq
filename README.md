@@ -2,83 +2,136 @@
 
 **Autonomous Customer Intelligence for B2B SaaS teams.**
 
-Stop missing critical customer signals. Motiq deploys AI agents that monitor all your customer feedback 24/7 — triaging signals, detecting patterns, and alerting the right people before small issues become churn.
+Motiq helps customer-facing teams stop missing critical customer signals. It connects to feedback channels, monitors every new signal with AI agents, and alerts the right people before small issues become churn.
 
-## Tech Stack
+## The Problem
 
-- **Runtime** — Bun
-- **Monorepo** — Turborepo + Bun workspaces
-- **Frontend** — TanStack Start (SSR) + React 19 + TanStack Router + Tailwind v4
-- **Backend** — Hono
-- **API Layer** — tRPC (end-to-end type-safe)
-- **Database** — PostgreSQL (Neon) + Drizzle ORM
-- **Auth** — Better Auth + Polar (payments)
-- **AI** — Vercel AI SDK + Google
-- **UI** — shadcn/ui + Radix
-- **Code Quality** — Biome (via Ultracite) + Lefthook
+B2B SaaS teams do not lose customers because they lack feedback. They lose customers because the important feedback is scattered across Slack, tickets, calls, forms, inboxes, and internal notes.
 
-## Getting Started
+Critical signals get buried:
 
-Install dependencies:
+- an enterprise customer mentions a broken workflow in Slack
+- a support thread hints at churn risk
+- a product complaint appears again and again across accounts
+- a billing issue blocks renewal conversations
+- a competitor shows up in multiple customer conversations
 
-```bash
-bun i
-```
+By the time these patterns are visible in a report, the team is already reacting.
 
-### Database Setup
+## The Product
 
-This project uses PostgreSQL (Neon) with Drizzle ORM.
+Motiq watches customer feedback continuously and turns it into actionable intelligence.
 
-1. Set up a PostgreSQL database.
-2. Update your `apps/api/.env` file with your connection details.
-3. Push the schema:
+Instead of asking teams to search dashboards, run reports, or manually inspect every channel, Motiq pushes the important signals forward:
 
-```bash
-bun run --filter @motiq/db db:push
-```
+- what happened
+- why it matters
+- how urgent it is
+- who should act
+- what source feedback supports it
 
-### Development
+The goal is simple: help teams act before risk becomes churn.
 
-```bash
-bun run dev        # Start full stack (web + api)
-bun run dev:web    # Start only the frontend
-bun run dev:api    # Start only the API
-```
+## Who Motiq Is For
 
-- Web app: [http://localhost:8080](http://localhost:8080)
-- API: [http://localhost:4040](http://localhost:4040)
+Motiq is built for B2B SaaS teams where customer feedback volume is growing faster than the team's ability to process it.
 
-## Project Structure
+Primary users include:
 
-```
-motiq/
-├── apps/
-│   ├── web/              # Frontend (TanStack Start + React 19)
-│   └── api/              # Backend API (Hono + Bun)
-├── packages/
-│   ├── ai/               # AI SDK integration (Google)
-│   ├── auth/             # Authentication (Better Auth + Polar)
-│   ├── cache/            # Caching (Upstash Redis)
-│   ├── db/               # Database schema & Drizzle ORM
-│   ├── env/              # Type-safe environment variables
-│   ├── mail/             # Transactional email (Plunk + React Email)
-│   ├── trpc/             # tRPC routers, procedures & context
-│   ├── ts-config/        # Shared TypeScript configs
-│   └── ui/               # Shared UI component library (shadcn/ui)
-```
+- VP of Customer Success
+- Head of Product
+- Support and CS Managers
+- founders and operators at customer-led SaaS companies
 
-## Scripts
+Motiq is especially useful for teams with many customer touchpoints and not enough time to manually connect the dots.
 
-| Command | Description |
-|---|---|
-| `bun run dev` | Start all apps in development mode |
-| `bun run build` | Build all apps and packages |
-| `bun run dev:web` | Start only the web app |
-| `bun run dev:api` | Start only the API |
-| `bun run check-types` | TypeScript type checking across monorepo |
-| `bun run check` | Run Biome linting and formatting check |
-| `bun run fix` | Auto-fix linting and formatting issues |
-| `bun run --filter @motiq/db db:push` | Push schema to database |
-| `bun run --filter @motiq/db db:generate` | Generate migrations |
-| `bun run --filter @motiq/db db:migrate` | Apply migrations |
-| `bun run --filter @motiq/db db:studio` | Open Drizzle Studio |
+## How It Works
+
+### 1. Connect
+
+Motiq brings customer feedback into one intelligence layer. The product starts with channels like Slack and is designed to expand across support tickets, forms, calls, inboxes, product feedback, and customer conversations.
+
+Every source becomes part of the same signal pipeline.
+
+### 2. Monitor
+
+Autonomous AI agents review incoming feedback and classify what matters.
+
+They look for:
+
+- churn risk
+- urgent complaints
+- product blockers
+- recurring patterns
+- competitive threats
+- escalation-worthy issues
+- high-priority customer requests
+
+Signals are prioritized so teams can focus on what needs attention now.
+
+### 3. Act
+
+Motiq turns critical feedback into alerts and recommendations.
+
+The product helps teams:
+
+- identify urgent customer risks
+- understand the source context
+- escalate the right issues
+- track what has been triaged
+- avoid losing important feedback in busy channels
+
+Motiq is not just a passive dashboard. It is a system that watches, interprets, and pushes the right work forward.
+
+## What Makes Motiq Different
+
+Most customer feedback tools help teams collect feedback. Motiq focuses on what happens after feedback is collected.
+
+It is built around autonomous monitoring:
+
+- always-on signal detection
+- AI triage for every incoming item
+- alerts that preserve source context
+- proactive risk discovery
+- a workflow designed around action, not reporting
+
+Motiq is meant to feel like an extra operator on the team: quiet, consistent, and focused on the signals that should not be missed.
+
+## Product Principles
+
+### Signals First
+
+The signal is the core unit of the product. Everything in Motiq is designed to make important customer information easier to notice, verify, and act on.
+
+### Proactive Over Reactive
+
+Teams should not need to wait for churn reviews, manual audits, or weekly reports to discover customer risk. Motiq surfaces problems while there is still time to act.
+
+### Trust Through Context
+
+Every alert should be grounded in real source feedback. Teams should be able to understand why Motiq flagged something and verify the original context.
+
+### Intelligent Minimalism
+
+Motiq keeps the interface focused. No clutter, no noisy dashboards, no vanity charts. The product highlights what matters and gets out of the way.
+
+## Current MVP
+
+The MVP focuses on the core loop:
+
+- connect a customer feedback source
+- ingest new customer messages
+- detect critical signals
+- generate alerts
+- show triage state in real time
+- help teams review and act on what matters
+
+This is the foundation for a broader autonomous customer intelligence system.
+
+## Vision
+
+Motiq is moving toward a future where customer intelligence is not something teams manually assemble.
+
+The product should continuously understand customer feedback, detect emerging risks, recommend action, and eventually help teams resolve issues proactively at scale.
+
+The long-term goal is to become the always-on intelligence layer for customer-led SaaS companies.

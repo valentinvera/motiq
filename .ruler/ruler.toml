@@ -1,0 +1,47 @@
+# Ruler Configuration File
+# See https://okigu.com/ruler for documentation.
+
+# Default agents to run when --agents is not specified
+default_agents = ["agentsmd", "antigravity", "claude", "gemini-cli", "zed"]
+
+# --- Global MCP Server Configuration ---
+[mcp]
+# Enable/disable MCP propagation globally (default: true)
+enabled = true
+# Global merge strategy: 'merge' or 'overwrite' (default: 'merge')
+merge_strategy = "merge"
+
+# --- MCP Server Definitions ---
+[mcp_servers.context7]
+command = "bunx"
+args = ["-y", "@upstash/context7-mcp"]
+
+[mcp_servers.shadcn]
+command = "bunx"
+args = ["shadcn@latest", "mcp"]
+
+[mcp_servers.neon]
+command = "bunx"
+args = ["-y", "mcp-remote@latest", "https://mcp.neon.tech/mcp"]
+
+[mcp_servers.better-auth]
+url = "https://mcp.chonkie.ai/better-auth/better-auth-builder/mcp"
+
+[mcp_servers.polar]
+command = "bunx"
+args = ["-y", "@polar-sh/mcp"]
+[mcp_servers.polar.env]
+POLAR_ACCESS_TOKEN = "polar_oat_6VGBqrotnaJlkS6d5xXC5BOFXSh2JLxAZQpPg1oOJU3"
+
+[mcp_servers.vercel]
+command = "bunx"
+args = ["-y", "mcp-remote@latest", "https://mcp.vercel.com"]
+
+[mcp_servers.ultracite]
+command = "bunx"
+args = ["-y", "mcp-remote", "https://www.ultracite.ai/api/mcp/mcp"]
+
+# --- Global .gitignore Configuration ---
+[gitignore]
+# Enable/disable automatic .gitignore updates (default: true)
+enabled = true
