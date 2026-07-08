@@ -1,9 +1,19 @@
 import { auth } from "@motiq/auth"
+import { redis } from "@motiq/cache"
 import { type Context, Hono } from "hono"
 import { streamSSE } from "hono/streaming"
-import { eventBus } from "../services/event-bus.js"
+import {
+  type EventMap,
+  type EventName,
+  eventBus,
+  getRealtimeChannel,
+  type RealtimeEvent,
+  realtimeEventNames,
+} from "../services/event-bus.js"
 
 export const sse = new Hono()
+
+type RedisSubscription = ReturnType<typeof redis.subscribe<RealtimeEvent>>
 
 async function handleSseRequest(c: Context) {
   const session = await auth.api.getSession({ headers: c.req.raw.headers })
@@ -18,14 +28,17 @@ async function handleSseRequest(c: Context) {
 
   return streamSSE(c, async (stream) => {
     let closed = false
+    let cleanedUp = false
+    let redisSubscription: RedisSubscription | null = null
 
-    const handleEvent = async (
-      payload: { organizationId: string },
-      type: string
+    const handleEvent = async <K extends EventName>(
+      payload: EventMap[K],
+      type: K
     ) => {
       if (closed || payload.organizationId !== activeOrgId) {
         return
       }
+
       try {
         await stream.writeSSE({
           event: type,
@@ -36,52 +49,48 @@ async function handleSseRequest(c: Context) {
       }
     }
 
-    const onSignalCreated = (p: { organizationId: string }) =>
-      handleEvent(p, "signal:created")
-    const onSignalUpdated = (p: { organizationId: string }) =>
-      handleEvent(p, "signal:updated")
-    const onSignalCommentCreated = (p: { organizationId: string }) =>
-      handleEvent(p, "signal-comment:created")
-    const onAlertCreated = (p: { organizationId: string }) =>
-      handleEvent(p, "alert:created")
-    const onAlertUpdated = (p: { organizationId: string }) =>
-      handleEvent(p, "alert:updated")
-    const onActivityCreated = (p: { organizationId: string }) =>
-      handleEvent(p, "activity:created")
-    const onPipelineCreated = (p: { organizationId: string }) =>
-      handleEvent(p, "pipeline:created")
-    const onPipelineUpdated = (p: { organizationId: string }) =>
-      handleEvent(p, "pipeline:updated")
-    const onActionProposed = (p: { organizationId: string }) =>
-      handleEvent(p, "action:proposed")
-    const onMentionCreated = (p: { organizationId: string }) =>
-      handleEvent(p, "mention:created")
-    const onMentionUpdated = (p: { organizationId: string }) =>
-      handleEvent(p, "mention:updated")
-    const onWorkspaceMembersUpdated = (p: { organizationId: string }) =>
-      handleEvent(p, "workspace:members_updated")
-    const onWorkspaceDeleted = (p: { organizationId: string }) =>
-      handleEvent(p, "workspace:deleted")
+    const localListeners = realtimeEventNames.map((eventName) => {
+      const listener = (payload: EventMap[typeof eventName]) => {
+        handleEvent(payload, eventName).catch((error) => {
+          console.error(`SSE local event ${eventName} failed:`, error)
+        })
+      }
 
-    eventBus.on("signal:created", onSignalCreated)
-    eventBus.on("signal:updated", onSignalUpdated)
-    eventBus.on("signal-comment:created", onSignalCommentCreated)
-    eventBus.on("alert:created", onAlertCreated)
-    eventBus.on("alert:updated", onAlertUpdated)
-    eventBus.on("activity:created", onActivityCreated)
-    eventBus.on("pipeline:created", onPipelineCreated)
-    eventBus.on("pipeline:updated", onPipelineUpdated)
-    eventBus.on("action:proposed", onActionProposed)
-    eventBus.on("mention:created", onMentionCreated)
-    eventBus.on("mention:updated", onMentionUpdated)
-    eventBus.on("workspace:members_updated", onWorkspaceMembersUpdated)
-    eventBus.on("workspace:deleted", onWorkspaceDeleted)
+      eventBus.on(eventName, listener)
+      return { eventName, listener }
+    })
+
+    const handleRedisMessage = (data: { message: RealtimeEvent }) => {
+      const event = data.message
+      if (!realtimeEventNames.includes(event.type)) {
+        return
+      }
+
+      handleEvent(event.payload, event.type).catch((error) => {
+        console.error(`SSE Redis event ${event.type} failed:`, error)
+      })
+    }
+
+    const handleRedisError = (error: Error) => {
+      console.error("SSE Redis subscription error:", error)
+    }
+
+    try {
+      redisSubscription = redis.subscribe<RealtimeEvent>(
+        getRealtimeChannel(activeOrgId)
+      )
+      redisSubscription.on("message", handleRedisMessage)
+      redisSubscription.on("error", handleRedisError)
+    } catch (error) {
+      console.error("Failed to subscribe SSE Redis listener:", error)
+    }
 
     const interval = setInterval(async () => {
       if (closed) {
         clearInterval(interval)
         return
       }
+
       try {
         await stream.writeSSE({ event: "ping", data: "ping" })
       } catch {
@@ -89,27 +98,34 @@ async function handleSseRequest(c: Context) {
       }
     }, 5000)
 
-    stream.onAbort(() => {
+    const cleanup = () => {
+      if (cleanedUp) {
+        return
+      }
+
+      cleanedUp = true
       closed = true
       clearInterval(interval)
-      eventBus.off("signal:created", onSignalCreated)
-      eventBus.off("signal:updated", onSignalUpdated)
-      eventBus.off("signal-comment:created", onSignalCommentCreated)
-      eventBus.off("alert:created", onAlertCreated)
-      eventBus.off("alert:updated", onAlertUpdated)
-      eventBus.off("activity:created", onActivityCreated)
-      eventBus.off("pipeline:created", onPipelineCreated)
-      eventBus.off("pipeline:updated", onPipelineUpdated)
-      eventBus.off("action:proposed", onActionProposed)
-      eventBus.off("mention:created", onMentionCreated)
-      eventBus.off("mention:updated", onMentionUpdated)
-      eventBus.off("workspace:members_updated", onWorkspaceMembersUpdated)
-      eventBus.off("workspace:deleted", onWorkspaceDeleted)
-    })
+
+      for (const { eventName, listener } of localListeners) {
+        eventBus.off(eventName, listener)
+      }
+
+      if (redisSubscription) {
+        redisSubscription.removeAllListeners()
+        redisSubscription.unsubscribe().catch((error) => {
+          console.error("Failed to unsubscribe SSE Redis listener:", error)
+        })
+      }
+    }
+
+    stream.onAbort(cleanup)
 
     while (!closed) {
       await new Promise((resolve) => setTimeout(resolve, 1000))
     }
+
+    cleanup()
   })
 }
 

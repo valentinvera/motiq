@@ -19,7 +19,7 @@ import {
   SignalIcon,
 } from "lucide-react"
 import { AnimatePresence, motion } from "motion/react"
-import { useEffect, useRef, useState } from "react"
+import { useCallback, useEffect, useRef, useState } from "react"
 import { PriorityBadge, StatusBadge, TypeBadge } from "@/components/app/badges"
 import { EmptyState } from "@/components/app/empty-state"
 import { SignalDetailPanel } from "@/components/app/signal-detail-panel"
@@ -99,6 +99,42 @@ function SignalsPage() {
     }),
   })
 
+  const invalidateSignals = useCallback(() => {
+    ;(async () => {
+      await Promise.all([
+        queryClient.invalidateQueries({
+          queryKey: trpc.signal.list.queryKey(),
+        }),
+        selectedId
+          ? queryClient.invalidateQueries({
+              queryKey: trpc.signal.getById.queryKey({ id: selectedId }),
+            })
+          : Promise.resolve(),
+      ])
+
+      await queryClient.invalidateQueries({
+        queryKey: trpc.signal.getActionableCount.queryKey(),
+      })
+    })().catch((error) => {
+      console.error("Failed to invalidate signal queries:", error)
+    })
+  }, [queryClient, selectedId, trpc])
+
+  const invalidateAlerts = useCallback(() => {
+    queryClient.invalidateQueries({ queryKey: trpc.alert.list.queryKey() })
+    queryClient.invalidateQueries({
+      queryKey: trpc.alert.getUnacknowledgedCount.queryKey(),
+    })
+  }, [queryClient, trpc])
+
+  const invalidateAlertsAndSignals = useCallback(() => {
+    invalidateAlerts()
+    invalidateSignals()
+  }, [invalidateAlerts, invalidateSignals])
+
+  const hasPendingSignals =
+    signals.data?.items.some((item) => item.status === "new") ?? false
+
   useEffect(() => {
     const eventSource = new EventSource(
       `${import.meta.env.VITE_API_URL}/api/sse`,
@@ -107,46 +143,28 @@ function SignalsPage() {
       }
     )
 
-    const invalidateSignals = () => {
-      ;(async () => {
-        await Promise.all([
-          queryClient.invalidateQueries({
-            queryKey: trpc.signal.list.queryKey(),
-          }),
-          selectedId
-            ? queryClient.invalidateQueries({
-                queryKey: trpc.signal.getById.queryKey({ id: selectedId }),
-              })
-            : Promise.resolve(),
-        ])
-
-        await queryClient.invalidateQueries({
-          queryKey: trpc.signal.getActionableCount.queryKey(),
-        })
-      })().catch((error) => {
-        console.error("Failed to invalidate signal queries:", error)
-      })
-    }
-
-    const invalidateAlerts = () => {
-      queryClient.invalidateQueries({ queryKey: trpc.alert.list.queryKey() })
-      queryClient.invalidateQueries({
-        queryKey: trpc.alert.getUnacknowledgedCount.queryKey(),
-      })
-    }
-
-    const invalidateAlertsAndSignals = () => {
+    const invalidateAllRealtimeData = () => {
       invalidateAlerts()
       invalidateSignals()
     }
 
+    eventSource.addEventListener("open", invalidateAllRealtimeData)
     eventSource.addEventListener("signal:created", invalidateSignals)
     eventSource.addEventListener("signal:updated", invalidateSignals)
     eventSource.addEventListener("alert:created", invalidateAlertsAndSignals)
     eventSource.addEventListener("alert:updated", invalidateAlertsAndSignals)
 
     return () => eventSource.close()
-  }, [queryClient, selectedId, trpc])
+  }, [invalidateAlerts, invalidateAlertsAndSignals, invalidateSignals])
+
+  useEffect(() => {
+    if (!hasPendingSignals) {
+      return
+    }
+
+    const interval = setInterval(invalidateSignals, 3000)
+    return () => clearInterval(interval)
+  }, [hasPendingSignals, invalidateSignals])
 
   const total = signals.data?.total ?? 0
   const totalPages = Math.ceil(total / PAGE_SIZE)

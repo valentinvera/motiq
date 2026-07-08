@@ -1,6 +1,7 @@
 import { EventEmitter } from "node:events"
+import { redis } from "@motiq/cache"
 
-interface EventMap {
+export interface EventMap {
   "signal:created": { organizationId: string; signalId: string }
   "signal:updated": { organizationId: string; signalId: string }
   "signal-comment:created": {
@@ -65,9 +66,60 @@ interface EventMap {
   }
 }
 
+export type EventName = keyof EventMap
+
+export type RealtimeEvent = {
+  [K in EventName]: {
+    id: string
+    type: K
+    payload: EventMap[K]
+    publishedAt: string
+  }
+}[EventName]
+
+export const realtimeEventNames = [
+  "signal:created",
+  "signal:updated",
+  "signal-comment:created",
+  "alert:created",
+  "alert:updated",
+  "activity:created",
+  "pipeline:created",
+  "pipeline:updated",
+  "action:proposed",
+  "mention:created",
+  "mention:updated",
+  "workspace:members_updated",
+  "workspace:deleted",
+] as const satisfies readonly EventName[]
+
+export function getRealtimeChannel(organizationId: string) {
+  return `motiq:events:${organizationId}`
+}
+
+async function publishRealtimeEvent<K extends EventName>(
+  eventName: K,
+  payload: EventMap[K]
+) {
+  const event: RealtimeEvent = {
+    id: crypto.randomUUID(),
+    type: eventName,
+    payload,
+    publishedAt: new Date().toISOString(),
+  } as RealtimeEvent
+
+  await redis.publish(getRealtimeChannel(payload.organizationId), event)
+}
+
 class TypedEventEmitter extends EventEmitter {
   emit<K extends keyof EventMap>(eventName: K, payload: EventMap[K]): boolean {
-    return super.emit(eventName, payload)
+    const deliveredLocally = super.emit(eventName, payload)
+
+    publishRealtimeEvent(eventName, payload).catch((error) => {
+      console.error(`Failed to publish realtime event ${eventName}:`, error)
+    })
+
+    return deliveredLocally
   }
 
   on<K extends keyof EventMap>(
