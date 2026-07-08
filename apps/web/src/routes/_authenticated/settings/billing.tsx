@@ -1,12 +1,16 @@
 import { billingPlans, type CheckoutPlanSlug } from "@motiq/auth/plans"
 import { Button } from "@motiq/ui/components/button"
+import { useQuery } from "@tanstack/react-query"
 import { createFileRoute } from "@tanstack/react-router"
 import { CheckIcon, CreditCardIcon, MailIcon } from "lucide-react"
 import { useState } from "react"
 import { toast } from "sonner"
 import { SettingsCard } from "@/components/app/settings-card"
+import { getPayment } from "@/functions/get-payment"
 import { authClient } from "@/lib/auth-client"
+import { formatBillingDate, getActiveBillingPlan } from "@/lib/billing"
 import { usePermission } from "@/lib/permissions"
+import { useTRPC } from "@/utils/trpc"
 
 export const Route = createFileRoute("/_authenticated/settings/billing")({
   head: () => ({
@@ -16,8 +20,15 @@ export const Route = createFileRoute("/_authenticated/settings/billing")({
 })
 
 function BillingTab() {
+  const trpc = useTRPC()
   const [pendingAction, setPendingAction] = useState<string | null>(null)
   const canManageBilling = usePermission("billing", "manage")
+  const activeWorkspace = useQuery(trpc.workspace.getActive.queryOptions())
+  const payment = useQuery({
+    queryFn: () => getPayment(),
+    queryKey: ["payment-state"],
+  })
+  const activePlan = getActiveBillingPlan(payment.data)
   const loading = pendingAction !== null
 
   async function handleOpenPortal() {
@@ -37,9 +48,21 @@ function BillingTab() {
   }
 
   async function handleCheckout(slug: CheckoutPlanSlug) {
+    if (!activeWorkspace.data?.id) {
+      toast.error("Select a workspace before starting checkout")
+      return
+    }
+
     setPendingAction(slug)
     try {
-      await authClient.checkout({ slug })
+      await authClient.checkout({
+        slug,
+        referenceId: activeWorkspace.data.id,
+        metadata: {
+          organizationId: activeWorkspace.data.id,
+          plan: slug,
+        },
+      })
     } catch {
       toast.error("Failed to start checkout")
       setPendingAction(null)
@@ -49,6 +72,18 @@ function BillingTab() {
   function handleContactSales() {
     window.location.href =
       "mailto:hello@motiq.app?subject=Enterprise%20plan%20for%20Motiq"
+  }
+
+  function getCheckoutButtonLabel(plan: { name: string; slug: string }) {
+    if (pendingAction === plan.slug) {
+      return "Starting checkout..."
+    }
+
+    if (activePlan?.plan.slug === plan.slug) {
+      return "Current plan"
+    }
+
+    return `Choose ${plan.name}`
   }
 
   if (!canManageBilling) {
@@ -81,6 +116,30 @@ function BillingTab() {
       footerNote="Checkout and subscription management are powered by Polar."
       title="Subscription & Billing"
     >
+      <div className="mt-5 rounded-lg border border-white/[0.08] bg-black/20 p-4">
+        <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+          <div>
+            <p className="font-medium text-sm text-zinc-100">
+              Current plan: {activePlan?.plan.name ?? "No active plan"}
+            </p>
+            <p className="mt-1 text-[12px] text-zinc-500">
+              {activePlan
+                ? `Renews ${formatBillingDate(activePlan.subscription.currentPeriodEnd)}`
+                : "Choose a plan to activate billing for this workspace."}
+            </p>
+          </div>
+          <span
+            className={`w-fit rounded-full border px-2 py-1 font-medium text-[11px] ${
+              activePlan
+                ? "border-emerald-400/20 bg-emerald-400/10 text-emerald-300"
+                : "border-white/[0.08] bg-white/[0.04] text-zinc-500"
+            }`}
+          >
+            {activePlan ? "Active" : "Free"}
+          </span>
+        </div>
+      </div>
+
       <div className="mt-5 grid gap-3 lg:grid-cols-3">
         {billingPlans.map((plan) => (
           <div
@@ -132,14 +191,12 @@ function BillingTab() {
                     ? "bg-white text-black hover:bg-white/90"
                     : "border-white/[0.08] bg-white/[0.04] text-zinc-200 hover:bg-white/[0.08]"
                 }`}
-                disabled={loading}
+                disabled={loading || activePlan?.plan.slug === plan.slug}
                 onClick={() => handleCheckout(plan.slug)}
                 size="sm"
                 variant={plan.recommended ? "default" : "outline"}
               >
-                {pendingAction === plan.slug
-                  ? "Starting checkout..."
-                  : `Choose ${plan.name}`}
+                {getCheckoutButtonLabel(plan)}
               </Button>
             ) : (
               <Button
