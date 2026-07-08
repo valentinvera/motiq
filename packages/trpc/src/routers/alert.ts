@@ -90,11 +90,29 @@ async function getAlertForOrganization(params: {
 export const alertRouter = router({
   list: orgProcedure.query(async ({ ctx }) => {
     const alerts = await db
-      .select()
+      .select({ alert, relatedSignal: signal })
       .from(alert)
+      .leftJoin(
+        signal,
+        and(
+          eq(alert.signalId, signal.id),
+          eq(signal.organizationId, ctx.organizationId)
+        )
+      )
       .where(eq(alert.organizationId, ctx.organizationId))
       .orderBy(desc(alert.createdAt))
-    return alerts
+    return alerts.map((item) => ({
+      ...item.alert,
+      relatedSignal: item.relatedSignal
+        ? {
+            id: item.relatedSignal.id,
+            source: item.relatedSignal.source,
+            title: item.relatedSignal.title,
+            customerName: item.relatedSignal.customerName,
+            externalId: item.relatedSignal.externalId,
+          }
+        : null,
+    }))
   }),
 
   getById: orgProcedure
