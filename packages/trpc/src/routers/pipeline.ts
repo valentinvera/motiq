@@ -1,9 +1,50 @@
 import { db } from "@motiq/db"
 import { agentRun } from "@motiq/db/schema/agent-runs"
 import { pipelineRun } from "@motiq/db/schema/pipeline-runs"
-import { and, count, desc, eq } from "drizzle-orm"
+import { and, desc, eq, sql } from "drizzle-orm"
 import { z } from "zod"
 import { orgProcedure, router } from "../index"
+
+const PIPELINE_LIST_SCAN_LIMIT = 500
+
+type PipelineRunRecord = typeof pipelineRun.$inferSelect
+
+function getLogicalPipelineKey(record: PipelineRunRecord) {
+  if (record.triggeredBy === "new_signal" && record.triggerSignalId) {
+    return `new_signal:${record.triggerSignalId}`
+  }
+
+  return record.id
+}
+
+function dedupePipelineRuns(records: PipelineRunRecord[]) {
+  const seen = new Set<string>()
+  const deduped: PipelineRunRecord[] = []
+
+  for (const record of records) {
+    const key = getLogicalPipelineKey(record)
+    if (seen.has(key)) {
+      continue
+    }
+
+    seen.add(key)
+    deduped.push(record)
+  }
+
+  return deduped
+}
+
+function countLogicalPipelineRuns(where: ReturnType<typeof and>) {
+  return db
+    .select({
+      count:
+        sql<number>`count(distinct case when ${pipelineRun.triggeredBy} = 'new_signal' and ${pipelineRun.triggerSignalId} is not null then ${pipelineRun.triggerSignalId} else ${pipelineRun.id} end)`.mapWith(
+          Number
+        ),
+    })
+    .from(pipelineRun)
+    .where(where)
+}
 
 export const pipelineRouter = router({
   list: orgProcedure
@@ -30,19 +71,20 @@ export const pipelineRouter = router({
 
       const where = and(...conditions)
 
-      const [items, totalResult] = await Promise.all([
+      const [records, totalResult] = await Promise.all([
         db
           .select()
           .from(pipelineRun)
           .where(where)
           .orderBy(desc(pipelineRun.createdAt))
-          .limit(limit)
-          .offset(offset),
-        db.select({ count: count() }).from(pipelineRun).where(where),
+          .limit(PIPELINE_LIST_SCAN_LIMIT),
+        countLogicalPipelineRuns(where),
       ])
 
+      const logicalRuns = dedupePipelineRuns(records)
+
       return {
-        items,
+        items: logicalRuns.slice(offset, offset + limit),
         total: totalResult[0]?.count ?? 0,
       }
     }),
