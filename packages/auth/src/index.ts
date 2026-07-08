@@ -17,7 +17,7 @@ import { DeleteAccount } from "@motiq/mail/templates/delete-account"
 import { InviteMember } from "@motiq/mail/templates/invite-member"
 import { ResetPassword } from "@motiq/mail/templates/reset-password"
 import { VerifyEmail } from "@motiq/mail/templates/verify-email"
-import { checkout, polar, portal, usage } from "@polar-sh/better-auth"
+import { checkout, polar, portal, usage, webhooks } from "@polar-sh/better-auth"
 import { APIError, type BetterAuthOptions, betterAuth } from "better-auth"
 import { drizzleAdapter } from "better-auth/adapters/drizzle"
 import {
@@ -297,6 +297,44 @@ function getCheckoutProducts() {
   ]
 }
 
+function getWebhookRecord(payload: unknown) {
+  if (!(payload && typeof payload === "object")) {
+    return null
+  }
+
+  return payload as {
+    data?: {
+      id?: unknown
+      metadata?: unknown
+      productId?: unknown
+      status?: unknown
+    }
+    type?: unknown
+  }
+}
+
+function logPolarWebhook(payload: unknown): Promise<void> {
+  const record = getWebhookRecord(payload)
+  const metadata =
+    record?.data?.metadata && typeof record.data.metadata === "object"
+      ? record.data.metadata
+      : null
+
+  console.log("[polar:webhook]", {
+    event: typeof record?.type === "string" ? record.type : "unknown",
+    id: typeof record?.data?.id === "string" ? record.data.id : null,
+    metadata,
+    productId:
+      typeof record?.data?.productId === "string"
+        ? record.data.productId
+        : null,
+    status:
+      typeof record?.data?.status === "string" ? record.data.status : null,
+  })
+
+  return Promise.resolve()
+}
+
 export const auth = betterAuth<BetterAuthOptions>({
   appName: env.APP_NAME,
   baseURL: env.BETTER_AUTH_URL,
@@ -479,11 +517,16 @@ export const auth = betterAuth<BetterAuthOptions>({
         checkout({
           products: getCheckoutProducts(),
           successUrl: env.POLAR_SUCCESS_URL,
+          returnUrl: `${env.CORS_ORIGIN}/settings/billing`,
           authenticatedUsersOnly: true,
           theme: "dark",
         }),
         portal(),
         usage(),
+        webhooks({
+          secret: env.POLAR_WEBHOOK_SECRET,
+          onPayload: logPolarWebhook,
+        }),
       ],
     }),
     lastLoginMethod({

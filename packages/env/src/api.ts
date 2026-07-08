@@ -9,6 +9,7 @@ export const env = createEnv({
     GOOGLE_GENERATIVE_AI_API_KEY: z.string().default(""),
     OPENROUTER_AI_API_KEY: z.string().min(1),
     POLAR_ACCESS_TOKEN: z.string().min(1),
+    POLAR_SERVER: z.enum(["sandbox", "production"]).default("sandbox"),
     POLAR_PRODUCT_ID: z.string().min(1),
     POLAR_STARTER_PRODUCT_ID: z.string().min(1),
     POLAR_GROWTH_PRODUCT_ID: z.string().default(""),
