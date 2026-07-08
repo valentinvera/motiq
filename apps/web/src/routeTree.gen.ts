@@ -20,6 +20,7 @@ import { Route as OnboardingTeamRouteImport } from './routes/onboarding/team'
 import { Route as OnboardingReadyRouteImport } from './routes/onboarding/ready'
 import { Route as OnboardingAppsRouteImport } from './routes/onboarding/apps'
 import { Route as AcceptInvitationIdRouteImport } from './routes/accept-invitation.$id'
+import { Route as AuthenticatedSuccessRouteImport } from './routes/_authenticated/success'
 import { Route as AuthenticatedSignalsRouteImport } from './routes/_authenticated/signals'
 import { Route as AuthenticatedSettingsRouteImport } from './routes/_authenticated/settings'
 import { Route as AuthenticatedReportsRouteImport } from './routes/_authenticated/reports'
@@ -93,6 +94,11 @@ const AcceptInvitationIdRoute = AcceptInvitationIdRouteImport.update({
   id: '/accept-invitation/$id',
   path: '/accept-invitation/$id',
   getParentRoute: () => rootRouteImport,
+} as any)
+const AuthenticatedSuccessRoute = AuthenticatedSuccessRouteImport.update({
+  id: '/success',
+  path: '/success',
+  getParentRoute: () => AuthenticatedRoute,
 } as any)
 const AuthenticatedSignalsRoute = AuthenticatedSignalsRouteImport.update({
   id: '/signals',
@@ -213,6 +219,7 @@ export interface FileRoutesByFullPath {
   '/reports': typeof AuthenticatedReportsRoute
   '/settings': typeof AuthenticatedSettingsRouteWithChildren
   '/signals': typeof AuthenticatedSignalsRoute
+  '/success': typeof AuthenticatedSuccessRoute
   '/accept-invitation/$id': typeof AcceptInvitationIdRoute
   '/onboarding/apps': typeof OnboardingAppsRoute
   '/onboarding/ready': typeof OnboardingReadyRoute
@@ -242,6 +249,7 @@ export interface FileRoutesByTo {
   '/pipelines': typeof AuthenticatedPipelinesRoute
   '/reports': typeof AuthenticatedReportsRoute
   '/signals': typeof AuthenticatedSignalsRoute
+  '/success': typeof AuthenticatedSuccessRoute
   '/accept-invitation/$id': typeof AcceptInvitationIdRoute
   '/onboarding/apps': typeof OnboardingAppsRoute
   '/onboarding/ready': typeof OnboardingReadyRoute
@@ -275,6 +283,7 @@ export interface FileRoutesById {
   '/_authenticated/reports': typeof AuthenticatedReportsRoute
   '/_authenticated/settings': typeof AuthenticatedSettingsRouteWithChildren
   '/_authenticated/signals': typeof AuthenticatedSignalsRoute
+  '/_authenticated/success': typeof AuthenticatedSuccessRoute
   '/accept-invitation/$id': typeof AcceptInvitationIdRoute
   '/onboarding/apps': typeof OnboardingAppsRoute
   '/onboarding/ready': typeof OnboardingReadyRoute
@@ -308,6 +317,7 @@ export interface FileRouteTypes {
     | '/reports'
     | '/settings'
     | '/signals'
+    | '/success'
     | '/accept-invitation/$id'
     | '/onboarding/apps'
     | '/onboarding/ready'
@@ -337,6 +347,7 @@ export interface FileRouteTypes {
     | '/pipelines'
     | '/reports'
     | '/signals'
+    | '/success'
     | '/accept-invitation/$id'
     | '/onboarding/apps'
     | '/onboarding/ready'
@@ -369,6 +380,7 @@ export interface FileRouteTypes {
     | '/_authenticated/reports'
     | '/_authenticated/settings'
     | '/_authenticated/signals'
+    | '/_authenticated/success'
     | '/accept-invitation/$id'
     | '/onboarding/apps'
     | '/onboarding/ready'
@@ -473,6 +485,13 @@ declare module '@tanstack/react-router' {
       fullPath: '/accept-invitation/$id'
       preLoaderRoute: typeof AcceptInvitationIdRouteImport
       parentRoute: typeof rootRouteImport
+    }
+    '/_authenticated/success': {
+      id: '/_authenticated/success'
+      path: '/success'
+      fullPath: '/success'
+      preLoaderRoute: typeof AuthenticatedSuccessRouteImport
+      parentRoute: typeof AuthenticatedRoute
     }
     '/_authenticated/signals': {
       id: '/_authenticated/signals'
@@ -660,6 +679,7 @@ interface AuthenticatedRouteChildren {
   AuthenticatedReportsRoute: typeof AuthenticatedReportsRoute
   AuthenticatedSettingsRoute: typeof AuthenticatedSettingsRouteWithChildren
   AuthenticatedSignalsRoute: typeof AuthenticatedSignalsRoute
+  AuthenticatedSuccessRoute: typeof AuthenticatedSuccessRoute
 }
 
 const AuthenticatedRouteChildren: AuthenticatedRouteChildren = {
@@ -673,6 +693,7 @@ const AuthenticatedRouteChildren: AuthenticatedRouteChildren = {
   AuthenticatedReportsRoute: AuthenticatedReportsRoute,
   AuthenticatedSettingsRoute: AuthenticatedSettingsRouteWithChildren,
   AuthenticatedSignalsRoute: AuthenticatedSignalsRoute,
+  AuthenticatedSuccessRoute: AuthenticatedSuccessRoute,
 }
 
 const AuthenticatedRouteWithChildren = AuthenticatedRoute._addFileChildren(

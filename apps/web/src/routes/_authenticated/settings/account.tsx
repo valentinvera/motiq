@@ -1,8 +1,10 @@
 import { Button } from "@motiq/ui/components/button"
 import { Input } from "@motiq/ui/components/input"
+import { useQuery } from "@tanstack/react-query"
 import { createFileRoute, useRouter } from "@tanstack/react-router"
 import {
   CheckCircle2Icon,
+  CreditCardIcon,
   Loader2Icon,
   LogOutIcon,
   Trash2Icon,
@@ -10,7 +12,9 @@ import {
 import { useRef, useState } from "react"
 import { toast } from "sonner"
 import { SettingsCard } from "@/components/app/settings-card"
+import { getPayment } from "@/functions/get-payment"
 import { authClient } from "@/lib/auth-client"
+import { formatBillingDate, getActiveBillingPlan } from "@/lib/billing"
 import { getMediaUrl, isBlobMediaUrl } from "@/lib/media"
 
 const ACCEPTED_AVATAR_TYPES = "image/png,image/jpeg,image/webp,image/gif"
@@ -32,6 +36,7 @@ function AccountTab() {
       <AvatarCard email={user.email} image={user.image ?? null} />
       <NameCard initialName={user.name} />
       <EmailCard email={user.email} />
+      <PlanCard />
       <SignOutCard />
     </>
   )
@@ -245,6 +250,53 @@ function EmailCard({ email }: { email: string }) {
         <span className="inline-flex items-center gap-1 rounded-sm bg-emerald-500/10 px-1.5 py-0.5 text-[10px] text-emerald-400">
           <CheckCircle2Icon className="size-3" />
           Verified
+        </span>
+      </div>
+    </SettingsCard>
+  )
+}
+
+function PlanCard() {
+  const payment = useQuery({
+    queryFn: () => getPayment(),
+    queryKey: ["payment-state"],
+  })
+  const activePlan = getActiveBillingPlan(payment.data)
+
+  return (
+    <SettingsCard
+      description="The active workspace subscription attached to your account through Polar."
+      footerNote={
+        activePlan
+          ? `Next renewal: ${formatBillingDate(activePlan.subscription.currentPeriodEnd)}`
+          : "Plans are managed from workspace billing settings."
+      }
+      title="Plan"
+    >
+      <div className="mt-4 flex max-w-sm items-center justify-between gap-3 rounded-md border border-white/[0.08] bg-white/[0.02] px-3 py-2">
+        <div className="flex min-w-0 items-center gap-2">
+          <span className="flex size-7 shrink-0 items-center justify-center rounded-md border border-white/[0.08] bg-white/[0.04] text-zinc-400">
+            <CreditCardIcon className="size-3.5" />
+          </span>
+          <div className="min-w-0">
+            <p className="truncate font-medium text-sm text-zinc-200">
+              {activePlan?.plan.name ?? "Free"}
+            </p>
+            <p className="text-[11px] text-zinc-500">
+              {activePlan
+                ? `${activePlan.plan.price}${activePlan.plan.period}`
+                : "No paid plan active"}
+            </p>
+          </div>
+        </div>
+        <span
+          className={`shrink-0 rounded-sm px-1.5 py-0.5 font-medium text-[10px] ${
+            activePlan
+              ? "bg-emerald-500/10 text-emerald-400"
+              : "bg-white/[0.04] text-zinc-500"
+          }`}
+        >
+          {activePlan ? "Active" : "Free"}
         </span>
       </div>
     </SettingsCard>
