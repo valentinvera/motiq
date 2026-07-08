@@ -31,8 +31,17 @@ app.use(
 )
 
 app.use(
+  "/api/auth/get-session",
+  rateLimit({ windowMs: 60_000, max: 300, keyPrefix: "rl:auth:session" })
+)
+app.use(
   "/api/auth/*",
-  rateLimit({ windowMs: 60_000, max: 30, keyPrefix: "rl:auth" })
+  rateLimit({
+    windowMs: 60_000,
+    max: 60,
+    keyPrefix: "rl:auth",
+    skip: (c) => new URL(c.req.url).pathname === "/api/auth/get-session",
+  })
 )
 app.use(
   "/api/chat/*",

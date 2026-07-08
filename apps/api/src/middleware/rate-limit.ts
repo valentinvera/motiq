@@ -5,13 +5,19 @@ interface RateLimitOptions {
   windowMs: number
   max: number
   keyPrefix?: string
+  skip?: (c: Context) => boolean
 }
 
 export const rateLimit = (options: RateLimitOptions) => {
-  const { windowMs, max, keyPrefix = "rl" } = options
+  const { windowMs, max, keyPrefix = "rl", skip } = options
   const windowSec = Math.ceil(windowMs / 1000)
 
   return async (c: Context, next: Next) => {
+    if (skip?.(c)) {
+      await next()
+      return
+    }
+
     const ip =
       c.req.header("x-forwarded-for")?.split(",")[0]?.trim() ??
       c.req.header("x-real-ip") ??

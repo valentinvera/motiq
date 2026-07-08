@@ -28,6 +28,7 @@ import {
 } from "lucide-react"
 import { useEffect, useState } from "react"
 import { authClient } from "@/lib/auth-client"
+import { clearCachedAuthSession } from "@/lib/auth-session"
 import { getMediaUrl } from "@/lib/media"
 import { useTRPC } from "@/utils/trpc"
 
@@ -151,6 +152,7 @@ export function Topbar({ user, onOpenCommandPalette }: TopbarProps) {
 
   async function handleSignOut() {
     await authClient.signOut()
+    clearCachedAuthSession()
     navigate({ to: "/login" })
   }
 
