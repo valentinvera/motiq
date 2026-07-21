@@ -74,6 +74,7 @@ function AuthenticatedLayout() {
       !pendingInvitation.data,
   })
   const [cmdOpen, setCmdOpen] = useState(false)
+  const [mobileSidebarOpen, setMobileSidebarOpen] = useState(false)
   const gPending = useRef(false)
 
   useEffect(() => {
@@ -226,10 +227,47 @@ function AuthenticatedLayout() {
     return () => document.removeEventListener("keydown", handleKeyDown)
   }, [handleKeyDown])
 
+  useEffect(() => {
+    const desktopMedia = window.matchMedia("(min-width: 769px)")
+    const closeOnDesktop = () => {
+      if (desktopMedia.matches) {
+        setMobileSidebarOpen(false)
+      }
+    }
+
+    desktopMedia.addEventListener("change", closeOnDesktop)
+    return () => desktopMedia.removeEventListener("change", closeOnDesktop)
+  }, [])
+
+  useEffect(() => {
+    if (!mobileSidebarOpen) {
+      return
+    }
+
+    const previousOverflow = document.body.style.overflow
+    document.body.style.overflow = "hidden"
+
+    return () => {
+      document.body.style.overflow = previousOverflow
+    }
+  }, [mobileSidebarOpen])
+
   return (
-    <div className="flex min-h-dvh w-full">
-      <AppSidebar organization={org.data ?? null} />
-      <main className="relative ml-14 flex flex-1 flex-col bg-black">
+    <div className="flex min-h-dvh w-full bg-black">
+      {mobileSidebarOpen && (
+        <button
+          aria-label="Close navigation"
+          className="fixed inset-0 z-20 cursor-default bg-black/60 backdrop-blur-[2px] min-[769px]:hidden"
+          onClick={() => setMobileSidebarOpen(false)}
+          type="button"
+        />
+      )}
+      <AppSidebar
+        mobileOpen={mobileSidebarOpen}
+        onMobileOpenChange={setMobileSidebarOpen}
+        organization={org.data ?? null}
+      />
+      <main className="relative flex flex-1 flex-col bg-black min-[769px]:ml-[4.5rem]">
         <div className="pointer-events-none absolute inset-0 overflow-hidden">
           <div
             className="absolute inset-0"
@@ -242,9 +280,11 @@ function AuthenticatedLayout() {
         <div className="grid-lines pointer-events-none absolute inset-0 opacity-[0.015]" />
         <div className="pointer-events-none absolute inset-0 bg-grain opacity-[0.008]" />
         <Topbar
+          mobileSidebarOpen={mobileSidebarOpen}
           onOpenCommandPalette={
             isOverviewRoute ? undefined : () => setCmdOpen(true)
           }
+          onOpenMobileSidebar={() => setMobileSidebarOpen(true)}
           organization={org.data ?? null}
           user={{
             name: auth.user.name,
