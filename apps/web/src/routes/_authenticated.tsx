@@ -253,7 +253,7 @@ function AuthenticatedLayout() {
   }, [mobileSidebarOpen])
 
   return (
-    <div className="flex min-h-dvh w-full">
+    <div className="flex min-h-dvh w-full bg-black">
       {mobileSidebarOpen && (
         <button
           aria-label="Close navigation"
