@@ -10,6 +10,7 @@ import {
   ShieldCheckIcon,
   SignalIcon,
   Squares2X2Icon,
+  XMarkIcon,
 } from "@heroicons/react/24/outline"
 import { Button } from "@motiq/ui/components/button"
 import {
@@ -104,6 +105,8 @@ function MotiqLogo() {
 }
 
 interface AppSidebarProps {
+  mobileOpen?: boolean
+  onMobileOpenChange?: (open: boolean) => void
   organization?: {
     id: string
     name: string
@@ -112,7 +115,11 @@ interface AppSidebarProps {
   } | null
 }
 
-export function AppSidebar({ organization }: AppSidebarProps) {
+export function AppSidebar({
+  mobileOpen = false,
+  onMobileOpenChange,
+  organization,
+}: AppSidebarProps) {
   const location = useLocation()
   const trpc = useTRPC()
   const queryClient = useQueryClient()
@@ -136,6 +143,8 @@ export function AppSidebar({ organization }: AppSidebarProps) {
   const [leaveOpen, setLeaveOpen] = useState(false)
   const [leaving, setLeaving] = useState(false)
   const closeTimeout = useRef<ReturnType<typeof setTimeout>>(null)
+  const previousPathname = useRef(location.pathname)
+  const showExpanded = expanded || mobileOpen
 
   const activeWorkspace = workspaces.data?.find(
     (ws) => ws.id === organization?.id
@@ -188,6 +197,28 @@ export function AppSidebar({ organization }: AppSidebarProps) {
 
     return () => eventSource.close()
   }, [location.pathname, queryClient, trpc])
+
+  useEffect(() => {
+    if (previousPathname.current !== location.pathname) {
+      previousPathname.current = location.pathname
+      onMobileOpenChange?.(false)
+    }
+  }, [location.pathname, onMobileOpenChange])
+
+  useEffect(() => {
+    if (!mobileOpen) {
+      return
+    }
+
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key === "Escape") {
+        onMobileOpenChange?.(false)
+      }
+    }
+
+    window.addEventListener("keydown", handleKeyDown)
+    return () => window.removeEventListener("keydown", handleKeyDown)
+  }, [mobileOpen, onMobileOpenChange])
 
   function isActive(href: string) {
     if (href === "/overview" && location.pathname !== "/overview") {
@@ -246,10 +277,15 @@ export function AppSidebar({ organization }: AppSidebarProps) {
   return (
     // biome-ignore lint/a11y/noNoninteractiveElementInteractions: hover-to-expand sidebar is a presentational affordance
     <aside
-      className="fixed inset-y-0 left-0 z-30 flex flex-col border-white/[0.06] border-r bg-[oklch(0.1_0_0)] transition-[width] duration-200 ease-in-out"
+      aria-label="Main navigation"
+      className={`fixed inset-y-0 left-0 z-30 flex w-60 flex-col border-white/[0.06] border-r bg-[oklch(0.1_0_0)] transition-[transform,width] duration-200 ease-in-out max-[769px]:shadow-2xl ${
+        mobileOpen
+          ? "max-[769px]:visible max-[769px]:translate-x-0"
+          : "max-[769px]:pointer-events-none max-[769px]:invisible max-[769px]:-translate-x-full"
+      } ${expanded ? "min-[769px]:w-60" : "min-[769px]:w-[4.5rem]"}`}
+      id="app-navigation"
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
-      style={{ width: expanded ? "15rem" : "4.5rem" }}
     >
       {/* Header — logo */}
       <div className="flex h-16 shrink-0 items-center border-white/[0.06] border-b pl-5">
@@ -259,6 +295,16 @@ export function AppSidebar({ organization }: AppSidebarProps) {
         >
         </Link>*/}
         <MotiqLogo />
+        <Button
+          aria-label="Close navigation"
+          className="mr-3 ml-auto size-9 rounded-lg text-zinc-400 hover:bg-white/[0.06] hover:text-white min-[769px]:hidden"
+          onClick={() => onMobileOpenChange?.(false)}
+          size="icon"
+          type="button"
+          variant="ghost"
+        >
+          <XMarkIcon className="size-5" />
+        </Button>
       </div>
 
       {/* Navigation */}
@@ -279,22 +325,23 @@ export function AppSidebar({ organization }: AppSidebarProps) {
                     ? "bg-white/[0.08] font-medium text-white"
                     : "text-zinc-400 hover:bg-white/[0.04] hover:text-zinc-200"
                 }`}
+                onClick={() => onMobileOpenChange?.(false)}
                 to={item.href}
               >
                 <item.icon
                   className={`size-5 shrink-0 ${active ? "text-white" : "text-zinc-500"}`}
                 />
-                {expanded && (
+                {showExpanded && (
                   <span className="whitespace-nowrap text-[15px]">
                     {item.label}
                   </span>
                 )}
-                {expanded && unread > 0 && (
+                {showExpanded && unread > 0 && (
                   <span className="ml-auto flex h-5 min-w-5 items-center justify-center rounded-full bg-red-500/15 px-1.5 font-medium text-[11px] text-red-400 ring-1 ring-red-500/20">
                     {unread}
                   </span>
                 )}
-                {!expanded && unread > 0 && (
+                {!showExpanded && unread > 0 && (
                   <span className="absolute top-1 right-1 size-2 rounded-full bg-red-500 shadow-[0_0_6px_#ef4444]" />
                 )}
               </Link>
@@ -302,7 +349,7 @@ export function AppSidebar({ organization }: AppSidebarProps) {
 
             return (
               <li className="relative" key={item.href}>
-                {expanded ? (
+                {showExpanded ? (
                   linkContent
                 ) : (
                   <Tooltip>
@@ -344,7 +391,7 @@ export function AppSidebar({ organization }: AppSidebarProps) {
                     : "M"
                 })()}
               </div>
-              {expanded && (
+              {showExpanded && (
                 <span className="truncate font-medium text-[15px] text-zinc-300">
                   {organization?.name ?? "Motiq"}
                 </span>

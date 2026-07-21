@@ -1,4 +1,4 @@
-import { UserIcon } from "@heroicons/react/24/outline"
+import { Bars3Icon, UserIcon } from "@heroicons/react/24/outline"
 import { Button } from "@motiq/ui/components/button"
 import {
   DropdownMenu,
@@ -35,7 +35,9 @@ import { useTRPC } from "@/utils/trpc"
 interface TopbarProps {
   organization?: { name: string; slug: string } | null
   user?: { name: string; email: string; image?: string | null }
+  mobileSidebarOpen?: boolean
   onOpenCommandPalette?: () => void
+  onOpenMobileSidebar?: () => void
 }
 
 const severityStyles: Record<string, string> = {
@@ -69,7 +71,12 @@ function getAlertResolution(item: {
   return { status: "reviewed", label: "Handled" } satisfies ResolutionMetadata
 }
 
-export function Topbar({ user, onOpenCommandPalette }: TopbarProps) {
+export function Topbar({
+  mobileSidebarOpen = false,
+  user,
+  onOpenCommandPalette,
+  onOpenMobileSidebar,
+}: TopbarProps) {
   const trpc = useTRPC()
   const navigate = useNavigate()
   const queryClient = useQueryClient()
@@ -157,15 +164,31 @@ export function Topbar({ user, onOpenCommandPalette }: TopbarProps) {
   }
 
   return (
-    <header className="flex h-16 items-center gap-4 border-white/[0.06] border-b bg-black/40 px-6 backdrop-blur-xl">
+    <header className="flex h-16 items-center gap-3 border-white/[0.06] border-b bg-black/40 px-4 backdrop-blur-xl min-[769px]:gap-4 min-[769px]:px-6">
+      {onOpenMobileSidebar && (
+        <Button
+          aria-controls="app-navigation"
+          aria-expanded={mobileSidebarOpen}
+          aria-label="Open navigation"
+          className="size-9 shrink-0 cursor-pointer rounded-lg text-zinc-400 transition-colors hover:bg-white/[0.06] hover:text-white min-[769px]:hidden"
+          onClick={onOpenMobileSidebar}
+          size="icon"
+          type="button"
+          variant="ghost"
+        >
+          <Bars3Icon className="size-5" />
+        </Button>
+      )}
       {onOpenCommandPalette && (
         <button
-          className="flex h-9 w-full max-w-sm items-center gap-2.5 rounded-lg px-3.5 text-zinc-500 transition-colors hover:bg-white/[0.04] hover:text-zinc-400"
+          className="flex h-9 min-w-0 flex-1 items-center gap-2.5 rounded-lg px-3.5 text-zinc-500 transition-colors hover:bg-white/[0.04] hover:text-zinc-400 min-[769px]:max-w-sm min-[769px]:flex-none"
           onClick={onOpenCommandPalette}
           type="button"
         >
           <SearchIcon className="size-4 shrink-0" />
-          <span className="text-[15px]">Find anything...</span>
+          <span className="truncate text-[15px] max-[480px]:hidden">
+            Find anything...
+          </span>
         </button>
       )}
 
